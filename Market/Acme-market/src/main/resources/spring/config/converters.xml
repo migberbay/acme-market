@@ -18,13 +18,47 @@
 	">
 
 	<util:list id="converters">
+			<bean class="converters.ActorToStringConverter" />
+			<bean class="converters.AdminToStringConverter" />
 			<bean class="converters.AuthorityToStringConverter" />
 			<bean class="converters.BoxToStringConverter" />
+			<bean class="converters.CommentToStringConverter" />
+			<bean class="converters.ConfigurationToStringConverter" />
+			<bean class="converters.CreditCardToStringConverter" />
+			<bean class="converters.CurriculaToStringConverter" />
+			<bean class="converters.CustomerToStringConverter" />
+			<bean class="converters.DeliveryBoyToStringConverter" />
+			<bean class="converters.DepartmentToStringConverter" />
+			<bean class="converters.EducationRecordToStringConverter" />
+			<bean class="converters.MarketToStringConverter" />
 			<bean class="converters.MessageToStringConverter" />
+			<bean class="converters.OrderToStringConverter" />
+			<bean class="converters.PersonalRecordToStringConverter" />
+			<bean class="converters.ProductToStringConverter" />
+			<bean class="converters.ProfessionalRecordToStringConverter" />
+			<bean class="converters.ProviderToStringConverter" />
+			<bean class="converters.RequestToStringConverter" />
 			
+			<bean class="converters.StringToActorConverter" />
+			<bean class="converters.StringToAdminConverter" />
 			<bean class="converters.StringToAuthorityConverter" />
 			<bean class="converters.StringToBoxConverter" />
-			<bean class="converters.StringToMessageConverter" />			
+			<bean class="converters.StringToCommentConverter" />
+			<bean class="converters.StringToConfigurationConverter" />
+			<bean class="converters.StringToCreditCardConverter" />
+			<bean class="converters.StringToCurriculaConverter" />
+			<bean class="converters.StringToCustomerConverter" />
+			<bean class="converters.StringToDeliveryBoyConverter" />
+			<bean class="converters.StringToDepartmentConverter" />
+			<bean class="converters.StringToEducationRecordConverter" />
+			<bean class="converters.StringToMarketConverter" />
+			<bean class="converters.StringToMessageConverter" />	
+			<bean class="converters.StringToOrderConverter" />
+			<bean class="converters.StringToPersonalRecordConverter" />	
+			<bean class="converters.StringToProductConverter" />
+			<bean class="converters.StringToProfessionalRecordConverter" />	
+			<bean class="converters.StringToProviderConverter" />
+			<bean class="converters.StringToRequestConverter" />
 	</util:list>
 	
 </beans>
