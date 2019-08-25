@@ -6,8 +6,8 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.Valid;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -27,6 +27,7 @@ public class Customer extends Actor {
 		this.creditCard = creditCard;
 	}
 
+	@Valid
 	@ManyToMany
 	public Collection<Market> getMarkets() {
 		return markets;

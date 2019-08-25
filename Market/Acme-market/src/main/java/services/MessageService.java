@@ -44,9 +44,6 @@ public class MessageService {
 		final Message message = new Message();
 
 		message.setSender(sender);
-		message.setPriority("NEUTRAL");
-		message.setFlagSpam(false);
-		message.setTags(new ArrayList<String>());
 		message.setMoment(new Date(System.currentTimeMillis() - 1000));
 
 		return message;
@@ -75,23 +72,17 @@ public class MessageService {
 	public Message reconstruct(final MessageForm form) {
 		final Message res = this.create(LoginService.getPrincipal());
 		res.setBody(form.getBody());
-		res.setPriority(form.getPriority());
 		res.setSubject(form.getSubject());
 
 		final List<UserAccount> recipients = new ArrayList<>();
-		final List<String> tags = new ArrayList<>();
 
 		final String[] recipientsArray = form.getRecipients().split(",");
-		final String[] tagsArray = form.getTags().split(",");
 
-		for (int i = 0; i < tagsArray.length; i++)
-			tags.add(tagsArray[i].trim());
 
 		for (int i = 0; i < recipientsArray.length; i++)
 			if (!(recipientsArray[i].length() < 5))
 				recipients.add(this.userAccountService.findByUsername(recipientsArray[i].trim()));
 
-		res.setTags(tags);
 		res.setRecipients(recipients);
 
 		//TODO: missing validator until bugfix is found.

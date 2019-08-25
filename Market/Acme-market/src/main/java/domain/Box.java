@@ -23,8 +23,6 @@ public class Box extends DomainEntity {
 	// Attributes -----------------------------------------------------------
 
 	private String	name;
-	private Boolean	systemBox;
-
 
 	// Getters and Setters ---------------------------------------------------
 
@@ -37,19 +35,10 @@ public class Box extends DomainEntity {
 		this.name = name;
 	}
 
-	public Boolean getSystemBox() {
-		return this.systemBox;
-	}
-
-	public void setSystemBox(final Boolean systemBox) {
-		this.systemBox = systemBox;
-	}
-
 
 	// Relationships ----------------------------------------------------------
 
 	private UserAccount			userAccount;
-	private Box					parentBox;
 	private Collection<Integer>	messages;
 
 
@@ -61,16 +50,6 @@ public class Box extends DomainEntity {
 
 	public void setMessages(final Collection<Integer> messages) {
 		this.messages = messages;
-	}
-
-	@Valid
-	@ManyToOne(optional = true)
-	public Box getParentBox() {
-		return this.parentBox;
-	}
-
-	public void setParentBox(final Box parentBox) {
-		this.parentBox = parentBox;
 	}
 
 	@Valid

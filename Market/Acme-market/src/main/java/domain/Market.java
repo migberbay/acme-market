@@ -4,11 +4,9 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -42,15 +40,17 @@ public class Market extends Actor {
 
 
 	//Relationships
-//	private Collection<Request> requests;
-//
-//	public Collection<Request> getRequests() {
-//		return requests;
-//	}
-//
-//	public void setRequests(Collection<Request> requests) {
-//		this.requests = requests;
-//	}
+	private Collection<Request> requests;
+
+	@Valid
+	@OneToMany
+	public Collection<Request> getRequests() {
+		return requests;
+	}
+
+	public void setRequests(Collection<Request> requests) {
+		this.requests = requests;
+	}
 	
 
 	

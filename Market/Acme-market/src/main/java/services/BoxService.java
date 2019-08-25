@@ -31,7 +31,6 @@ public class BoxService {
 		final Box box = new Box();
 
 		box.setUserAccount(userAccount);
-		box.setSystemBox(false);
 		box.setMessages(new ArrayList<Integer>());
 
 		return box;
@@ -62,8 +61,6 @@ public class BoxService {
 
 	public void delete(final Box box) {
 
-		Assert.isTrue(box.getSystemBox().equals(false));
-
 		final UserAccount userAccount = LoginService.getPrincipal();
 		Assert.isTrue(box.getUserAccount().equals(userAccount));
 
@@ -76,13 +73,11 @@ public class BoxService {
 		if (box.getId() == 0) {
 			res = this.create(LoginService.getPrincipal());
 			res.setName(box.getName());
-			res.setParentBox(box.getParentBox());
 
 		} else {
 			res = this.findOne(box.getId());
 			res.setName(box.getName());
-			res.setParentBox(box.getParentBox());
-		}
+			}
 
 		return res;
 	}
@@ -91,33 +86,21 @@ public class BoxService {
 
 	public void createSystemBoxes(final UserAccount userAccount) {
 
-		final Box inbox = new Box(), outbox = new Box(), thrashbox = new Box(), spambox = new Box(), notification = new Box();
+		final Box inbox = new Box(), outbox = new Box(), thrashbox = new Box();
 		inbox.setUserAccount(userAccount);
 		inbox.setName("In Box");
-		inbox.setSystemBox(true);
 		inbox.setMessages(new ArrayList<Integer>());
 		outbox.setUserAccount(userAccount);
 		outbox.setName("Out Box");
-		outbox.setSystemBox(true);
 		outbox.setMessages(new ArrayList<Integer>());
 		thrashbox.setUserAccount(userAccount);
 		thrashbox.setName("Thrash Box");
-		thrashbox.setSystemBox(true);
 		thrashbox.setMessages(new ArrayList<Integer>());
-		spambox.setUserAccount(userAccount);
-		spambox.setName("Spam Box");
-		spambox.setSystemBox(true);
-		spambox.setMessages(new ArrayList<Integer>());
-		notification.setUserAccount(userAccount);
-		notification.setName("Notification Box");
-		notification.setSystemBox(true);
-		notification.setMessages(new ArrayList<Integer>());
+
 
 		this.saveSystem(inbox);
 		this.saveSystem(outbox);
 		this.saveSystem(thrashbox);
-		this.saveSystem(spambox);
-		this.saveSystem(notification);
 	}
 
 	public void addMessageToBox(final Box box, final Message message) {
@@ -138,8 +121,5 @@ public class BoxService {
 		return this.boxRepository.save(box);
 	}
 
-	public Collection<Box> findByParentBox(final Box box) {
-		return this.boxRepository.findByParent(box);
-	}
 
 }

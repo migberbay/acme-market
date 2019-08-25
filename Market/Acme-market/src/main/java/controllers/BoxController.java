@@ -52,17 +52,6 @@ public class BoxController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "/listChildren", method = RequestMethod.GET)
-	public ModelAndView listChildren(@RequestParam final int boxId) {
-		ModelAndView res;
-
-		final Collection<Box> children = this.boxService.findByParentBox(this.boxService.findOne(boxId));
-
-		res = new ModelAndView("box/listChildren");
-		res.addObject("children", children);
-
-		return res;
-	}
 
 	//Create-----------------------------------------------------------
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
