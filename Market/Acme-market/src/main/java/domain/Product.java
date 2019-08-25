@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -50,9 +51,11 @@ public class Product extends DomainEntity {
 
 	//Relationships
 	
-	private Collection<Request> requests;
+//	private Collection<Request> requests;
 	private Collection<Comment> comments;
-	
+	private Department department;
+	private Provider provider;
+/*	
 	@Valid
 	@OneToMany
 	public Collection<Request> getRequests() {
@@ -62,7 +65,7 @@ public class Product extends DomainEntity {
 	public void setRequests(Collection<Request> requests) {
 		this.requests = requests;
 	}
-	
+	*/
 	@Valid
 	@OneToMany
 	public Collection<Comment> getComments() {
@@ -71,6 +74,26 @@ public class Product extends DomainEntity {
 
 	public void setComments(Collection<Comment> comments) {
 		this.comments = comments;
+	}
+
+	@Valid
+	@ManyToOne(optional=true)
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	@Valid
+	@ManyToOne(optional=false)
+	public Provider getProvider() {
+		return provider;
+	}
+
+	public void setProvider(Provider provider) {
+		this.provider = provider;
 	}
 	
 }

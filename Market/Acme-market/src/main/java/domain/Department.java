@@ -44,7 +44,7 @@ public class Department extends DomainEntity {
 	//Relationships
 	
 	private Market market;
-	private Collection<Product> products;
+//	private Collection<Product> products;
 	
 	@Valid
 	@ManyToOne(optional=false)
@@ -56,7 +56,7 @@ public class Department extends DomainEntity {
 		this.market = market;
 	}
 	
-	@Valid
+/*	@Valid
 	@OneToMany
 	public Collection<Product> getProducts() {
 		return products;
@@ -64,6 +64,6 @@ public class Department extends DomainEntity {
 
 	public void setProducts(Collection<Product> products) {
 		this.products = products;
-	}
+	}*/
 	
 }

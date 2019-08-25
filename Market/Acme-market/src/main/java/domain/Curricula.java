@@ -23,45 +23,7 @@ public class Curricula extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
-	private PersonalRecord personalRecord;
-	private Collection<EducationRecord> educationRecords;
-	private Collection<ProfessionalRecord> professionalRecords;
 	private Provider provider;
-
-	
-	@Valid
-	@OneToOne(optional = false)
-	public PersonalRecord getPersonalRecord() {
-		return this.personalRecord;
-	}
-
-	public void setPersonalRecord(final PersonalRecord personalRecord) {
-		this.personalRecord = personalRecord;
-	}
-	
-	@Valid
-	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL)
-	public Collection<EducationRecord> getEducationRecords() {
-		return this.educationRecords;
-	}
-
-	public void setEducationRecords(
-			final Collection<EducationRecord> educationRecords) {
-		this.educationRecords = educationRecords;
-	}
-
-	@Valid
-	@ElementCollection
-	@OneToMany(cascade = CascadeType.ALL)
-	public Collection<ProfessionalRecord> getProfessionalRecords() {
-		return this.professionalRecords;
-	}
-
-	public void setProfessionalRecords(
-			final Collection<ProfessionalRecord> professionalRecords) {
-		this.professionalRecords = professionalRecords;
-	}
 
 	@Valid
 	@OneToOne(optional = false)

@@ -29,7 +29,7 @@ public class DeliveryBoy extends Actor {
 	}
 	
 	@Valid
-	@OneToMany
+	@OneToMany(mappedBy="deliveryBoy")
 	public Collection<Order> getOrders() {
 		return orders;
 	}

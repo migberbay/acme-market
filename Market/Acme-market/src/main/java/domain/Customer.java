@@ -6,6 +6,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
@@ -17,6 +18,7 @@ public class Customer extends Actor {
 	//Relationships
 	private CreditCard creditCard;
 	private Collection<Market> markets;
+	private Collection<Order> orders;
 	
 	@OneToOne (optional = false)
 	public CreditCard getCreditCard() {
@@ -35,6 +37,16 @@ public class Customer extends Actor {
 
 	public void setMarkets(Collection<Market> markets) {
 		this.markets = markets;
+	}
+
+	@Valid
+	@OneToMany(mappedBy="customer")
+	public Collection<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Collection<Order> orders) {
+		this.orders = orders;
 	}
 	
 	

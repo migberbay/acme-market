@@ -43,7 +43,7 @@ public class Market extends Actor {
 	private Collection<Request> requests;
 
 	@Valid
-	@OneToMany
+	@OneToMany(mappedBy="market")
 	public Collection<Request> getRequests() {
 		return requests;
 	}

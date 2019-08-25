@@ -9,6 +9,7 @@ import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,7 +33,7 @@ public class Order extends DomainEntity {
 	
 	@NotBlank
 	@Column(unique = true)
-	@Pattern(regexp ="^([0-2]{1}[0-9]{1})([0]{1}[1-9]{1}|[1]{1}[0-2]{1})([0]{1}[1-9]{1}|[1,2]{1}[0-9]{1}|[3]{1}[0-1]{1})[-][A-Z0-9]{6}$")
+	@Pattern(regexp ="^[0-9]{4}[-][A-Z0-9]{6}$")
 	public String getTicker() {
 		return this.ticker;
 	}
@@ -91,19 +92,41 @@ public class Order extends DomainEntity {
 
 	//Relationships
 	
-	private Collection<Market> markets;
+	private Customer customer;
+	private Market market;
+	private DeliveryBoy deliveryBoy;
 	private Collection<Product> products;
 	
 	@Valid
-	@OneToOne(optional=false)
-	public Collection<Market> getMarkets() {
-		return markets;
+	@ManyToOne(optional=false)
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setMarkets(Collection<Market> markets) {
-		this.markets = markets;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
-	
+
+	@Valid
+	@ManyToOne(optional=false)
+	public Market getMarket() {
+		return market;
+	}
+
+	public void setMarket(Market market) {
+		this.market = market;
+	}
+
+	@Valid
+	@ManyToOne(optional=true)
+	public DeliveryBoy getDeliveryBoy() {
+		return deliveryBoy;
+	}
+
+	public void setDeliveryBoy(DeliveryBoy deliveryBoy) {
+		this.deliveryBoy = deliveryBoy;
+	}
+
 	@Valid
 	@ManyToMany
 	public Collection<Product> getProducts() {

@@ -36,7 +36,7 @@ public class Comment extends DomainEntity {
 		return score;
 	}
 
-	public void setQuantity(Integer score) {
+	public void setScore(Integer score) {
 		this.score = score;
 	}
 

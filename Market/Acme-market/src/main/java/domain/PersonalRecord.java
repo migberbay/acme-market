@@ -3,6 +3,8 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.validation.Valid;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
@@ -66,5 +68,19 @@ public class PersonalRecord extends DomainEntity {
 
 	public void setLinkedInUrl(final String linkedInUrl) {
 		this.linkedInUrl = linkedInUrl;
+	}
+	
+	// Relationships -----------------------------------------------------------------------------------
+
+	private Curricula curricula;
+	
+	@Valid
+	@ManyToOne(optional=false)
+	public Curricula getCurricula() {
+		return curricula;
+	}
+
+	public void setCurricula(Curricula curricula) {
+		this.curricula = curricula;
 	}
 }
