@@ -24,11 +24,11 @@ public class BoxService {
 	private BoxRepository	boxRepository;
 
 
-	public Box create(final UserAccount userAccount) {
+	public Box create( UserAccount userAccount) {
 
 		Assert.isTrue(userAccount.equals(userAccount));
 
-		final Box box = new Box();
+		 Box box = new Box();
 
 		box.setUserAccount(userAccount);
 		box.setMessages(new ArrayList<Message>());
@@ -40,18 +40,19 @@ public class BoxService {
 		return this.boxRepository.findAll();
 	}
 
-	public Box findOne(final int Id) {
+	public Box findOne( int Id) {
 		return this.boxRepository.findOne(Id);
 	}
 
-	public Collection<Box> findByUserAccountId(final int userAccountId) {
+	public Collection<Box> findByUserAccountId( int userAccountId) {
 		return this.boxRepository.findByUserAccountId(userAccountId);
 	}
 
-	public Box save(final Box box) {
+	public Box save( Box box) {
 
 		Box result;
 
+		System.out.println("trying to save box: "+ box);
 		//		UserAccount principal = LoginService.getPrincipal();
 		//		Assert.isTrue(box.getUserAccount().getUserAccount().equals(principal));
 
@@ -59,15 +60,15 @@ public class BoxService {
 		return result;
 	}
 
-	public void delete(final Box box) {
+	public void delete(Box box) {
 
-		final UserAccount userAccount = LoginService.getPrincipal();
+		 UserAccount userAccount = LoginService.getPrincipal();
 		Assert.isTrue(box.getUserAccount().equals(userAccount));
 
 		this.boxRepository.delete(box);
 	}
 
-	public Box reconstructBox(final Box box) {
+	public Box reconstructBox(Box box) {
 
 		Box res;
 		if (box.getId() == 0) {
@@ -84,9 +85,9 @@ public class BoxService {
 
 	// Other business methods -----
 
-	public void createSystemBoxes(final UserAccount userAccount) {
+	public void createSystemBoxes( UserAccount userAccount) {
 
-		final Box inbox = new Box(), outbox = new Box(), thrashbox = new Box();
+		 Box inbox = new Box(), outbox = new Box(), thrashbox = new Box();
 		inbox.setUserAccount(userAccount);
 		inbox.setName("In Box");
 		inbox.setMessages(new ArrayList<Message>());
@@ -109,12 +110,12 @@ public class BoxService {
 
 	}
 
-	public Box findByUserAccountAndName(final UserAccount userAccount, final String boxName) {
+	public Box findByUserAccountAndName( UserAccount userAccount,  String boxName) {
 		Assert.notNull(userAccount);
 		return this.boxRepository.findByUserAccountIdAndName(userAccount.getId(), boxName);
 	}
 
-	public Box saveSystem(final Box box) {
+	public Box saveSystem( Box box) {
 		return this.boxRepository.save(box);
 	}
 
