@@ -40,7 +40,7 @@
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/welcome/**" access="permitAll" />
-		<security:intercept-url pattern="/actor/register.do" access="permitAll"/>
+		<security:intercept-url pattern="/actor/**" access="permitAll"/>
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()"/>
 		

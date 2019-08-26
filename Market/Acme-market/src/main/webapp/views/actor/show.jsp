@@ -11,22 +11,30 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 	<div>		
-		<b><spring:message code="actor.username"/></b>: <jstl:out value="${actor.userAccount.username}"/> <br/>			
+		<b><spring:message code="actor.username"/></b>: <jstl:out value="${actor.userAccount.username}"/> <br/>	
 		<b><spring:message code="actor.name"/></b>: <jstl:out value="${actor.name}"/> <br/>
-		<b><spring:message code="actor.surnames"/></b>: <jstl:out value="${actor.surnames}"/> <br/>
+		<b><spring:message code="actor.middleName"/></b>: <jstl:out value="${actor.middleName}"/> <br/>
+		<b><spring:message code="actor.surname"/></b>: <jstl:out value="${actor.surname}"/> <br/>
 		<b><spring:message code="actor.photo"/></b>: <jstl:out value="${actor.photo}"/> <br/>				 				 
 		<b><spring:message code="actor.email"/></b>: <jstl:out value="${actor.email}"/> <br/>			 				 
 		<b><spring:message code="actor.phone"/></b>: <jstl:out value="${actor.phone}"/> <br/>
-		<jstl:if test="${isScientist}">
-			<b><spring:message code="audit.score"/></b>: <jstl:out value="${actor.auditScore}"/> <br/>
+		<b><spring:message code="actor.address"/></b>: <jstl:out value="${actor.address}"/> <br/>
+		<br>
+		
+	<jstl:if test="${logged}">
+		<b><a href="actor/editPersonal.do"><spring:message code="actor.edit" /></a> Personal Data</b> <br/>
+		
+		<jstl:if test="${actorIsCustomer}">
+			<h3>Credit Card:</h3>
+			<b><spring:message code="actor.holder"/></b>: <jstl:out value="${actor.creditCard.holder}"/> <br/>
+			<b><spring:message code="actor.make"/></b>: <jstl:out value="${actor.creditCard.make}"/> <br/>
+			<b><spring:message code="actor.number"/></b>: <jstl:out value="${actor.creditCard.number}"/> <br/>
+			<b><spring:message code="actor.CVV"/></b>: <jstl:out value="${actor.creditCard.CVV}"/> <br/>
+			<b><spring:message code="actor.expiration"/></b>: <jstl:out value="${actor.creditCard.expirationDate.getMonth()+1}"/> / <jstl:out value="${actor.creditCard.expirationDate.getYear()+1900}"/> <br/>
+  					
+  			<b><a href="actor/editCreditCard.do"><spring:message code="actor.edit" /></a> CreditCard Data</b> <br/>
 		</jstl:if>
-		<jstl:if test="${logged}">
-		<jstl:if test="${actorIsScientist}">
-			<b><spring:message code="audit.score"/></b>: <jstl:out value="${actor.auditScore}"/> <br/>
-		</jstl:if>
-			<b><a href="actor/editPersonal.do"><spring:message code="actor.edit" /></a> Personal Data</b> <br/>
-
-		</jstl:if>
+	</jstl:if>
 	</div>
 	<br/>
 	
@@ -36,13 +44,7 @@
   					you have no credit card created, make one <a href ="actor/editCreditCard.do" >here</a>.
   				</jstl:when>
   				<jstl:otherwise>
-  					<b><spring:message code="actor.holder"/></b>: <jstl:out value="${actor.creditCard.holder}"/> <br/>
-					<b><spring:message code="actor.make"/></b>: <jstl:out value="${actor.creditCard.make}"/> <br/>
-					<b><spring:message code="actor.number"/></b>: <jstl:out value="${actor.creditCard.number}"/> <br/>
-					<b><spring:message code="actor.CVV"/></b>: <jstl:out value="${actor.creditCard.CVV}"/> <br/>
-					<b><spring:message code="actor.expiration"/></b>: <jstl:out value="${actor.creditCard.expirationDate.getMonth()+1}"/> / <jstl:out value="${actor.creditCard.expirationDate.getYear()+1900}"/> <br/>
   					
-  					<b><a href="actor/editCreditCard.do"><spring:message code="actor.edit" /></a> CreditCard Data</b> <br/>
   				</jstl:otherwise>
   			</jstl:choose>
 		</jstl:if>  

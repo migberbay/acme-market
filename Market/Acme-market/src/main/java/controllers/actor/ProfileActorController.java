@@ -113,6 +113,8 @@ public class ProfileActorController extends AbstractController {
 		} else {//accedemos a nuestro perfil
 			Actor actor = actorService.getPrincipal();
 			
+			System.out.println(actor);
+			
 			result.addObject("logged", true);
 			result.addObject("actor", actor);
 			
@@ -131,7 +133,7 @@ public class ProfileActorController extends AbstractController {
 			if (actor.getUserAccount().getAuthorities().contains(marketAuth)) {
 				Market market = marketService.findOne(actor.getId());
 				result.addObject("actor", market);
-				result.addObject("actorIsScientist",true);
+				result.addObject("actorIsMarket",true);
 			}
 			
 			if (actor.getUserAccount().getAuthorities().contains(deliveryBoyAuth)) {
