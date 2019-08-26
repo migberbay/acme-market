@@ -61,7 +61,8 @@
 	
 	<jstl:choose>
 		<jstl:when test="${registerForm.type == 'CUSTOMER'}">
-			<spring:message code="actor.card"/>:<br/>
+		<br>
+			<h3><spring:message code="actor.card"/>:</h3><br/>
 			<acme:textbox code="actor.holder" path="holder"/> <br />
 			
 			<form:label path="make">

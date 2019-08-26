@@ -1,5 +1,9 @@
 package controllers.actor;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -121,7 +125,17 @@ public class ActorCreateController extends AbstractController {
 		}else{
 		res = new ModelAndView("actor/register");
 		
+		Date d = new Date();
+		Collection <Integer> months = new ArrayList<>();
+		Collection <Integer> years = new ArrayList<>();
+		for (int i = 0; i < 12; i++) {
+			months.add(i+1);
+			years.add(d.getYear()+i+1900);
+		}
+		
 		res.addObject("registerForm",form);
+		res.addObject("months",months);
+		res.addObject("years",years);
 		res.addObject("message", messageCode);
 		return res;
 	}
