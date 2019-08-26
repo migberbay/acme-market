@@ -167,6 +167,7 @@ public class ProfileActorController extends AbstractController {
 			Market m = marketService.getPrincipal();
 			f.setVATNumber(m.getVATNumber());
 			f.setCompanyName(m.getCompanyName());
+			result.addObject("isMarket",true);
 		}
 
 		

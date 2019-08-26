@@ -4,15 +4,15 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Order;
+import domain.Purchase;
 
 
 @Component
 @Transactional
-public class OrderToStringConverter implements Converter<Order,String> {
+public class PurchaseToStringConverter implements Converter<Purchase,String> {
 
 	@Override
-	public String convert(Order o) {
+	public String convert(Purchase o) {
 		String res;
 		
 		if(o == null)

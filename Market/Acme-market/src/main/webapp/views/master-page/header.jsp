@@ -29,6 +29,13 @@
 					<li><a href="message/createBroadcast.do"><spring:message code="master.page.broadcast" /></a></li>				
 				</ul>
 			</li>
+			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="actor/register.do?type=ADMIN"><spring:message code="master.page.register.admin" /></a></li>
+					<li><a href="actor/register.do?type=MARKET"><spring:message code="master.page.register.market" /></a></li>	
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
@@ -43,6 +50,14 @@
 		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
+			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="actor/register.do?type=CUSTOMER"><spring:message code="master.page.register.customer" /></a></li>
+					<li><a href="actor/register.do?type=PROVIDER"><spring:message code="master.page.register.provider" /></a></li>	
+					<li><a href="actor/register.do?type=DELIVERYBOY"><spring:message code="master.page.register.deliveryBoy" /></a></li>				
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
@@ -53,9 +68,6 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="profile/action-1.do"><spring:message code="master.page.profile.action.1" /></a></li>
-					<li><a href="profile/action-2.do"><spring:message code="master.page.profile.action.2" /></a></li>
-					<li><a href="profile/action-3.do"><spring:message code="master.page.profile.action.3" /></a></li>			
 					<li><a href="box/list.do"><spring:message code="master.page.mailbox" /></a></li>			
 					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 				</ul>

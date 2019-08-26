@@ -18,7 +18,7 @@ public class Customer extends Actor {
 	//Relationships
 	private CreditCard creditCard;
 	private Collection<Market> markets;
-	private Collection<Order> orders;
+	private Collection<Purchase> purchases;
 	
 	@OneToOne (optional = false)
 	public CreditCard getCreditCard() {
@@ -41,12 +41,12 @@ public class Customer extends Actor {
 
 	@Valid
 	@OneToMany(mappedBy="customer")
-	public Collection<Order> getOrders() {
-		return orders;
+	public Collection<Purchase> getPurchases() {
+		return purchases;
 	}
 
-	public void setOrders(Collection<Order> orders) {
-		this.orders = orders;
+	public void setPurchases(Collection<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 	
 	

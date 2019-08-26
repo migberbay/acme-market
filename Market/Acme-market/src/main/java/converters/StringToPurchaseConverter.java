@@ -6,22 +6,22 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import repositories.OrderRepository;
+import repositories.PurchaseRepository;
 
-import domain.Order;
+import domain.Purchase;
 
 
 
 @Component
 @Transactional
-public class StringToOrderConverter implements Converter<String,Order> {
+public class StringToPurchaseConverter implements Converter<String,Purchase> {
 
 	@Autowired
-	OrderRepository repository;
+	PurchaseRepository repository;
 	
 	@Override
-	public Order convert(String s) {
-		Order res;
+	public Purchase convert(String s) {
+		Purchase res;
 		int id;
 		
 		try {

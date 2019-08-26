@@ -210,10 +210,10 @@
 				<ref bean="market2"/>
 			</list>
 		</property>
-		<property name="orders">
+		<property name="purchases">
 			<list>
-				<ref bean="order1"/>
-				<ref bean="order2"/>
+ 				<ref bean="purchase1"/>
+				<ref bean="purchase2"/> 
 			</list>
 		</property>
 	</bean>
@@ -232,9 +232,9 @@
 				<ref bean="market2"/>
 			</list>
 		</property>
-		<property name="orders">
+		<property name="purchases">
 			<list>
-				<ref bean="order3"/>
+ 				<ref bean="purchase3"/> 
 			</list>
 		</property>
 	</bean>
@@ -254,7 +254,7 @@
 				<ref bean="market3"/>
 			</list>
 		</property>
-		<property name="orders">
+		<property name="purchases">
 			<list>
 			</list>
 		</property>
@@ -310,7 +310,7 @@
 	
 	<!-- DELIVERYBOY -->
 	
-	<bean id="deliverBoy1" class="domain.DeliverBoy">
+	<bean id="deliveryBoy1" class="domain.DeliveryBoy">
 		<property name="name" value="Luis" />
 		<property name="surname" value="Piedrahita"/>
 		<property name="photo" value="http://www.pinterest.com/epirimi.jpg" />
@@ -322,14 +322,14 @@
 			<list>
 			</list>
 		</property>
-		<property name="orders">
+		<property name="purchases">
 			<list>
-				<ref bean="order2"/>
+ 				<ref bean="purchase2"/> 
 			</list>
 		</property>
 	</bean>
 	
-	<bean id="deliverBoy2" class="domain.DeliverBoy">
+	<bean id="deliveryBoy2" class="domain.DeliveryBoy">
 		<property name="name" value="Federico" />
 		<property name="surname" value="De la Vega"/>
 		<property name="photo" value="http://www.pinterest.com/efenr33.jpg" />
@@ -341,14 +341,14 @@
 			<list>
 			</list>
 		</property>
-		<property name="orders">
+		<property name="purchases">
 			<list>
-				<ref bean="order3"/>
+ 				<ref bean="purchase3"/> 
 			</list>
 		</property>
 	</bean>
 	
-	<bean id="deliverBoy3" class="domain.DeliverBoy">
+	<bean id="deliveryBoy3" class="domain.DeliveryBoy">
 		<property name="name" value="Alberto" />
 		<property name="surname" value="Olmo"/>
 		<property name="photo" value="http://www.pinterest.com/eablrm.jpg" />
@@ -360,7 +360,7 @@
 			<list>
 			</list>
 		</property>
-		<property name="orders">
+		<property name="purchases">
 			<list>
 			</list>
 		</property>
@@ -375,6 +375,8 @@
 		<property name="email" value="megashop@mail.com" />
 		<property name="phone" value="954885117" />
 		<property name="address" value="calle panaderia 33" />
+		<property name="VATNumber" value="ESX12341234" />
+		<property name="companyName" value="Coviran" />
 		<property name="userAccount" ref="userAccount11" />
 		<property name="requests">
 			<list>
@@ -391,6 +393,8 @@
 		<property name="email" value="tutierra@mail.com" />
 		<property name="phone" value="954001229" />
 		<property name="address" value="calle alfareria 24" />
+		<property name="VATNumber" value="ESX12567894" />
+		<property name="companyName" value="Mercadona" />
 		<property name="userAccount" ref="userAccount12" />
 		<property name="requests">
 			<list>
@@ -406,6 +410,8 @@
 		<property name="email" value="arbol@mail.com" />
 		<property name="phone" value="954001593" />
 		<property name="address" value="calle alfareria 54" />
+		<property name="VATNumber" value="ESX17902734" />
+		<property name="companyName" value="Carrefour" />
 		<property name="userAccount" ref="userAccount13" />
 		<property name="requests">
 			<list>
@@ -806,15 +812,15 @@
 	</bean>
 	
 	
-	<!-- ORDERS  -->
+	<!-- PURCHASES  -->
 	
-	<bean id="order1" class="domain.Order">
+	 <bean id="purchase1" class="domain.Purchase">
 		<property name="ticker" value="4212-A0C93J" />
 		<property name="status" value="PENDING" />
 		<property name="estimatedDate" value="2019/10/25 12:00" />
 		<property name="totalPrice" value="21" />
-		<property name="isFinal" ref="false" />
-		<property name="isAssigned" ref="false" />
+		<property name="isFinal" value="false" />
+		<property name="isAssigned" value="false" />
 		<property name="customer" ref="customer1" />
 		<property name="market" ref="market1" />
 		<property name="products">
@@ -825,13 +831,13 @@
 		</property>
 	</bean>
 	
-	<bean id="order2" class="domain.Order">
+	<bean id="purchase2" class="domain.Purchase">
 		<property name="ticker" value="1122-A0C93J" />
 		<property name="status" value="ASSIGNED" />
 		<property name="estimatedDate" value="2019/10/26 12:00" />
 		<property name="totalPrice" value="40" />
-		<property name="isFinal" ref="true" />
-		<property name="isAssigned" ref="true" />
+		<property name="isFinal" value="true" />
+		<property name="isAssigned" value="true" />
 		<property name="customer" ref="customer1" />
 		<property name="deliveryBoy" ref="deliveryBoy1" />
 		<property name="market" ref="market2" />
@@ -845,13 +851,13 @@
 		</property>
 	</bean>
 	
-	<bean id="order3" class="domain.Order">
+	<bean id="purchase3" class="domain.Purchase">
 		<property name="ticker" value="1000-A0C93J" />
 		<property name="status" value="DELIVERED" />
 		<property name="estimatedDate" value="2019/08/24 12:00" />
 		<property name="totalPrice" value="15" />
-		<property name="isFinal" ref="true" />
-		<property name="isAssigned" ref="true" />
+		<property name="isFinal" value="true" />
+		<property name="isAssigned" value="true" />
 		<property name="customer" ref="customer2" />
 		<property name="deliveryBoy" ref="deliveryBoy2" />
 		<property name="market" ref="market3" />
@@ -863,14 +869,13 @@
 				<ref bean="product15"/>
 			</list>
 		</property>
-	</bean>
+	</bean> 
 	
 	<!-- BOXES -->
 	<!-- BOXES ADMIN -->
 
 	<bean id="box1" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount1" />
 		<property name="messages">
 			<list>
@@ -880,7 +885,6 @@
 		
 	<bean id="box2" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount1" />
 		<property name="messages">
 			<list>
@@ -890,7 +894,6 @@
 
 	<bean id="box3" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount1" />
 		<property name="messages">
 			<list>
@@ -902,7 +905,6 @@
 
 	<bean id="box4" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount2" />
 		<property name="messages">
 			<list>
@@ -912,7 +914,6 @@
 		
 	<bean id="box5" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount2" />
 		<property name="messages">
 			<list>
@@ -922,7 +923,6 @@
 
 	<bean id="box6" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount2" />
 		<property name="messages">
 			<list>
@@ -934,7 +934,6 @@
 
 	<bean id="box7" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="messages">
 			<list>
@@ -944,7 +943,6 @@
 		
 	<bean id="box8" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="messages">
 			<list>
@@ -954,7 +952,6 @@
 	
 	<bean id="box9" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount3" />
 		<property name="messages">
 			<list>
@@ -966,7 +963,6 @@
 
 	<bean id="box10" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount4" />
 		<property name="messages">
 			<list>
@@ -976,7 +972,6 @@
 		
 	<bean id="box11" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount4" />
 		<property name="messages">
 			<list>
@@ -986,7 +981,6 @@
 
 	<bean id="box12" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount4" />
 		<property name="messages">
 			<list>
@@ -998,7 +992,6 @@
 
 	<bean id="box13" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="messages">
 			<list>
@@ -1008,7 +1001,6 @@
 		
 	<bean id="box14" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="messages">
 			<list>
@@ -1018,7 +1010,6 @@
 
 	<bean id="box15" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount5" />
 		<property name="messages">
 			<list>
@@ -1030,7 +1021,6 @@
 
 	<bean id="box16" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="messages">
 			<list>
@@ -1040,7 +1030,6 @@
 		
 	<bean id="box17" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="messages">
 			<list>
@@ -1050,7 +1039,6 @@
 
 	<bean id="box18" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount6" />
 		<property name="messages">
 			<list>
@@ -1062,7 +1050,6 @@
 
 	<bean id="box19" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="messages">
 			<list>
@@ -1072,7 +1059,6 @@
 		
 	<bean id="box20" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount7" />
 		<property name="messages">
 			<list>
@@ -1082,7 +1068,7 @@
 
 	<bean id="box21" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount7" />
 		<property name="messages">
 			<list>
@@ -1094,7 +1080,7 @@
 
 	<bean id="box22" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount8" />
 		<property name="messages">
 			<list>
@@ -1104,7 +1090,6 @@
 		
 	<bean id="box23" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="messages">
 			<list>
@@ -1114,7 +1099,6 @@
 
 	<bean id="box24" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount8" />
 		<property name="messages">
 			<list>
@@ -1126,7 +1110,7 @@
 
 	<bean id="box25" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount9" />
 		<property name="messages">
 			<list>
@@ -1136,7 +1120,7 @@
 		
 	<bean id="box26" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount9" />
 		<property name="messages">
 			<list>
@@ -1146,7 +1130,7 @@
 
 	<bean id="box27" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount9" />
 		<property name="messages">
 			<list>
@@ -1158,7 +1142,7 @@
 
 	<bean id="box28" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount10" />
 		<property name="messages">
 			<list>
@@ -1168,7 +1152,6 @@
 		
 	<bean id="box29" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount10" />
 		<property name="messages">
 			<list>
@@ -1178,7 +1161,7 @@
 
 	<bean id="box30" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount10" />
 		<property name="messages">
 			<list>
@@ -1190,7 +1173,7 @@
 
 	<bean id="box31" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount11" />
 		<property name="messages">
 			<list>
@@ -1200,7 +1183,6 @@
 		
 	<bean id="box32" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount11" />
 		<property name="messages">
 			<list>
@@ -1210,7 +1192,7 @@
 
 	<bean id="box33" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount11" />
 		<property name="messages">
 			<list>
@@ -1222,7 +1204,7 @@
 
 	<bean id="box34" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
+		
 		<property name="userAccount" ref="userAccount12" />
 		<property name="messages">
 			<list>
@@ -1232,7 +1214,6 @@
 		
 	<bean id="box35" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount12" />
 		<property name="messages">
 			<list>
@@ -1242,7 +1223,6 @@
 
 	<bean id="box36" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount12" />
 		<property name="messages">
 			<list>
@@ -1254,7 +1234,6 @@
 
 	<bean id="box37" class="domain.Box">
 		<property name="name" value="In Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount13" />
 		<property name="messages">
 			<list>
@@ -1264,7 +1243,6 @@
 		
 	<bean id="box38" class="domain.Box">
 		<property name="name" value="Out Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount13" />
 		<property name="messages">
 			<list>
@@ -1274,7 +1252,6 @@
 
 	<bean id="box39" class="domain.Box">
 		<property name="name" value="Trash Box" />
-		<property name="systemBox" value="true" />
 		<property name="userAccount" ref="userAccount13" />
 		<property name="messages">
 			<list>

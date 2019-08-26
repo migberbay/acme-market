@@ -16,7 +16,7 @@ public class DeliveryBoy extends Actor {
 	//Relationships
 	
 	private Collection<Comment> comments;
-	private Collection<Order> orders;
+	private Collection<Purchase> purchases;
 	
 	@Valid
 	@OneToMany
@@ -30,12 +30,12 @@ public class DeliveryBoy extends Actor {
 	
 	@Valid
 	@OneToMany(mappedBy="deliveryBoy")
-	public Collection<Order> getOrders() {
-		return orders;
+	public Collection<Purchase> getPurchases() {
+		return purchases;
 	}
 	
-	public void setOrders(Collection<Order> orders) {
-		this.orders = orders;
+	public void setPurchases(Collection<Purchase> purchases) {
+		this.purchases = purchases;
 	}
 	
 	
