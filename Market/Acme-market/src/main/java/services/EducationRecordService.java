@@ -2,12 +2,18 @@ package services;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.EducationRecordRepository;
+import domain.Curricula;
 import domain.EducationRecord;
+import domain.PersonalRecord;
 
 
 @Service
@@ -20,6 +26,15 @@ public class EducationRecordService {
 	private EducationRecordRepository educationRecordRepository;
 	
 	//Supporting Services -----
+	
+	@Autowired
+	private ProviderService providerService;
+	
+	@Autowired
+	private CurriculaService curriculaService;
+	
+	@Autowired
+	private Validator validator;
 	
 	//Simple CRUD methods -----
 	
@@ -51,6 +66,34 @@ public class EducationRecordService {
 	
 	public Collection<EducationRecord> findEducationRecordsByCurricula(int curricula){
 		return this.educationRecordRepository.findEducationRecordsByCurricula(curricula);
+	}
+	
+	public EducationRecord reconstruct(EducationRecord education, BindingResult bindingResult) {
+		EducationRecord res = new EducationRecord();
+		
+		if(education.getId()==0){
+			res = education;
+			Curricula c = curriculaService.findCurriculaByProvider(providerService.getPrincipal().getId());
+			res.setCurricula(c);
+		}else{
+			EducationRecord e = educationRecordRepository.findOne(education.getId());
+			res=e;
+			res.setDiplomaTitle(education.getDiplomaTitle());
+			res.setStartDate(education.getStartDate());
+			res.setEndDate(education.getEndDate());
+			res.setInstitution(education.getInstitution());
+			res.setAttachment(education.getAttachment());
+			res.setComments(education.getComments());
+		}
+
+		validator.validate(education, bindingResult);
+		
+		if(bindingResult.hasErrors()){
+			System.out.println(bindingResult.getFieldErrors());
+			throw new ValidationException();
+		}
+
+		return res;
 	}
 
 }

@@ -21,20 +21,20 @@
 
 <security:authorize access="hasRole('PROVIDER')">
 
-<form:form action="educationRecord/provider/edit.do" modelAttribute="education">
+<form:form action="professionalRecord/provider/edit.do" modelAttribute="professional">
 
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	
-	<acme:textbox code="education.diplomaTitle" path="diplomaTitle"/>	<br/>
-	<acme:textbox code="education.startDate" path="startDate"/><br/>
-	<acme:textbox code="education.endDate" path="endDate"/><br/>
-	<acme:textbox code="education.institution" path="institution"/><br/>
-	<acme:textbox code="education.attachment" path="attachment"/><br/>
-	<acme:textarea code="education.comments" path="comments"/><br/>
+	<acme:textbox code="professional.companyName" path="companyName"/>	<br/>
+	<acme:textbox code="professional.startDate" path="startDate"/><br/>
+	<acme:textbox code="professional.endDate" path="endDate"/><br/>
+	<acme:textbox code="professional.role" path="role"/><br/>
+	<acme:textbox code="professional.attachment" path="attachment"/><br/>
+	<acme:textarea code="professional.comments" path="comments"/><br/>
 
-	<acme:submit name="save" code="education.save"/>
-	<acme:cancel url="curricula/provider/show.do" code="education.cancel"/>
+	<acme:submit name="save" code="professional.save"/>
+	<acme:cancel url="curricula/provider/show.do" code="professional.cancel"/>
 	<br />	
 
 </form:form>

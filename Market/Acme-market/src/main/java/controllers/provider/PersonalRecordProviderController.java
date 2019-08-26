@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.CurriculaService;
-import services.EducationRecordService;
 import services.PersonalRecordService;
-import services.ProfessionalRecordService;
 import services.ProviderService;
 import controllers.AbstractController;
 import domain.Curricula;
@@ -26,7 +24,30 @@ public class PersonalRecordProviderController extends AbstractController {
 
 	@Autowired
 	private PersonalRecordService personalService;
+	
+	@Autowired
+	private ProviderService providerService;
+	
+	@Autowired
+	private CurriculaService curriculaService;
 
+	// Edit -------------------------------------------------------------------------
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit(@RequestParam final int personalRecordId) {
+		ModelAndView result;
+		PersonalRecord personal = personalService.findOne(personalRecordId);
+		if(personal!=null){
+		Provider logged = providerService.getPrincipal();
+		Curricula c = curriculaService.findCurriculaByProvider(logged.getId());
+		if(personal.getCurricula().equals(c)){
+			result = this.createEditModelAndView(personal);
+		}else
+			result = new ModelAndView("error/access");
+		}
+		else result = new ModelAndView("error/access");
+		return result;
+	}
 	
 	// Save---------------------------------------------------------------------
 	
@@ -45,6 +66,28 @@ public class PersonalRecordProviderController extends AbstractController {
 			oops.printStackTrace();
 			result = this.createEditModelAndView(personal,"record.commit.error");
 		}
+
+		return result;
+	}
+	
+	// Delete -----------------------------------------------------------------
+
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam final int personalRecordId) {
+		ModelAndView result;
+		Provider logged = providerService.getPrincipal();
+		PersonalRecord personal = personalService.findOne(personalRecordId);
+		Curricula c = curriculaService.findCurriculaByProvider(logged.getId());
+		if(personal.getCurricula().equals(c)){
+		try {
+			personalService.delete(personal);
+			result = new ModelAndView("redirect:/curricula/provider/show.do");
+		} catch (final Throwable oops) {
+			oops.printStackTrace();
+			result = this.createEditModelAndView(personal, "personal.commit.error");
+		}
+		}else
+			result = new ModelAndView("error/access");
 
 		return result;
 	}

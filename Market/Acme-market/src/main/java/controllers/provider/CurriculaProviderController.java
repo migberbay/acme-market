@@ -4,19 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import security.LoginService;
-import security.UserAccount;
 import services.CurriculaService;
 import services.EducationRecordService;
 import services.PersonalRecordService;
 import services.ProfessionalRecordService;
 import services.ProviderService;
 import controllers.AbstractController;
-import domain.Box;
-import domain.Curricula;
 import domain.PersonalRecord;
 import domain.Provider;
 
