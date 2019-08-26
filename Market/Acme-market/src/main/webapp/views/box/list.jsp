@@ -20,10 +20,13 @@
 	<a href="message/create.do"><spring:message code='m.create' /></a>
 	
 	<jstl:forEach items="${boxes}" var="x">
-	<button class="collapsible"><jstl:out value="${x.name}"/></button>
-	<div class="content">
-	  <table border='1' style="width:100%">
+	<button class="collapsible">
+	<jstl:out value="${x.name}"/>(<jstl:out value="${x.messages.size()}"/>)
+	</button>
+	<div class="content" style="overflow-y: scroll; height:400px;">
+	  
 		<jstl:forEach items="${x.messages}" var="y">
+		<table border='1' style="width:100%">
 			<tr><td>
 					<spring:message code='m.sender' /><jstl:out value="${y.sender.username}" /> <br>
 					<spring:message code='m.subject' /><jstl:out value="${y.subject}" />
@@ -36,8 +39,8 @@
 				<tr><td>
 					<a href="message/delete.do?messageId=${y.id}"><spring:message code='m.delete' /></a>
 				</td></tr>
+		</table>
 		</jstl:forEach>
-	</table>
 	</div>
 	</jstl:forEach>
 	

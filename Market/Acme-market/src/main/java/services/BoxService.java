@@ -52,9 +52,7 @@ public class BoxService {
 
 		Box result;
 
-		System.out.println("trying to save box: "+ box);
-		//		UserAccount principal = LoginService.getPrincipal();
-		//		Assert.isTrue(box.getUserAccount().getUserAccount().equals(principal));
+		System.out.println("trying to save box: "+ box.getName() +" from user: "+ box.getUserAccount()+ " with messages: "+ box.getMessages());
 
 		result = this.boxRepository.saveAndFlush(box);
 		return result;

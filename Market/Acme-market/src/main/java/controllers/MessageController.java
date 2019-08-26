@@ -100,24 +100,22 @@ public class MessageController extends AbstractController {
 
 	//Delete-----------------------------------------------------------
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam  int messageId) {
+	public ModelAndView delete(@RequestParam int messageId) {
 		ModelAndView res;
 		 Message message = this.messageService.findOne(messageId);
-		 Collection<Box> boxes = this.boxService.findByUserAccountId(LoginService.getPrincipal().getId());
-		 MessageForm form = new MessageForm();
-		boolean hasMessage = false;
-		for ( Box b : boxes)
-			if (b.getMessages().contains(messageId))
-				hasMessage = true;
-		if (!hasMessage)
-			res = new ModelAndView("error/access");
-		else
-			try {
-				this.messageService.delete(message);
-				res = new ModelAndView("redirect:/box/list.do");
-			} catch ( Throwable e) {
-				res = this.createEditModelAndView(form, "message.commit.error");
-			}
+		 
+		 if(message.getSender().equals(LoginService.getPrincipal())){
+			 try {
+					this.messageService.delete(message);
+					res = new ModelAndView("redirect:/box/list.do");
+				} catch ( Throwable e) {
+					e.printStackTrace();
+					res = this.createEditModelAndView(new MessageForm(), "message.commit.error");
+				}
+		 }else{
+			 res = new ModelAndView("error/access");
+		 }
+			
 		return res;
 	}
 

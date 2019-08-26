@@ -5,8 +5,8 @@ import java.util.Collection;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 
@@ -43,7 +43,7 @@ public class Box extends DomainEntity {
 
 
 	@Valid
-	@ElementCollection
+	@ManyToMany
 	public Collection<Message> getMessages() {
 		return this.messages;
 	}

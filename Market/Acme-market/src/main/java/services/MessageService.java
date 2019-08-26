@@ -94,76 +94,38 @@ public class MessageService {
 		return res;
 	}
 
-	public void delete( Message message) {
+	public void delete(Message message) {
 
 		// El mensaje se movera a la trashbox, si el mensaje ya estaba en la
-		// trashbox se elimina del sistema.
+		// trashbox se de la trashbox, el mensaje en si nunca es eliminado
 
 		UserAccount userAccount = LoginService.getPrincipal();
-
-		//añadimos todas las boxes de los actores que tienen el message a allActorBoxes
-		Set<Box> allActorBoxes = new HashSet<>();
-
-		Collection<UserAccount> recipients = message.getRecipients();
-		for (UserAccount ua : recipients)
-			allActorBoxes.addAll(this.boxService.findByUserAccountId(ua.getId()));
-		UserAccount sender = message.getSender();
-		allActorBoxes.addAll(this.boxService.findByUserAccountId(sender.getId()));
-
-		//Vemos que actor de los que tiene el message es el que esta logeado.
-		UserAccount logged = null;
-
-		for (UserAccount recipient : recipients)
-			if (recipient.equals(userAccount)) {
-				logged = recipient;
-				break;
+		Box trash = new Box();
+		Box holder = new Box();
+		Collection<Box> boxes = boxService.findByUserAccountId(userAccount.getId());
+		String boxName = ""; 
+		
+		for (Box box : boxes) {
+			if(box.getMessages().contains(message)){
+				boxName = box.getName();
+				holder = box;
 			}
-
-		if (sender.equals(userAccount))
-			logged = sender;
-
-		//localizamos la trashbox y separamos los otros boxes en otherboxes para el actor logeado.
-		Box trash = null;
-		Collection<Box> otherboxes = new ArrayList<Box>();
-
-		for (Box box : this.boxService.findByUserAccountId(logged.getId()))
-			if (box.getName().equals("Trash Box"))
+			if(box.getName().trim().equals("Trash Box")){
 				trash = box;
-			else
-				otherboxes.add(box);
-
-		//comprobar si esta en trashbox
-		if (trash.getMessages().contains(message.getId())) {
-			Collection<Message> aux = trash.getMessages();
-			aux.remove(message.getId());
-			trash.setMessages(aux);
-			allActorBoxes.remove(trash);
-
-			//comprobamos si el mensaje esta en alguna otra box.
-			boolean isInOtherBox = false;
-			for (Box b : allActorBoxes)
-				if (b.getMessages().contains(message.getId())) {
-					isInOtherBox = true;
-					break;
-				}
-			if (!isInOtherBox)
-				this.messageRepository.delete(message);
-
-			this.boxService.save(trash);
-		} else
-			for (Box b : otherboxes)
-				if (b.getMessages().contains(message.getId())) {
-					Collection<Message> aux = b.getMessages();
-					aux.remove(message.getId());
-					b.setMessages(aux);
-
-					Collection<Message> t = trash.getMessages();
-					t.add(message);
-					trash.setMessages(t);
-
-					this.boxService.save(trash);
-					this.boxService.save(b);
-				}
+			}
+		}
+		
+		if(boxName.trim().equals("Trash Box")){
+			trash.getMessages().remove(message);
+			boxService.save(trash);
+		}else{
+			holder.getMessages().remove(message);
+			boxService.save(holder);
+			
+			trash.getMessages().add(message);
+			boxService.save(trash);
+		}
+		
 	}
 
 	// Other business methods -----
@@ -181,6 +143,7 @@ public class MessageService {
 
 		for (Box box : boxes) {
 			Collection<Message> messages = new ArrayList<Message>();
+			
 			messages.add(message);
 			messages.addAll(box.getMessages());
 			box.setMessages(messages);
