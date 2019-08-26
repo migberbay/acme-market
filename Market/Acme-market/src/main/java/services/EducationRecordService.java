@@ -86,7 +86,7 @@ public class EducationRecordService {
 			res.setComments(education.getComments());
 		}
 
-		validator.validate(education, bindingResult);
+		validator.validate(res, bindingResult);
 		
 		if(bindingResult.hasErrors()){
 			System.out.println(bindingResult.getFieldErrors());
