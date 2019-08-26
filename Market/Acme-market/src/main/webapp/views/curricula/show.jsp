@@ -13,16 +13,15 @@
 <security:authorize access="hasRole('PROVIDER')">
 
 		<h3><spring:message code="curricula.personalRecord"/></h3>
-		<h4><a href="personalRecord/provider/edit.do?personalRecordId=${personal.id}"><spring:message code="curricula.edit"/></a></h4>
-		<spring:message code="curricula.personalRecord.fullName"/>: <jstl:out value="${personal.fullName}"/><br>
-		<spring:message code="curricula.personalRecord.photo"/>: <jstl:out value="${personal.photo }"/><br>
-		<spring:message code="curricula.personalRecord.email"/>: <jstl:out value="${personal.email }"/><br>
-		<spring:message code="curricula.personalRecord.phone"/>: <jstl:out value="${personal.phone }"/><br>
-		<spring:message code="curricula.personalRecord.linkedInProfile"/>: <jstl:out value="${personal.linkedInUrl}"/><br>
-		<hr>
+		<b><spring:message code="curricula.personalRecord.fullName"/>:</b> <jstl:out value="${personal.fullName}"/><br>
+		<b><spring:message code="curricula.personalRecord.photo"/>:</b> <jstl:out value="${personal.photo }"/><br>
+		<b><spring:message code="curricula.personalRecord.email"/>:</b> <jstl:out value="${personal.email }"/><br>
+		<b><spring:message code="curricula.personalRecord.phone"/>:</b> <jstl:out value="${personal.phone }"/><br>
+		<b><spring:message code="curricula.personalRecord.linkedInProfile"/>:</b> <jstl:out value="${personal.linkedInUrl}"/><br>
+		<a href="personalRecord/provider/edit.do?personalRecordId=${personal.id}"><spring:message code="curricula.edit"/></a>
+		
 		
 		<h3><spring:message code="curricula.educationRecords"/></h3>
-		<h4><a href="educationRecord/provider/create.do"><spring:message code="curricula.create"/></a></h4><hr>
 		<display:table name="educations" id="row" requestURI="curricula/provider/show.do" pagesize="5">
 			<display:column titleKey="curricula.options">
 				<a href="educationRecord/provider/edit.do?educationRecordId=${row.id}"><spring:message code="curricula.edit"/></a><br/>
@@ -36,9 +35,10 @@
 		<display:column titleKey="curricula.attachment" property="attachment"/>
 		<display:column titleKey="curricula.comments" property="comments"/>
 	</display:table>
+			<a href="educationRecord/provider/create.do"><spring:message code="curricula.create"/></a>
+	
 		
 		<h3><spring:message code="curricula.professionalRecords"/></h3>
-		<h4><a href="professionalRecord/provider/create.do"><spring:message code="curricula.create"/></a></h4><hr>
 		<display:table name="professionals" id="row" requestURI="curricula/provider/show.do" pagesize="5">
 			<display:column titleKey="curricula.options">
 				<a href="professionalRecord/provider/edit.do?professionalRecordId=${row.id}"><spring:message code="curricula.edit"/></a><br/>
@@ -52,5 +52,7 @@
 		<display:column titleKey="curricula.attachment" property="attachment"/>
 		<display:column titleKey="curricula.comments" property="comments"/>
 	</display:table>
+	<a href="professionalRecord/provider/create.do"><spring:message code="curricula.create"/></a>
+	
 
 </security:authorize>
