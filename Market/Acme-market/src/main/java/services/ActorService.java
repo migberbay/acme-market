@@ -1,6 +1,8 @@
 package services;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import security.UserAccount;
 import security.UserAccountService;
 import domain.Actor;
 import domain.Admin;
+import domain.CreditCard;
 import domain.Customer;
 import domain.DeliveryBoy;
 import domain.Market;
@@ -101,6 +104,20 @@ public class ActorService {
 		
 		System.out.println("la contraseña de la useraccount persistida es :" + savedua.getPassword());
 		
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Integer.valueOf(form.getExpirationYear()),Integer.valueOf(form.getExpirationMonth())-1, 1);
+		Date date = calendar.getTime();
+		
+		CreditCard cc = creditCardService.create();
+		cc.setHolder(form.getHolder());
+		cc.setMake(form.getMake());
+		cc.setNumber(form.getNumber());
+		cc.setCVV(form.getCVV());
+		cc.setExpirationDate(date);
+		
+		CreditCard savedCC = creditCardService.save(cc);
+		
+		
 		res.setUserAccount(savedua);
 		
 		res.setAddress(actor.getAddress());
@@ -110,6 +127,7 @@ public class ActorService {
 		res.setName(actor.getName());
 		res.setPhone(actor.getPhone());
 		res.setPhoto(actor.getPhoto());
+		res.setCreditCard(savedCC);
 
 		Customer saved = customerService.save(res);
 				
