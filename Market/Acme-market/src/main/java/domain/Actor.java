@@ -78,7 +78,8 @@ public class Actor extends DomainEntity {
 	public void setEmail(final String email) {
 		this.email = email;
 	}
-
+	
+	
 	public String getPhone() {
 		return this.phone;
 	}
