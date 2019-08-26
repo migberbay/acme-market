@@ -16,5 +16,5 @@
 
 <hr />
 
-<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme-Market Co., Inc.</b> 
+<b>Copyright &copy; <fmt:formatDate value="${date}" pattern="yyyy" /> Acme co., Inc. ; ${systemName} co.</b>
 <a href="welcome/TOS.do"><spring:message code="master.page.TOSagreement"/></a>

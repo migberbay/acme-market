@@ -1261,7 +1261,7 @@
 	
 	<bean id="configuration1" class="domain.Configuration">
 		<property name="systemName" value="Acme Market" />
-		<property name="banner" value="https://irp-cdn.multiscreensite.com/3737b2b6/dms3rep/multi/desktop/4-2000x889.jpg" />
+		<property name="banner" value="https://i.ibb.co/Lt1bskR/untitled.jpg" />
 		<property name="welcomeTextEnglish" value="Welcome to Acme Market! Price, quality, and trust in a single place" />
 		<property name="welcomeTextSpanish" value="¡Bienvenidos a Acme Market! Precio, calidad y confianza en el mismo sitio" />
 		<property name="defaultPhoneCode" value="+34" />

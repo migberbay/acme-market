@@ -13,19 +13,20 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 
-<div>
-	<a href="#"><img src="images/logo.png" alt="Acme-Market Co., Inc." /></a>
+<a href="">
+<div class="page-header" style="background: url(${banner}) center no-repeat; background-size: cover">
 </div>
+</a>
 
 <div>
 	<ul id="jMenu">
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
-			<li><a class="fNiv"><spring:message	code="master.page.administrator" /></a>
+			<li><a class="fNiv"><spring:message	code="master.page.system" /></a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="administrator/action-1.do"><spring:message code="master.page.administrator.action.1" /></a></li>
-					<li><a href="administrator/action-2.do"><spring:message code="master.page.administrator.action.2" /></a></li>	
+					<li><a href="system/admin/configuration.do"><spring:message code="master.page.configuration" /></a></li>
+					<li><a href="admin/dashboard.do"><spring:message code="master.page.dashboard" /></a></li>
 					<li><a href="message/createBroadcast.do"><spring:message code="master.page.broadcast" /></a></li>				
 				</ul>
 			</li>
