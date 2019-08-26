@@ -7,13 +7,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
+import security.UserAccount;
 import services.CurriculaService;
 import services.EducationRecordService;
 import services.PersonalRecordService;
 import services.ProfessionalRecordService;
 import services.ProviderService;
 import controllers.AbstractController;
+import domain.Box;
 import domain.Curricula;
+import domain.PersonalRecord;
 import domain.Provider;
 
 @Controller
@@ -39,16 +43,22 @@ public class CurriculaProviderController extends AbstractController {
 	// List -----------------------------------------------------------------
 
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam final int curriculaId) {
+	public ModelAndView show() {
 
 		ModelAndView result;
-
 		
-		result = new ModelAndView("curricula/show");
-		result.addObject("personal", personalService.findPersonalRecordByCurricula(curriculaId));
-		result.addObject("professionals",professionalService.findProfessionalRecordsByCurricula(curriculaId));
-		result.addObject("educations",educationService.findEducationRecordsByCurricula(curriculaId));
-		result.addObject("uri", "curricula/show.do");
+		Provider provider = providerService.getPrincipal();
+
+		if(curriculaService.findCurriculaByProvider(provider.getId())!=null){
+			result = new ModelAndView("curricula/show");
+			int curriculaId = curriculaService.findCurriculaByProvider(provider.getId()).getId();
+			result.addObject("personal", personalService.findPersonalRecordByCurricula(curriculaId));
+			result.addObject("professionals",professionalService.findProfessionalRecordsByCurricula(curriculaId));
+			result.addObject("educations",educationService.findEducationRecordsByCurricula(curriculaId));
+			result.addObject("uri", "curricula/show.do");
+		}else
+			result = new ModelAndView("error/access");
+		
 
 		return result;
 	}
@@ -59,13 +69,8 @@ public class CurriculaProviderController extends AbstractController {
 		
 		Provider provider = providerService.getPrincipal();
 		if(curriculaService.findCurriculaByProvider(provider.getId())==null){
-			try {
-				Curricula created = curriculaService.create();
-				result = new ModelAndView("redirect:curricula/provider/show.do?curriculaId="+created.getId());
-			} catch (final Throwable oops) {
-				oops.printStackTrace();
-				result = new ModelAndView("redirect:actor/show.do");
-			}
+			PersonalRecord p = personalService.create();
+			result = this.createEditModelAndView(p);
 		}else
 			result = new ModelAndView("error/access");
 
@@ -75,4 +80,18 @@ public class CurriculaProviderController extends AbstractController {
 
 	//Helper methods --------------------------------------------------------------------------
 
+	protected ModelAndView createEditModelAndView(final PersonalRecord personal) {
+		ModelAndView res;
+		res = this.createEditModelAndView(personal, null);
+		return res;
+	}
+	protected ModelAndView createEditModelAndView(final PersonalRecord personal, final String messageCode) {
+		ModelAndView res;
+
+		res = new ModelAndView("personalRecord/edit");
+		res.addObject("personal", personal);
+		res.addObject("errorMessage", messageCode);
+
+		return res;
+	}
 }

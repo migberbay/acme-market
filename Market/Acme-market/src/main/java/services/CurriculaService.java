@@ -29,13 +29,9 @@ public class CurriculaService {
 	
 	public Curricula create(){
 		
-		Provider provider = providerService.getPrincipal();
 		Curricula res = new Curricula();
-		res.setProvider(provider);
-			
-		Curricula saved = curriculaRepository.saveAndFlush(res);
-		
-		return saved;
+	
+		return res;
 	}
 	
 	public Collection<Curricula> findAll(){
