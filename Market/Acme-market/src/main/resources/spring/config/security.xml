@@ -47,6 +47,10 @@
 		<security:intercept-url pattern="/system/admin/**" access="hasRole('ADMIN')" /> 
 		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')" /> 
 
+		<security:intercept-url pattern="/curricula/provider/**" access="hasRole('PROVIDER')" /> 
+		<security:intercept-url pattern="/personalRecord/provider/**" access="hasRole('PROVIDER')" /> 
+
+
 		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" />
 

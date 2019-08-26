@@ -70,16 +70,16 @@ public class PersonalRecordService {
 	//Other business methods -----
 	
 	public PersonalRecord reconstruct(PersonalRecord personal, BindingResult bindingResult) {
-		PersonalRecord res = new PersonalRecord();
+		PersonalRecord res = personal;
 		
 		if(personal.getId()==0){
 			Curricula c = new Curricula();
 			c.setProvider(providerService.getPrincipal());
 			Curricula saved = curriculaService.save(c);
-			personal.setCurricula(saved);
+			res.setCurricula(saved);
 		}else{
 			PersonalRecord p = personalRecordRepository.findOne(personal.getId());
-			res = p;
+			res=p;
 			res.setFullName(personal.getFullName());
 			res.setEmail(personal.getEmail());
 			res.setLinkedInUrl(personal.getLinkedInUrl());

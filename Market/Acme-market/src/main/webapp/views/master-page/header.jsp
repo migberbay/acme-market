@@ -49,6 +49,10 @@
 			</li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('PROVIDER')">
+			<li><a class="fNiv" href="curricula/provider/show.do"><spring:message code="master.page.curricula" /></a></li>
+		</security:authorize>
+		
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>

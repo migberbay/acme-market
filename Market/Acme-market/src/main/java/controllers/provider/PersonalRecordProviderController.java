@@ -1,5 +1,7 @@
 package controllers.provider;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -23,20 +25,8 @@ import domain.Provider;
 public class PersonalRecordProviderController extends AbstractController {
 
 	@Autowired
-	private CurriculaService curriculaService;
-		
-	@Autowired
-	private ProviderService providerService;
-	
-	@Autowired
 	private PersonalRecordService personalService;
-	
-	@Autowired
-	private ProfessionalRecordService professionalService;
-	
-	@Autowired
-	private EducationRecordService educationService;
-	
+
 	
 	// Save---------------------------------------------------------------------
 	
@@ -45,11 +35,15 @@ public class PersonalRecordProviderController extends AbstractController {
 		ModelAndView result;
 		
 		try {
-			personalService.reconstruct(personal,binding);
+			PersonalRecord saved = personalService.reconstruct(personal,binding);
+			personalService.save(saved);
 			result = new ModelAndView("redirect:curricula/provider/show.do");
+		} catch (ValidationException oops) {
+			oops.printStackTrace();
+			result = this.createEditModelAndView(personal);
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			result = new ModelAndView("redirect:actor/show.do");
+			result = this.createEditModelAndView(personal,"record.commit.error");
 		}
 
 		return result;
@@ -58,4 +52,18 @@ public class PersonalRecordProviderController extends AbstractController {
 
 	//Helper methods --------------------------------------------------------------------------
 
+	protected ModelAndView createEditModelAndView(final PersonalRecord personal) {
+		ModelAndView res;
+		res = this.createEditModelAndView(personal, null);
+		return res;
+	}
+	protected ModelAndView createEditModelAndView(final PersonalRecord personal, final String messageCode) {
+		ModelAndView res;
+
+		res = new ModelAndView("personalRecord/edit");
+		res.addObject("personal", personal);
+		res.addObject("errorMessage", messageCode);
+
+		return res;
+	}
 }
