@@ -37,7 +37,7 @@ public class PersonalRecordProviderController extends AbstractController {
 		try {
 			PersonalRecord saved = personalService.reconstruct(personal,binding);
 			personalService.save(saved);
-			result = new ModelAndView("redirect:curricula/provider/show.do");
+			result = new ModelAndView("redirect:/curricula/provider/show.do");
 		} catch (ValidationException oops) {
 			oops.printStackTrace();
 			result = this.createEditModelAndView(personal);

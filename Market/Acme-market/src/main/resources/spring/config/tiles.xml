@@ -29,6 +29,8 @@
 		<value>/views/admin/tiles.xml</value>
 		<value>/views/curricula/tiles.xml</value>
 		<value>/views/personalRecord/tiles.xml</value>
+		<value>/views/educationRecord/tiles.xml</value>
+		<value>/views/professionalRecord/tiles.xml</value>
 		<value>/views/error/tiles.xml</value>
 	</util:list>
 
