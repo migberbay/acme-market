@@ -32,7 +32,7 @@
 			<bean class="converters.EducationRecordToStringConverter" />
 			<bean class="converters.MarketToStringConverter" />
 			<bean class="converters.MessageToStringConverter" />
-			<bean class="converters.OrderToStringConverter" />
+			<bean class="converters.PurchaseToStringConverter" />
 			<bean class="converters.PersonalRecordToStringConverter" />
 			<bean class="converters.ProductToStringConverter" />
 			<bean class="converters.ProfessionalRecordToStringConverter" />
@@ -53,7 +53,7 @@
 			<bean class="converters.StringToEducationRecordConverter" />
 			<bean class="converters.StringToMarketConverter" />
 			<bean class="converters.StringToMessageConverter" />	
-			<bean class="converters.StringToOrderConverter" />
+			<bean class="converters.StringToPurchaseConverter" />
 			<bean class="converters.StringToPersonalRecordConverter" />	
 			<bean class="converters.StringToProductConverter" />
 			<bean class="converters.StringToProfessionalRecordConverter" />	
