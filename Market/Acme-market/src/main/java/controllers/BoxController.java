@@ -47,74 +47,8 @@ public class BoxController extends AbstractController {
 		boxes.addAll(this.boxService.findByUserAccountId(logged.getId()));
 
 		res = new ModelAndView("box/list");
-		res.addObject("boxes", boxes);
+		res.addObject("boxes", boxes.toArray());
 
-		return res;
-	}
-
-
-	//Create-----------------------------------------------------------
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-		ModelAndView res;
-		final Box box = this.boxService.create(LoginService.getPrincipal());
-
-		res = this.createEditModelAndView(box);
-		return res;
-
-	}
-
-	//Edit-------------------------------------------------------------
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int boxId) {
-		ModelAndView res;
-		final Box box = this.boxService.findOne(boxId);
-
-		if (!LoginService.getPrincipal().equals(box.getUserAccount()))
-			res = new ModelAndView("error/access");
-		else {
-			Assert.notNull(box);
-			res = this.createEditModelAndView(box);
-		}
-		return res;
-	}
-
-	//Save-------------------------------------------------------------	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Box box, final BindingResult binding) {
-		ModelAndView res;
-
-		final Box reboxed = this.boxService.reconstructBox(box);
-
-		if (binding.hasErrors())
-			res = this.createEditModelAndView(reboxed);
-		else
-			try {
-				this.boxService.save(reboxed);
-				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable e) {
-				res = this.createEditModelAndView(box, "message.commit.error");
-
-				for (int i = 0; i < e.getStackTrace().length; i++)
-					System.out.println(e.getStackTrace()[i]);
-			}
-		return res;
-	}
-
-	//Delete-----------------------------------------------------------
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int boxId) {
-		ModelAndView res;
-		final Box box = this.boxService.findOne(boxId);
-		if (!LoginService.getPrincipal().equals(box.getUserAccount()))
-			res = new ModelAndView("error/access");
-		else
-			try {
-				this.boxService.delete(box);
-				res = new ModelAndView("redirect:list.do");
-			} catch (final Throwable e) {
-				res = this.createEditModelAndView(box, "message.commit.error");
-			}
 		return res;
 	}
 

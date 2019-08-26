@@ -16,26 +16,46 @@
 -->
 
 <security:authorize access="isAuthenticated()">
-	<a href="box/create.do"><spring:message code='box.create'/></a>
 	
-	<display:table name="boxes" id="row" requestURI="box/list.do" pagesize="5">
-
-		<display:column titleKey="box.boxes">
-			<table border='1'style="width:100%">
-			<tr>
-				<td>
-				<jstl:out value="${row.name}"/><br>
-				<a href="message/list.do?boxId=${row.id}"><spring:message code ='box.listMessages'/></a><br>
-				<a href="box/listChildren.do?boxId=${row.id}"><spring:message code ='box.listChildren'/></a><br>
+	<a href="message/create.do"><spring:message code='m.create' /></a>
+	
+	<jstl:forEach items="${boxes}" var="x">
+	<button class="collapsible"><jstl:out value="${x.name}"/></button>
+	<div class="content">
+	  <table border='1' style="width:100%">
+		<jstl:forEach items="${x.messages}" var="y">
+			<tr><td>
+					<spring:message code='m.sender' /><jstl:out value="${y.sender.username}" /> <br>
+					<spring:message code='m.subject' /><jstl:out value="${y.subject}" />
+				</td></tr>
 				
-				<jstl:if test="${row.systemBox == false}">
-				<a href="box/delete.do?boxId=${row.id}"><spring:message code ='box.delete'/></a><br>
-				<a href="box/edit.do?boxId=${row.id}"><spring:message code ='box.edit'/></a><br>
-				</jstl:if>
-				</td>
-			</tr>
-			</table>
-		</display:column>
-	</display:table>
+				<tr><td>
+					<jstl:out value="${y.body}" />
+				</td></tr>
+				
+				<tr><td>
+					<a href="message/delete.do?messageId=${y.id}"><spring:message code='m.delete' /></a>
+				</td></tr>
+		</jstl:forEach>
+	</table>
+	</div>
+	</jstl:forEach>
+	
+<script>
+	var coll = document.getElementsByClassName("collapsible");
+	var i;
+	
+	for (i = 0; i < coll.length; i++) {
+	  coll[i].addEventListener("click", function() {
+	    this.classList.toggle("active");
+	    var content = this.nextElementSibling;
+	    if (content.style.maxHeight){
+	      content.style.maxHeight = null;
+	    } else {
+	      content.style.maxHeight = content.scrollHeight + "px";
+	    } 
+	  });
+	}
+</script>
 	
 </security:authorize>

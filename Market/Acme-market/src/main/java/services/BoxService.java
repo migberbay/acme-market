@@ -31,7 +31,7 @@ public class BoxService {
 		final Box box = new Box();
 
 		box.setUserAccount(userAccount);
-		box.setMessages(new ArrayList<Integer>());
+		box.setMessages(new ArrayList<Message>());
 
 		return box;
 	}
@@ -89,13 +89,13 @@ public class BoxService {
 		final Box inbox = new Box(), outbox = new Box(), thrashbox = new Box();
 		inbox.setUserAccount(userAccount);
 		inbox.setName("In Box");
-		inbox.setMessages(new ArrayList<Integer>());
+		inbox.setMessages(new ArrayList<Message>());
 		outbox.setUserAccount(userAccount);
 		outbox.setName("Out Box");
-		outbox.setMessages(new ArrayList<Integer>());
+		outbox.setMessages(new ArrayList<Message>());
 		thrashbox.setUserAccount(userAccount);
 		thrashbox.setName("Thrash Box");
-		thrashbox.setMessages(new ArrayList<Integer>());
+		thrashbox.setMessages(new ArrayList<Message>());
 
 
 		this.saveSystem(inbox);
@@ -103,11 +103,8 @@ public class BoxService {
 		this.saveSystem(thrashbox);
 	}
 
-	public void addMessageToBox(final Box box, final Message message) {
-		final List<Integer> aux = new ArrayList<>(box.getMessages());
-
-		aux.add(0, message.getId()); // los mensajes nuevos siempre se ponen primero.
-		box.setMessages(aux);
+	public void addMessageToBox(Box box, Message message) {
+		box.getMessages().add(message);
 		this.save(box);
 
 	}

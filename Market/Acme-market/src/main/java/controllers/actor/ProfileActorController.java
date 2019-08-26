@@ -21,6 +21,7 @@ import services.ActorService;
 import services.AdminService;
 import services.ConfigurationService;
 import services.CreditCardService;
+import services.CurriculaService;
 import services.CustomerService;
 import services.DeliveryBoyService;
 import services.MarketService;
@@ -29,6 +30,7 @@ import controllers.AbstractController;
 import domain.Actor;
 import domain.Admin;
 import domain.CreditCard;
+import domain.Curricula;
 import domain.Customer;
 import domain.DeliveryBoy;
 import domain.Market;
@@ -65,6 +67,9 @@ public class ProfileActorController extends AbstractController {
 	
 	@Autowired
 	private CreditCardService cardService;
+	
+	@Autowired
+	private CurriculaService curriculaService;
 	
 	@Autowired
 	private Validator validator;
@@ -145,6 +150,7 @@ public class ProfileActorController extends AbstractController {
 			if (actor.getUserAccount().getAuthorities().contains(providerAuth)) {
 				Provider provider = providerService.findOne(actor.getId());
 				result.addObject("actor", provider);
+				result.addObject("curricula",curriculaService.findCurriculaByProvider(provider.getId()));
 				result.addObject("actorIsProvidert",true);
 			}
 		}

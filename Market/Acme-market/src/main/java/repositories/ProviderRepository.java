@@ -16,4 +16,5 @@ public interface ProviderRepository extends JpaRepository<Provider, Integer> {
 	@Query("select p from Provider p where p.userAccount = ?1") 
 	Provider findByPrincipal(UserAccount principal);
 	
+	
 }

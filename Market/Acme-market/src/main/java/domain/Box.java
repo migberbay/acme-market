@@ -39,16 +39,16 @@ public class Box extends DomainEntity {
 	// Relationships ----------------------------------------------------------
 
 	private UserAccount			userAccount;
-	private Collection<Integer>	messages;
+	private Collection<Message>	messages;
 
 
 	@Valid
 	@ElementCollection
-	public Collection<Integer> getMessages() {
+	public Collection<Message> getMessages() {
 		return this.messages;
 	}
 
-	public void setMessages(final Collection<Integer> messages) {
+	public void setMessages(final Collection<Message> messages) {
 		this.messages = messages;
 	}
 

@@ -5,19 +5,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class MessageForm {
 
-	private String priority;
 	private String recipients;
 	private String subject;
 	private String body;
-	private String tags;
 	
-	@NotBlank
-	public String getPriority() {
-		return priority;
-	}
-	public void setPriority(String priority) {
-		this.priority = priority;
-	}
 	
 	@NotBlank
 	public String getRecipients() {
@@ -43,13 +34,6 @@ public class MessageForm {
 		this.body = body;
 	}
 
-	public String getTags() {
-		return tags;
-	}
-	public void setTags(String tags) {
-		this.tags = tags;
-	}
-	
 
 	
 }

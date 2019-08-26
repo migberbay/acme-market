@@ -24,6 +24,18 @@
 	<jstl:if test="${logged}">
 		<b><a href="actor/editPersonal.do"><spring:message code="actor.edit" /></a> Personal Data</b> <br/>
 		
+		<jstl:if test="${actorIsProvider}">
+			<jstl:choose>
+			<jstl:when test="${curricula == null}">
+				<a href="curricula/provider/create.do">Create a curricula</a>
+			</jstl:when>
+			<jstl:otherwise>
+				<a href="curricula/provider/show.do">Show curricula</a>
+			</jstl:otherwise>
+			</jstl:choose>
+		</jstl:if>
+		
+		
 		<jstl:if test="${actorIsCustomer}">
 			<h3>Credit Card:</h3>
 			<b><spring:message code="actor.holder"/></b>: <jstl:out value="${actor.creditCard.holder}"/> <br/>

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mysql.jdbc.Messages;
+
 import repositories.MessageRepository;
 import security.Authority;
 import security.LoginService;
@@ -39,9 +41,9 @@ public class MessageService {
 
 
 	// Simple CRUD methods -----
-	public Message create(final UserAccount sender) {
+	public Message create( UserAccount sender) {
 
-		final Message message = new Message();
+		 Message message = new Message();
 
 		message.setSender(sender);
 		message.setMoment(new Date(System.currentTimeMillis() - 1000));
@@ -53,15 +55,15 @@ public class MessageService {
 		return this.messageRepository.findAll();
 	}
 
-	public Message findOne(final int Id) {
+	public Message findOne( int Id) {
 		return this.messageRepository.findOne(Id);
 	}
 
-	public Message save(final Message message) {
+	public Message save( Message message) {
 
 		Message result;
 
-		final Date moment = new Date(System.currentTimeMillis() - 1000);
+		 Date moment = new Date(System.currentTimeMillis() - 1000);
 
 		message.setMoment(moment);
 
@@ -69,47 +71,49 @@ public class MessageService {
 		return result;
 	}
 
-	public Message reconstruct(final MessageForm form) {
-		final Message res = this.create(LoginService.getPrincipal());
+	public Message reconstruct( MessageForm form) {
+		Message res = this.create(LoginService.getPrincipal());
 		res.setBody(form.getBody());
 		res.setSubject(form.getSubject());
 
-		final List<UserAccount> recipients = new ArrayList<>();
+		List<UserAccount> recipients = new ArrayList<>();
 
-		final String[] recipientsArray = form.getRecipients().split(",");
+		String[] recipientsArray = form.getRecipients().split(",");
 
 
-		for (int i = 0; i < recipientsArray.length; i++)
-			if (!(recipientsArray[i].length() < 5))
-				recipients.add(this.userAccountService.findByUsername(recipientsArray[i].trim()));
-
+		for (int i = 0; i < recipientsArray.length; i++){
+			UserAccount ua = this.userAccountService.findByUsername(recipientsArray[i].trim());
+			if(ua != null){
+				recipients.add(ua);
+			}
+		}
+			
 		res.setRecipients(recipients);
 
-		//TODO: missing validator until bugfix is found.
 
 		return res;
 	}
 
-	public void delete(final Message message) {
+	public void delete( Message message) {
 
 		// El mensaje se movera a la trashbox, si el mensaje ya estaba en la
 		// trashbox se elimina del sistema.
 
-		final UserAccount userAccount = LoginService.getPrincipal();
+		UserAccount userAccount = LoginService.getPrincipal();
 
 		//añadimos todas las boxes de los actores que tienen el message a allActorBoxes
-		final Set<Box> allActorBoxes = new HashSet<>();
+		Set<Box> allActorBoxes = new HashSet<>();
 
-		final Collection<UserAccount> recipients = message.getRecipients();
-		for (final UserAccount ua : recipients)
+		Collection<UserAccount> recipients = message.getRecipients();
+		for (UserAccount ua : recipients)
 			allActorBoxes.addAll(this.boxService.findByUserAccountId(ua.getId()));
-		final UserAccount sender = message.getSender();
+		UserAccount sender = message.getSender();
 		allActorBoxes.addAll(this.boxService.findByUserAccountId(sender.getId()));
 
 		//Vemos que actor de los que tiene el message es el que esta logeado.
 		UserAccount logged = null;
 
-		for (final UserAccount recipient : recipients)
+		for (UserAccount recipient : recipients)
 			if (recipient.equals(userAccount)) {
 				logged = recipient;
 				break;
@@ -120,9 +124,9 @@ public class MessageService {
 
 		//localizamos la trashbox y separamos los otros boxes en otherboxes para el actor logeado.
 		Box trash = null;
-		final Collection<Box> otherboxes = new ArrayList<Box>();
+		Collection<Box> otherboxes = new ArrayList<Box>();
 
-		for (final Box box : this.boxService.findByUserAccountId(logged.getId()))
+		for (Box box : this.boxService.findByUserAccountId(logged.getId()))
 			if (box.getName().equals("Trash Box"))
 				trash = box;
 			else
@@ -130,14 +134,14 @@ public class MessageService {
 
 		//comprobar si esta en trashbox
 		if (trash.getMessages().contains(message.getId())) {
-			final Collection<Integer> aux = trash.getMessages();
+			Collection<Message> aux = trash.getMessages();
 			aux.remove(message.getId());
 			trash.setMessages(aux);
 			allActorBoxes.remove(trash);
 
 			//comprobamos si el mensaje esta en alguna otra box.
 			boolean isInOtherBox = false;
-			for (final Box b : allActorBoxes)
+			for (Box b : allActorBoxes)
 				if (b.getMessages().contains(message.getId())) {
 					isInOtherBox = true;
 					break;
@@ -147,14 +151,14 @@ public class MessageService {
 
 			this.boxService.save(trash);
 		} else
-			for (final Box b : otherboxes)
+			for (Box b : otherboxes)
 				if (b.getMessages().contains(message.getId())) {
-					final Collection<Integer> aux = b.getMessages();
+					Collection<Message> aux = b.getMessages();
 					aux.remove(message.getId());
 					b.setMessages(aux);
 
-					final Collection<Integer> t = trash.getMessages();
-					t.add(message.getId());
+					Collection<Message> t = trash.getMessages();
+					t.add(message);
 					trash.setMessages(t);
 
 					this.boxService.save(trash);
@@ -164,40 +168,27 @@ public class MessageService {
 
 	// Other business methods -----
 
-	public void addMesageToBoxes(final Message message) {
-		final Collection<Box> boxes = new ArrayList<Box>();
-		final Box outBox = this.boxService.findByUserAccountAndName(message.getSender(), "Out Box");
-
-		final Authority adminAuth = new Authority();
-		adminAuth.setAuthority(Authority.ADMIN);
+	public void addMesageToBoxes(Message message) {
+		Collection<Box> boxes = new ArrayList<Box>();
+		Box outBox = this.boxService.findByUserAccountAndName(message.getSender(), "Out Box");
 
 		boxes.add(outBox);
-		for (final UserAccount ua : message.getRecipients()) {
-			final Box spamBox = this.boxService.findByUserAccountAndName(ua, "Spam Box");
-			boxes.add(spamBox);
-
+		
+		for (UserAccount ua : message.getRecipients()) {
+			Box inBox = this.boxService.findByUserAccountAndName(ua, "In Box");
+			boxes.add(inBox);
 		}
-		if (message.getSender().getAuthorities().contains(adminAuth))
-			for (final UserAccount ua : message.getRecipients()) {
-				final Box notificationBox = this.boxService.findByUserAccountAndName(ua, "Notification Box");
-				boxes.add(notificationBox);
-			}
-		else
-			for (final UserAccount ua : message.getRecipients()) {
-				final Box inBox = this.boxService.findByUserAccountAndName(ua, "In Box");
-				boxes.add(inBox);
 
-			}
-
-		for (final Box box : boxes) {
-			final Collection<Integer> messages = new ArrayList<>(box.getMessages());
-			messages.add(message.getId());
+		for (Box box : boxes) {
+			Collection<Message> messages = new ArrayList<Message>();
+			messages.add(message);
+			messages.addAll(box.getMessages());
 			box.setMessages(messages);
 			this.boxService.save(box);
 		}
 	}
 
-	public Collection<Message> findBySender(final UserAccount sender) {
+	public Collection<Message> findBySender( UserAccount sender) {
 		return this.messageRepository.findBySender(sender);
 	}
 
