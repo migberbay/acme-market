@@ -38,11 +38,8 @@ public class ProfessionalRecordProviderController extends AbstractController {
 		ModelAndView result;
 		
 		Provider provider = providerService.getPrincipal();
-		if(curriculaService.findCurriculaByProvider(provider.getId())==null){
-			ProfessionalRecord e = professionalService.create();
-			result = this.createEditModelAndView(e);
-		}else
-			result = new ModelAndView("error/access");
+		ProfessionalRecord e = professionalService.create();
+		result = this.createEditModelAndView(e);
 
 		return result;
 	}

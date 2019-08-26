@@ -37,12 +37,8 @@ public class EducationRecordProviderController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		
-		Provider provider = providerService.getPrincipal();
-		if(curriculaService.findCurriculaByProvider(provider.getId())==null){
-			EducationRecord e = educationService.create();
-			result = this.createEditModelAndView(e);
-		}else
-			result = new ModelAndView("error/access");
+		EducationRecord e = educationService.create();
+		result = this.createEditModelAndView(e);
 
 		return result;
 	}

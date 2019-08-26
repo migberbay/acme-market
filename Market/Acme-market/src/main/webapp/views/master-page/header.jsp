@@ -73,9 +73,9 @@
 				</a>
 				<ul>
 					<li class="arrow"></li>
-					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>
 					<li><a href="box/list.do"><spring:message code="master.page.mailbox" /></a></li>
-					<li><a href="actor/show.do"><spring:message code="master.page.profile" /></a></li>			
+					<li><a href="actor/show.do"><spring:message code="master.page.profile" /></a></li>		
+					<li><a href="j_spring_security_logout"><spring:message code="master.page.logout" /> </a></li>	
 					
 				</ul>
 			</li>
