@@ -51,6 +51,13 @@
 		
 		<security:authorize access="hasRole('PROVIDER')">
 			<li><a class="fNiv" href="curricula/provider/show.do"><spring:message code="master.page.curricula" /></a></li>
+			<li><a class="fNiv"><spring:message	code="master.page.product" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="product/provider/list.do"><spring:message code="master.page.product.list" /></a></li>
+					<li><a href="product/provider/create.do"><spring:message code="master.page.product.create" /></a></li>					
+				</ul>
+			</li>
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">

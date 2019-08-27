@@ -31,6 +31,7 @@
 		<value>/views/personalRecord/messages</value>
 		<value>/views/educationRecord/messages</value>
 		<value>/views/professionalRecord/messages</value>
+		<value>/views/product/messages</value>
 		<value>/views/error/messages</value>
 	</util:list>
 

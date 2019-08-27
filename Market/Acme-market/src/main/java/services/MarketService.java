@@ -60,5 +60,9 @@ public class MarketService {
 	public Market getPrincipal(){
 		return this.marketRepository.findByPrincipal(LoginService.getPrincipal());
 	}
+	
+	public Market getMarketByProduct(int productId){
+		return this.marketRepository.getMarketByProduct(productId);
+	}
 
 }
