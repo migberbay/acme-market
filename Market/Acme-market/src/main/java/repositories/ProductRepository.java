@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import domain.Market;
 import domain.Curricula;
+import domain.Market;
 import domain.Product;
 
 @Repository
@@ -20,6 +21,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("select p from Product p where p.provider.id=?1")
 	Collection<Product> getProductsByProvider(int providerId);
 
-	@Query("select p.products. from Curricula c where c.provider.id=?1")
-	Collection<Product> findValidProductByMarket(Market market);
+	@Query("select m.request.product from Market m where m.request.status = ACCEPTED and m = ?1 and m.request.product.stock >0")
+	Collection<Product> findValidProductsByMarket(Market market);
 }
