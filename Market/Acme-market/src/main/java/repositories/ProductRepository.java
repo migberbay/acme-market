@@ -21,6 +21,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("select p from Product p where p.provider.id=?1")
 	Collection<Product> getProductsByProvider(int providerId);
 
-	@Query("select m.request.product from Market m where m.request.status = ACCEPTED and m = ?1 and m.request.product.stock >0")
-	Collection<Product> findValidProductsByMarket(Market market);
 }
