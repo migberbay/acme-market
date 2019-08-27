@@ -33,6 +33,7 @@
 		<value>/views/professionalRecord/messages</value>
 		<value>/views/product/messages</value>
 		<value>/views/error/messages</value>
+		<value>/views/market/messages</value>
 	</util:list>
 
 </beans>

@@ -31,5 +31,4 @@
 		<put-attribute name="body" value="/views/product/show.jsp" />
 	</definition>
 
-	
 </tiles-definitions>

@@ -33,6 +33,7 @@
 		<value>/views/professionalRecord/tiles.xml</value>
 		<value>/views/product/tiles.xml</value>
 		<value>/views/error/tiles.xml</value>
+		<value>/views/market/tiles.xml</value>
 	</util:list>
 
 </beans>
