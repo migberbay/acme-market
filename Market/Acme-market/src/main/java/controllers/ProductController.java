@@ -50,7 +50,7 @@ public class ProductController extends AbstractController {
 		if(marketId == null){
 			 products = productService.findAll();
 		}else{
-			Market market = marketService.findOne(marketId);
+			products = productService.getProductsByMarket(marketId);
 		}
 		
 

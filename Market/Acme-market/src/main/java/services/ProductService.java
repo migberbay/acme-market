@@ -1,6 +1,6 @@
 package services;
 
-<<<<<<< HEAD
+
 import java.util.Collection;
 
 import javax.validation.ValidationException;
@@ -14,7 +14,7 @@ import org.springframework.validation.Validator;
 import repositories.ProductRepository;
 import domain.Market;
 import domain.Product;
-=======
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -26,7 +26,6 @@ import repositories.ProductRepository;
 import domain.Comment;
 import domain.Product;
 import domain.Provider;
->>>>>>> 7ab474954d3175044145622ec4d70611a061de4d
 
 
 @Service
@@ -40,7 +39,7 @@ public class ProductService {
 	
 	//Supporting Services -----
 	
-<<<<<<< HEAD
+
 	@Autowired
 	private ProviderService providerService;
 
@@ -51,8 +50,9 @@ public class ProductService {
 	
 	public Product create(){
 		Product res = new Product();
-					
-=======
+		return res;
+	}
+
 	//Simple CRUD methods -----
 	
 	public Product create(Provider provider){
@@ -60,7 +60,6 @@ public class ProductService {
 		Collection<Comment> comments = new ArrayList<>();
 		res.setComments(comments);
 		res.setProvider(provider);
->>>>>>> 7ab474954d3175044145622ec4d70611a061de4d
 		return res;
 	}
 	
