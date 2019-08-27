@@ -38,9 +38,10 @@
 
 		<security:intercept-url pattern="/security/login.do" access="permitAll" /> 
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
-
 		<security:intercept-url pattern="/welcome/**" access="permitAll" />
 		<security:intercept-url pattern="/actor/**" access="permitAll"/>
+		<security:intercept-url pattern="/market/**" access="permitAll"/>
+		<security:intercept-url pattern="/product/**" access="permitAll"/>
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()"/>
 		
