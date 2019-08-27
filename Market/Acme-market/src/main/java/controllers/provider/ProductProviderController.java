@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.MarketService;
 import services.ProductService;
 import services.ProviderService;
 import controllers.AbstractController;
+import domain.Market;
 import domain.Product;
 import domain.Provider;
 
@@ -28,6 +30,9 @@ public class ProductProviderController extends AbstractController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private MarketService marketService;
 	
 	// List -----------------------------------------------------------------
 	
@@ -50,10 +55,13 @@ public class ProductProviderController extends AbstractController {
 		public ModelAndView show(@RequestParam final int productId) {
 
 			ModelAndView result;
+			result = new ModelAndView("product/show");
 
 			Product product = productService.findOne(productId);
-
-			result = new ModelAndView("product/show");
+			if(product.getDepartment()!=null){
+				Market market = marketService.getMarketByProduct(productId);
+				result.addObject("market",market);
+			}
 			result.addObject("product", product);
 			result.addObject("uri", "product/provider/list.do");
 
@@ -67,12 +75,9 @@ public class ProductProviderController extends AbstractController {
 		ModelAndView result;
 		Product product = productService.create();
 
-		Provider logged = providerService.getPrincipal();
-		if(product.getProvider().equals(logged))
-			result = this.createEditModelAndView(product);
-		else
-			result = new ModelAndView("error/access");
-		
+//		Provider logged = providerService.getPrincipal();
+		result = this.createEditModelAndView(product);
+
 		return result;
 	}
 	
@@ -147,7 +152,7 @@ public class ProductProviderController extends AbstractController {
 	protected ModelAndView createEditModelAndView(Product product, String messageCode){
 		ModelAndView res;
 		
-		res = new ModelAndView("product/edit");;
+		res = new ModelAndView("product/edit");
 		res.addObject("product", product);
 		res.addObject("message", messageCode);
 

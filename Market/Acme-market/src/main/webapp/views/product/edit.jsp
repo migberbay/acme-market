@@ -19,28 +19,19 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="package/manager/edit.do" modelAttribute="package1">
+<form:form action="product/provider/edit.do" modelAttribute="product">
 
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
-
-	<security:authorize access="hasRole('MANAGER')">
 	
-	<acme:textbox code="package.title" path="title"/>	<br/>
-	<acme:textarea code="package.description" path="description"/>	<br/>
-	<acme:textbox code="package.startDate" path="startDate" placeholder="dd/MM/yyyy HH:mm"/><br/>
-	<acme:textbox code="package.endDate" path="endDate" placeholder="dd/MM/yyyy HH:mm"/><br/>
-	<acme:textbox code="package.price" path="price"/><br/>
-	<acme:textbox code="package.photo" path="photo"/><br/>
+	<acme:textbox code="product.name" path="name"/>	<br/>
+	<acme:textbox code="product.stock" path="stock"/>	<br/>
+	<acme:textbox code="product.price" path="price"/><br/>
+	
 
-	<jstl:if test="${package1.id!=0}">
-		<acme:checkbox code="package.isFinal" path="isFinal"/><br/>
-	</jstl:if>
-
-	<acme:submit name="save" code="package.save"/>
-	<acme:cancel url="package/manager/list.do" code="package.cancel"/>
+	<acme:submit name="save" code="product.save"/>
+	<acme:cancel url="product/provider/list.do" code="product.cancel"/>
 	<br />	
 	
-	</security:authorize>
 
 </form:form>

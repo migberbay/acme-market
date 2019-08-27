@@ -88,9 +88,13 @@ public class ProductService {
 		
 		if(product.getId()==0){
 			res = product;
+			res.setProvider(providerService.getPrincipal());
 		}else{
 			Product e = productRepository.findOne(product.getId());
 			res=e;
+			res.setName(product.getName());
+			res.setPrice(product.getPrice());
+			res.setStock(product.getStock());
 		}
 
 		validator.validate(res, bindingResult);

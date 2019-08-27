@@ -10,16 +10,14 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 	    
 	    <div>
-	   		<b><spring:message code="package.ticker"   /></b>: <jstl:out value="${package1.ticker}"   /><br/>
-	   		<b><spring:message code="package.title"   /></b>: <jstl:out value="${package1.title}"   /> <br/>    		 
-	   		<b><spring:message code="package.description"   /></b>: <jstl:out value="${package1.description}"/> <br/>    		 
-			<spring:message code="package.moment.format" var="formatMoment"/>
-		    <b><spring:message code="package.startDate"/></b>: <fmt:formatDate value="${package1.startDate}" type="date" pattern="${formatMoment}"/> <br/> 
-		    <b><spring:message code="package.endDate"/></b>: <fmt:formatDate value="${package1.endDate}" type="date" pattern="${formatMoment}"/> <br/> 
-		    <b><spring:message code="package.price" /></b>: <jstl:out value="${package1.price}" /> <br/>
-		    <b><spring:message code="package.photo" /></b>: <a href="<jstl:out value="${package1.photo}" />"><jstl:out value="${package1.photo}" /></a> <br/>
+	   		<b><spring:message code="product.name"   /></b>: <jstl:out value="${product.name}"   /><br/>
+	   		<b><spring:message code="product.stock"   /></b>: <jstl:out value="${product.stock}"   /> <br/>  
+	   		<b><spring:message code="product.price"   /></b>: <jstl:out value="${product.price}"   /> <br/>    		 
+	   		<b><spring:message code="product.provider"   /></b>: <jstl:out value="${product.provider.userAccount.username}"/> <br/>    		 
+		    <b><spring:message code="product.department" /></b>: <jstl:out value="${product.department.title}" /> <br/>
+		    <b><spring:message code="product.market" /></b>: <jstl:out value="${market.companyName}" /> <br/>
 		</div>
 		<br/>
 		
-		<acme:cancel url="${uri}" code="package.back"/>
+		<acme:cancel url="${uri}" code="product.back"/>
 		
