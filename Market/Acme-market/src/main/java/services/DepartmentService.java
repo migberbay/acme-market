@@ -2,13 +2,18 @@ package services;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.DepartmentRepository;
 import security.LoginService;
 import domain.Department;
+import domain.Product;
 
 
 @Service
@@ -24,6 +29,9 @@ public class DepartmentService {
 	
 	@Autowired
 	private MarketService marketService;
+	
+	@Autowired
+	private Validator validator;
 	
 	//Simple CRUD methods -----
 	
@@ -56,5 +64,28 @@ public class DepartmentService {
 	}
 	
 	//Other business methods -----
+	
+	public Department reconstruct(Department department, BindingResult bindingResult) {
+		Department res = new Department();
+		
+		if(department.getId()==0){
+			res = department;
+			res.setMarket(marketService.getPrincipal());
+		}else{
+			Department e = departmentRepository.findOne(department.getId());
+			res=e;
+			res.setTitle(department.getTitle());
+			res.setDiscount(department.getDiscount());
+		}
+
+		validator.validate(res, bindingResult);
+		
+		if(bindingResult.hasErrors()){
+			System.out.println(bindingResult.getFieldErrors());
+			throw new ValidationException();
+		}
+
+		return res;
+	}
 
 }

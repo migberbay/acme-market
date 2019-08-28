@@ -20,8 +20,8 @@
 			</display:column>
 		</security:authorize>
 		
-		<display:column property="title" titleKey="department.name"/>
-		<display:column property="discount" titleKey="department.price"/>
+		<display:column property="title" titleKey="department.title"/>
+		<display:column property="discount" titleKey="department.discount"/>
 
 	</display:table>
 	

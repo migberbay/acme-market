@@ -82,75 +82,77 @@ public class DepartmentMarketController extends AbstractController {
 	
 	// Create -----------------------------------------------------------------
 
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
-		ModelAndView result;
-		Department department = departmentService.create();
+		@RequestMapping(value = "/create", method = RequestMethod.GET)
+		public ModelAndView create() {
+			ModelAndView result;
+			Department department = departmentService.create();
 
-//		Market logged = marketService.getPrincipal();
-		result = this.createEditModelAndView(department);
+	//		Market logged = marketService.getPrincipal();
+			result = this.createEditModelAndView(department);
 
-		return result;
-	}
+			return result;
+		}
 	
 	// Edit -----------------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int departmentId) {
-		ModelAndView result;
-		Department department = departmentService.findOne(departmentId);	
-		Market logged = marketService.getPrincipal();
+		@RequestMapping(value = "/edit", method = RequestMethod.GET)
+		public ModelAndView edit(@RequestParam final int departmentId) {
+			ModelAndView result;
+			Department department = departmentService.findOne(departmentId);	
+			Market logged = marketService.getPrincipal();
+			Collection<Product> products = productService.getProductsByDepartment(departmentId);
 		
-		if(department.getMarket().equals(logged)){
-			result = this.createEditModelAndView(department);
-		}else
-			result = new ModelAndView("error/access");
+			if(department.getMarket().equals(logged) && products.isEmpty()){
+				result = this.createEditModelAndView(department);
+			}else
+				result = new ModelAndView("error/access");
 
-		return result;
-	}
+			return result;
+		}
 
 	// Save -----------------------------------------------------------------
 
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView edit(@ModelAttribute("department")Department department, final BindingResult bindingResult) {
-		ModelAndView result;
-		Department res;
-		try {
-			res = departmentService.reconstruct(department,bindingResult);
-			departmentService.save(res);
-			result = new ModelAndView("redirect:/department/market/list.do");
-		} catch (ValidationException oops) {
-			oops.printStackTrace();
-			result = this.createEditModelAndView(department);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			result = this.createEditModelAndView(department,"file.commit.error");
+		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
+		public ModelAndView edit(@ModelAttribute("department")Department department, final BindingResult bindingResult) {
+			ModelAndView result;
+			Department res;
+			try {
+				res = departmentService.reconstruct(department,bindingResult);
+				departmentService.save(res);
+				result = new ModelAndView("redirect:/department/market/list.do");
+			} catch (ValidationException oops) {
+				oops.printStackTrace();
+				result = this.createEditModelAndView(department);
+			} catch (final Throwable oops) {
+				oops.printStackTrace();
+				result = this.createEditModelAndView(department,"file.commit.error");
+			}
+			return result;
 		}
-		return result;
-	}
 	
 
 	// Delete -----------------------------------------------------------------
 
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int departmentId) {
-		ModelAndView result;
-		Market logged = marketService.getPrincipal();
-		Department department = departmentService.findOne(departmentId);
+		@RequestMapping(value = "/delete", method = RequestMethod.GET)
+		public ModelAndView delete(@RequestParam final int departmentId) {
+			ModelAndView result;
+			Market logged = marketService.getPrincipal();
+			Department department = departmentService.findOne(departmentId);
+			Collection<Product> products = productService.getProductsByDepartment(departmentId);
+			
+			if(department.getMarket().equals(logged) && products.isEmpty()){
+				try {
+					result = new ModelAndView("redirect:/department/market/list.do");
+					departmentService.delete(department);
+				} catch (final Throwable oops) {
+					oops.printStackTrace();
+					result = this.createEditModelAndView(department, "department.commit.error");
+				}
+			}else
+				result = new ModelAndView("error/access");
 
-		if(department.getMarket().equals(logged)){
-		try {
-			result = new ModelAndView("redirect:/department/market/list.do");
-			departmentService.delete(department);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			result = this.createEditModelAndView(department, "department.commit.error");
+			return result;
 		}
-		}else
-			result = new ModelAndView("error/access");
-
-		return result;
-	}
 
 	//Helper methods --------------------------------------------------------------------------
 

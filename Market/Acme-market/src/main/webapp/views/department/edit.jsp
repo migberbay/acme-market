@@ -25,8 +25,7 @@
 	<form:hidden path="version"/>
 	
 	<acme:textbox code="department.title" path="title"/>	<br/>
-	<acme:textbox code="department.discount" path="discount"/>	<br/>
-	
+	<acme:textbox code="department.discount" path="discount"/>	<br/>	
 
 	<acme:submit name="save" code="department.save"/>
 	<acme:cancel url="department/market/list.do" code="department.cancel"/>
