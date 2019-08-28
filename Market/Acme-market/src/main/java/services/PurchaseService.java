@@ -3,6 +3,7 @@ package services;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class PurchaseService {
 		res.setProducts(new ArrayList<Product>());
 		res.setStatus("PENDING");
 		res.setIsFinal(false);
-		res.setTicker("7802-SH67SY");
+		res.setTicker(generateTicker());
 		res.setTotalPrice(0.0);
 		res.setIsAssigned(false);
 		res.setEstimatedDate(new Date());
@@ -66,4 +67,18 @@ public class PurchaseService {
 		return this.purchaseRepository.findByPrincipal(customerService.getPrincipal());
 	}
 
+	public String generateTicker(){
+		Random r = new Random();
+		String res = "";
+		String possible = new String("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789");//36
+		for (int i = 0; i < 4; i++) {
+			res += new Integer(r.nextInt(10)).toString();
+		}
+		res += "-";
+		for (int i = 0; i < 6; i++) {
+			res += possible.charAt(r.nextInt(36));
+		}
+
+		return res;
+	}
 }

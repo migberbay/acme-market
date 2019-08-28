@@ -60,12 +60,15 @@ public class PurchaseCustomerController extends AbstractController {
 		public ModelAndView show(@RequestParam final int purchaseId) {
 
 			ModelAndView result;
-			result = new ModelAndView("purchase/show");
-
+			Customer c = customerService.getPrincipal();
 			Purchase purchase = purchaseService.findOne(purchaseId);
 			
-			result.addObject("purchase", purchase);
-
+			if(purchase.getCustomer().equals(c)){
+				result = new ModelAndView("purchase/show");
+				result.addObject("purchase", purchase);
+			}else{
+				result = new ModelAndView("error/access");
+			}
 			return result;
 		}
 	
@@ -99,7 +102,7 @@ public class PurchaseCustomerController extends AbstractController {
 		Purchase purchase = purchaseService.findOne(purchaseId);
 		Customer c = customerService.getPrincipal();
 		
-		if(purchase.getCustomer().equals(c)){
+		if(purchase.getCustomer().equals(c) && purchase.getIsFinal() == false){
 			result = this.createEditModelAndView(purchase);
 			result.addObject("products",productService.getProductsByMarket(purchase.getMarket().getId()));
 		}else{
@@ -118,7 +121,7 @@ public class PurchaseCustomerController extends AbstractController {
 		
 		System.out.println("finalizing: " + purchase);
 		
-		if(purchase.getCustomer().equals(c)){
+		if(purchase.getCustomer().equals(c) && purchase.getIsFinal() == false){
 			try {
 				purchase.setIsFinal(true);
 				purchaseService.save(purchase);
@@ -145,7 +148,7 @@ public class PurchaseCustomerController extends AbstractController {
 		
 		System.out.println("adding: " + product + "to: " + purchase);
 		
-		if(purchase.getCustomer().equals(c)){
+		if(purchase.getCustomer().equals(c) && purchase.getIsFinal() == false){
 			try {
 				purchase.getProducts().add(product);
 				purchaseService.save(purchase);
@@ -172,7 +175,7 @@ public class PurchaseCustomerController extends AbstractController {
 		
 		System.out.println("removing: " + product + "from: " + purchase);
 		
-		if(purchase.getCustomer().equals(c)){
+		if(purchase.getCustomer().equals(c) && purchase.getIsFinal() == false){
 			try {
 				purchase.getProducts().remove(product);
 				purchaseService.save(purchase);
@@ -198,13 +201,13 @@ public class PurchaseCustomerController extends AbstractController {
 		Customer logged = customerService.getPrincipal();
 		Purchase purchase = purchaseService.findOne(purchaseId);
 
-		if(purchase.getCustomer().equals(logged)){
+		if(purchase.getCustomer().equals(logged) && purchase.getIsFinal() == false){
 		try {
 			result = new ModelAndView("redirect:/purchase/customer/list.do");
 			purchaseService.delete(purchase);
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			result = this.createEditModelAndView(purchase, "purchase.commit.error");
+			result = this.createEditModelAndView(purchase, "commit.error");
 		}
 		}else
 			result = new ModelAndView("error/access");

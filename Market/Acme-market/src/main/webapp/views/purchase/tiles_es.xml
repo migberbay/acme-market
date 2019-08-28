@@ -26,4 +26,9 @@
 		<put-attribute name="body" value="/views/purchase/edit.jsp" />
 	</definition>
 	
+	<definition name="purchase/show" extends="master.page">	
+		<put-attribute name="title" value="Mostrar Compra" />
+		<put-attribute name="body" value="/views/purchase/show.jsp" />
+	</definition>
+	
 </tiles-definitions>
