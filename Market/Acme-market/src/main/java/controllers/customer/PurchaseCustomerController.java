@@ -1,13 +1,14 @@
 package controllers.customer;
 
+import java.util.ArrayList;
 import java.util.Collection;
-
-import javax.validation.ValidationException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -118,15 +119,46 @@ public class PurchaseCustomerController extends AbstractController {
 		
 		Purchase purchase = purchaseService.findOne(purchaseId);
 		Customer c = customerService.getPrincipal();
+		Boolean isEnough = true;
 		
 		System.out.println("finalizing: " + purchase);
 		
 		if(purchase.getCustomer().equals(c) && purchase.getIsFinal() == false){
 			try {
-				purchase.setIsFinal(true);
-				purchaseService.save(purchase);
+				Map<Product,Integer> productsByAmount = new HashMap<>();
+				for (Product p : purchase.getProducts()) {
+					if(productsByAmount.containsKey(p)){
+						productsByAmount.put(p, productsByAmount.get(p)+1);
+					}else{
+						productsByAmount.put(p, 1);
+					}
+				}
+				System.out.println(productsByAmount);
 				
-				result = list();
+				List<Product> overOrderedProducts = new ArrayList<>();
+				for (Entry<Product, Integer> e : productsByAmount.entrySet()) {
+					if(e.getValue()>e.getKey().getStock()){//ha pedido mas del producto que del stock que hay.
+						isEnough = false;
+						overOrderedProducts.add(e.getKey());
+					}
+				}
+				
+				if(isEnough){
+					purchase.setIsFinal(true);
+					purchaseService.save(purchase);
+					
+					for (Entry<Product, Integer> e : productsByAmount.entrySet()) {
+						e.getKey().setStock(e.getKey().getStock()-e.getValue());
+						productService.save(e.getKey());
+					}
+					
+					result = list();
+				}else{
+					result = edit(purchaseId);
+					result.addObject("isEnough", isEnough);
+					result.addObject("overOrderedProducts", overOrderedProducts);
+				}
+				
 			} catch (Exception e) {
 				result = edit(purchaseId);
 				result.addObject("message", "commit.error");

@@ -20,6 +20,18 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+
+<jstl:if test="${!isEnough}">
+<div class = "error">
+You have ordered too much of:<br>
+<jstl:forEach items="${overOrderedProducts}" var="x">
+<jstl:out value="${x.name}"/><br>
+</jstl:forEach>
+</div>
+</jstl:if>
+<br><br>
+
+
 <div id="mydiv">
   <div id="mydivheader">Click here to move</div>
  	Avaliable products:<br>
