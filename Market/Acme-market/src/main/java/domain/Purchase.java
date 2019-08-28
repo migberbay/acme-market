@@ -64,6 +64,12 @@ public class Purchase extends DomainEntity {
 
 	@NotNull
 	public Double getTotalPrice() {
+		totalPrice = 0.;
+		if(this.products != null){
+			for (Product p : this.products) {
+				totalPrice += p.getPrice();
+			}
+		}
 		return totalPrice;
 	}
 

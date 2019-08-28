@@ -53,8 +53,9 @@ public class ProductController extends AbstractController {
 			products = productService.getProductsByMarket(marketId);
 		}
 		
-
+		
 		res = new ModelAndView("product/list");
+		res.addObject("requestURI","product/list.do");
 		res.addObject("products", products);
 
 		return res;

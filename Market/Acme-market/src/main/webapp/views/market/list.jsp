@@ -12,8 +12,15 @@
 
 
 	<display:table name="markets" id="row" requestURI="market/list.do" pagesize="5">
+	
+	<jstl:if test="${isCustomer}">
+		<display:column titleKey="purchase.action">
+			<a href = "purchase/customer/create.do?marketId=${row.id}">Open a Purchase</a>
+		</display:column>
+	</jstl:if>
+		
 		<display:column titleKey="market.products">
-			<a href = "product/list.do=marketId${row.id}">Show</a>
+			<a href = "product/list.do?marketId=${row.id}">Show</a>
 		</display:column>
 		<display:column property="companyName" titleKey="market.companyName" />
 	

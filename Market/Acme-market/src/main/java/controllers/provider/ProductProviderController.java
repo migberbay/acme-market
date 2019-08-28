@@ -44,6 +44,7 @@ public class ProductProviderController extends AbstractController {
 		
 		result = new ModelAndView("product/list");
 		result.addObject("products",products);		
+		result.addObject("requestURI","product/provider/list.do");
 		
 		return result;
 	}

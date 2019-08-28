@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import services.MarketService;
@@ -41,9 +42,21 @@ public class MarketController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView res;
 		Collection<Market> markets = marketService.findAll();
-
+		Boolean isCustomer = false;
+		try {
+			Authority customerAuth = new Authority();
+			customerAuth.setAuthority(Authority.CUSTOMER);
+			
+			if(LoginService.getPrincipal().getAuthorities().contains(customerAuth)){
+				isCustomer = true;
+			}
+		} catch (Exception e) {
+			System.out.println("actor not logged.");
+		}
+		
 		res = new ModelAndView("market/list");
 		res.addObject("markets", markets);
+		res.addObject("isCustomer",isCustomer);
 
 		return res;
 	}

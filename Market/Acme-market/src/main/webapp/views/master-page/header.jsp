@@ -40,13 +40,7 @@
 		</security:authorize>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
-			<li><a class="fNiv"><spring:message	code="master.page.customer" /></a>
-				<ul>
-					<li class="arrow"></li>
-					<li><a href="customer/action-1.do"><spring:message code="master.page.customer.action.1" /></a></li>
-					<li><a href="customer/action-2.do"><spring:message code="master.page.customer.action.2" /></a></li>					
-				</ul>
-			</li>
+			<li><a class="fNiv" href="purchase/customer/list.do"><spring:message code="master.page.purchase.list" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('PROVIDER')">
@@ -74,6 +68,7 @@
 		</security:authorize>
 		
 		<security:authorize access="isAuthenticated()">
+		<li><a class="fNiv" href="market/list.do"><spring:message code="master.page.market.list" /></a></li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

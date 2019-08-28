@@ -9,7 +9,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-	<display:table name="products" id="row" requestURI="product/provider/list.do" pagesize="5">
+	<display:table name="products" id="row" requestURI="${requestURI}" pagesize="5">
 		<security:authorize access="hasRole('PROVIDER')">
 			<display:column titleKey="product.options">
 				<a href="product/provider/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>

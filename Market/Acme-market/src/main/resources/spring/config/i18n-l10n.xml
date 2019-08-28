@@ -34,6 +34,7 @@
 		<value>/views/product/messages</value>
 		<value>/views/error/messages</value>
 		<value>/views/market/messages</value>
+		<value>/views/purchase/messages</value>
 	</util:list>
 
 </beans>

@@ -18,4 +18,6 @@ public interface MarketRepository extends JpaRepository<Market, Integer> {
 	
 	@Query("select d.market from Product p join p.department d where p.id=?1")
 	Market getMarketByProduct(int productId);
+	
+
 }
