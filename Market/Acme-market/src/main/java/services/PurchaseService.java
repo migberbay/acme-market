@@ -1,6 +1,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
@@ -66,6 +67,10 @@ public class PurchaseService {
 		
 		return this.purchaseRepository.findByPrincipal(customerService.getPrincipal());
 	}
+	
+	public Collection<Purchase> findUnasigned() {
+		return this.purchaseRepository.findUnasigned();
+	}
 
 	public String generateTicker(){
 		Random r = new Random();
@@ -80,5 +85,13 @@ public class PurchaseService {
 		}
 
 		return res;
+	}
+
+	public Date calculateDate(Purchase purchase) {
+		Calendar cal = Calendar.getInstance();
+		Integer minutesToAdd = 5 * purchase.getProducts().size();
+		cal.add(Calendar.MINUTE, minutesToAdd);
+		
+		return cal.getTime();
 	}
 }

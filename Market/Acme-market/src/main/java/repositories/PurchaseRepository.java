@@ -16,4 +16,7 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Integer> {
 
 	@Query("select p from Purchase p where p.customer = ?1")
 	Collection<Purchase> findByPrincipal(Customer c);
+	
+	@Query("select p from Purchase p where p.status = 'PENDING' and p.isFinal = true")
+	Collection<Purchase> findUnasigned();
 }

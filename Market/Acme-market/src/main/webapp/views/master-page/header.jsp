@@ -43,6 +43,10 @@
 			<li><a class="fNiv" href="purchase/customer/list.do"><spring:message code="master.page.purchase.list" /></a></li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('DELIVERYBOY')">
+			<li><a class="fNiv" href="purchase/deliveryBoy/list.do"><spring:message code="master.page.purchase.list" /></a></li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('MARKET')">
 			<li><a class="fNiv"><spring:message	code="master.page.department" /></a>
 				<ul>

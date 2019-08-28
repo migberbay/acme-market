@@ -49,7 +49,8 @@ public class PurchaseCustomerController extends AbstractController {
 		Collection<Purchase> purchases = purchaseService.findPurchasesByPrincipal();
 		
 		result = new ModelAndView("purchase/list");
-		result.addObject("purchases",purchases);		
+		result.addObject("purchases",purchases);	
+		result.addObject("requestURI","purchase/customer/list.do");
 		
 		return result;
 	}
@@ -78,19 +79,26 @@ public class PurchaseCustomerController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int marketId) {
 		ModelAndView result = new ModelAndView();
-		try {
-			Market market = marketService.findOne(marketId);
-			Purchase purchase = purchaseService.create();
-			purchase.setCustomer(customerService.getPrincipal());
-			purchase.setMarket(market);
-			
-			Purchase saved = purchaseService.save(purchase);
-			
-			result = this.createEditModelAndView(saved);
-			result.addObject("products",productService.getProductsByMarket(marketId));
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		Market market = marketService.findOne(marketId);
+		Customer customer = customerService.getPrincipal();
+		if(customer.getMarkets().contains(market)){
+			try {
+				Purchase purchase = purchaseService.create();
+				purchase.setCustomer(customer);
+				purchase.setMarket(market);
+				
+				Purchase saved = purchaseService.save(purchase);
+				
+				result = this.createEditModelAndView(saved);
+				result.addObject("products",productService.getProductsByMarket(marketId));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else{
+			result = new ModelAndView("error/access");
 		}
+		
 
 		return result;
 	}

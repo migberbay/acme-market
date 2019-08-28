@@ -23,7 +23,7 @@
 
 <jstl:if test="${!isEnough}">
 <div class = "error">
-You have ordered too much of:<br>
+<jstl:out value="You have ordered too much of:"/><br>
 <jstl:forEach items="${overOrderedProducts}" var="x">
 <jstl:out value="${x.name}"/><br>
 </jstl:forEach>
