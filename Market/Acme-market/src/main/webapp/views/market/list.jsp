@@ -16,6 +16,12 @@
 	<jstl:if test="${isCustomer}">
 		<display:column titleKey="purchase.action">
 			<a href = "purchase/customer/create.do?marketId=${row.id}">Open a Purchase</a>
+			<jstl:if test="${!customer.markets.contains(row)}">
+				<br/><a href="customer/market/join.do?marketId=${row.id}"><spring:message code="market.join"/></a>
+			</jstl:if>
+			<jstl:if test="${customer.markets.contains(row)}">
+				<br/><a href = "customer/market/leave.do?marketId=${row.id}"><spring:message code="market.leave"/></a>
+			</jstl:if>
 		</display:column>
 	</jstl:if>
 		

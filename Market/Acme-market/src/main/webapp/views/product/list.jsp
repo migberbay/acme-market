@@ -28,6 +28,13 @@
 		<display:column property="name" titleKey="product.name"/>
 		<display:column property="price" titleKey="product.price"/>
 		<display:column property="stock" titleKey="product.stock"/>
+		<jstl:forEach items="${departments}" var="x">
+			<jstl:if test="${row.department.id==x.id}">
+				<display:column titleKey="product.market">
+					<a href="actor/show.do?actorId=${x.market.id}"><jstl:out value="${x.market.companyName}" /></a>
+				</display:column>
+			</jstl:if>
+		</jstl:forEach>
 	</display:table>
 	<security:authorize access="hasRole('PROVIDER')">
 	<div>

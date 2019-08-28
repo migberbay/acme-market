@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import services.CustomerService;
 import services.MarketService;
 import domain.Market;
 
@@ -29,12 +30,8 @@ public class MarketController extends AbstractController {
 	@Autowired
 	private MarketService	marketService;
 
-
-	// Constructors -----------------------------------------------------------
-
-	public MarketController() {
-		super();
-	}
+	@Autowired
+	private CustomerService customerService;
 
 	//Listing-----------------------------------------------------------
 
@@ -43,18 +40,17 @@ public class MarketController extends AbstractController {
 		ModelAndView res;
 		Collection<Market> markets = marketService.findAll();
 		Boolean isCustomer = false;
+		res = new ModelAndView("market/list");
+
 		try {
-			Authority customerAuth = new Authority();
-			customerAuth.setAuthority(Authority.CUSTOMER);
-			
-			if(LoginService.getPrincipal().getAuthorities().contains(customerAuth)){
+			if(LoginService.hasRole("CUSTOMER")){
 				isCustomer = true;
+				res.addObject("customer",customerService.getPrincipal());
 			}
 		} catch (Exception e) {
 			System.out.println("actor not logged.");
 		}
 		
-		res = new ModelAndView("market/list");
 		res.addObject("markets", markets);
 		res.addObject("isCustomer",isCustomer);
 

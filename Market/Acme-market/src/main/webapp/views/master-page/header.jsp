@@ -43,6 +43,16 @@
 			<li><a class="fNiv" href="purchase/customer/list.do"><spring:message code="master.page.purchase.list" /></a></li>
 		</security:authorize>
 		
+		<security:authorize access="hasRole('MARKET')">
+			<li><a class="fNiv"><spring:message	code="master.page.department" /></a>
+				<ul>
+					<li class="arrow"></li>
+					<li><a href="department/market/list.do"><spring:message code="master.page.department.list" /></a></li>
+					<li><a href="department/market/create.do"><spring:message code="master.page.department.create" /></a></li>					
+				</ul>
+			</li>
+		</security:authorize>
+		
 		<security:authorize access="hasRole('PROVIDER')">
 			<li><a class="fNiv" href="curricula/provider/show.do"><spring:message code="master.page.curricula" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.product" /></a>
@@ -57,6 +67,8 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv" href="market/list.do"><spring:message code="master.page.market.list" /></a></li>
+			<li><a class="fNiv" href="product/list.do"><spring:message code="master.page.product.list" /></a></li>
+			<li><a class="fNiv" href="product/search.do"><spring:message code="master.page.product.search" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -69,6 +81,8 @@
 		
 		<security:authorize access="isAuthenticated()">
 		<li><a class="fNiv" href="market/list.do"><spring:message code="master.page.market.list" /></a></li>
+		<li><a class="fNiv" href="product/list.do"><spring:message code="master.page.product.list" /></a></li>
+		<li><a class="fNiv" href="product/search.do"><spring:message code="master.page.product.search" /></a></li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 

@@ -114,5 +114,17 @@ public class ProductService {
 	public Collection<Product> findProductsByPrincipal() {
 		return this.productRepository.getProductsByProvider(providerService.getPrincipal().getId());
 	}
+	
+	public Collection<Product> getMarketProducts(){
+		return this.productRepository.getMarketProducts();
+	}
+	
+	public Collection<Product> searchProducts(String keyword){
+		return this.productRepository.searchProducts(keyword);
+	}
+
+	public Collection<Product> getProductsByDepartment(int departmentId) {
+		return this.productRepository.getProductsByDepartment(departmentId);
+	}
 
 }

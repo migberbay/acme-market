@@ -35,6 +35,7 @@
 		<value>/views/error/tiles.xml</value>
 		<value>/views/market/tiles.xml</value>
 		<value>/views/purchase/tiles.xml</value>
+		<value>/views/department/tiles.xml</value>
 	</util:list>
 
 </beans>

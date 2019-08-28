@@ -7,9 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import domain.Market;
-import domain.Curricula;
-import domain.Market;
 import domain.Product;
 
 @Repository
@@ -20,5 +17,14 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
 	@Query("select p from Product p where p.provider.id=?1")
 	Collection<Product> getProductsByProvider(int providerId);
+	
+	@Query("select p from Product p where p.department!=null")
+	Collection<Product> getMarketProducts();
+	
+	@Query("select p from Product p where ((?1 is null or ?1 like '' ) or (p.name like %?1%))")
+	Collection<Product> searchProducts(String keyword);
+
+	@Query("select p from Product p where p.department=?1")
+	Collection<Product> getProductsByDepartment(int departmentId);
 
 }
