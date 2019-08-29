@@ -15,7 +15,11 @@
 			
 			<a href="product/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
 				<security:authorize access="hasRole('PROVIDER')">
+<<<<<<< HEAD
 					
+=======
+					<a href="product/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
+>>>>>>> 4415421fefb9985cb7e536da6c9b8f303052cb8b
 				<jstl:if test="${row.department==null}">
 					<a href="product/provider/edit.do?productId=${row.id}"><spring:message code="product.edit"/></a><br/>
 					<a href="product/provider/delete.do?productId=${row.id}"><spring:message code="product.delete"/></a><br/>

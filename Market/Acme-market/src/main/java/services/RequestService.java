@@ -96,4 +96,22 @@ public class RequestService {
 
 		return res;
 	}
+	
+	public Request reconstruct(Request request, BindingResult bindingResult) {
+		Request res = new Request();
+		
+		Request e = requestRepository.findOne(request.getId());
+		res=e;
+		res.setStatus(request.getStatus());
+		res.setRejectReason(request.getRejectReason());
+
+		validator.validate(res, bindingResult);
+		
+		if(bindingResult.hasErrors()){
+			System.out.println(bindingResult.getFieldErrors());
+			throw new ValidationException();
+		}
+
+		return res;
+	}
 }

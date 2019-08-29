@@ -102,7 +102,7 @@ public class DepartmentMarketController extends AbstractController {
 			Market logged = marketService.getPrincipal();
 			Collection<Product> products = productService.getProductsByDepartment(departmentId);
 		
-			if(department.getMarket().equals(logged) && products.isEmpty()){
+			if(department.getMarket().equals(logged)){
 				result = this.createEditModelAndView(department);
 			}else
 				result = new ModelAndView("error/access");
@@ -118,6 +118,7 @@ public class DepartmentMarketController extends AbstractController {
 			Department res;
 			try {
 				res = departmentService.reconstruct(department,bindingResult);
+				if(department.getId()!=0) this.applyDiscount(res);
 				departmentService.save(res);
 				result = new ModelAndView("redirect:/department/market/list.do");
 			} catch (ValidationException oops) {
@@ -125,7 +126,7 @@ public class DepartmentMarketController extends AbstractController {
 				result = this.createEditModelAndView(department);
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
-				result = this.createEditModelAndView(department,"file.commit.error");
+				result = this.createEditModelAndView(department,"department.commit.error");
 			}
 			return result;
 		}
@@ -167,10 +168,25 @@ public class DepartmentMarketController extends AbstractController {
 		ModelAndView res;
 		
 		res = new ModelAndView("department/edit");
+		if(department.getId()!=0){
+			Collection<Product> products = productService.getProductsByDepartment(department.getId());
+			res.addObject("isEmpty",products.isEmpty());
+		}
 		res.addObject("department", department);
 		res.addObject("message", messageCode);
 
 		return res;
+	}
+	
+	private void applyDiscount(Department dep){
+		Department old = departmentService.findOne(dep.getId());
+		Collection<Product> products = productService.getProductsByDepartment(dep.getId());
+		for(Product p: products){
+			Double or = Math.abs(1/(p.getPrice()-old.getDiscount()));
+			if(dep.getDiscount()>old.getDiscount()) p.setPrice(or -(or*dep.getDiscount()));
+			if(dep.getDiscount()<old.getDiscount()) p.setPrice(or +(or*dep.getDiscount()));
+			productService.save(p);
+		}
 	}
 
 }

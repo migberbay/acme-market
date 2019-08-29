@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.DepartmentService;
+import services.MarketService;
 import services.ProductService;
 import domain.Department;
+import domain.Market;
 import domain.Product;
 import forms.StringFinderForm;
 
@@ -29,29 +31,31 @@ public class ProductController extends AbstractController {
 	
 	@Autowired
 	private DepartmentService departmentService;
+	
+	@Autowired
+	private MarketService marketService;
 
-	//Listing-----------------------------------------------------------
 
-//	@RequestMapping(value = "/list", method = RequestMethod.GET)
-//	public ModelAndView list(@RequestParam(required = false) Integer departmentId) {
-//		ModelAndView res;
-//		Collection<Product> products;
-//		
-//		if(departmentId == null){
-//			 products = productService.getMarketProducts();
-//		}else{
-//			products = productService.getProductsByDepartment(departmentId);
-//		}
-//		
-//		
-//		res = new ModelAndView("product/list");
-//		Collection<Department> deps = departmentService.findAll();
-//		res.addObject("departments",deps);
-//		res.addObject("requestURI","product/list.do");
-//		res.addObject("products", products);
-//
-//		return res;
-//	}
+	
+	// Show --------------------------------------------------------------------
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam final int productId) {
+
+		ModelAndView result;
+		result = new ModelAndView("product/show");
+
+		Product product = productService.findOne(productId);
+		if(product.getDepartment()!=null){
+			Market market = marketService.getMarketByProduct(productId);
+			result.addObject("market",market);
+		}
+		result.addObject("product", product);
+		result.addObject("uri", "product/search.do");
+
+		return result;
+	}
+
 
 	// filter: change filter parameters and lists packages -------------------------------------
 

@@ -74,7 +74,9 @@ public class DepartmentService {
 		}else{
 			Department e = departmentRepository.findOne(department.getId());
 			res=e;
-			res.setTitle(department.getTitle());
+			System.out.println(department);
+			System.out.println("Reconstruct department " + department.getTitle());
+			if(department.getTitle()!=null) res.setTitle(department.getTitle());
 			res.setDiscount(department.getDiscount());
 		}
 

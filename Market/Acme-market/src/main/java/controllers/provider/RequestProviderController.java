@@ -2,6 +2,7 @@ package controllers.provider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.validation.ValidationException;
 
@@ -77,7 +78,12 @@ public class RequestProviderController extends AbstractController {
 		ModelAndView result;
 		Request res;
 		try {
-			res = requestService.reconstruct(request,this.productId ,bindingResult);
+			res = requestService.reconstruct(request,bindingResult);
+	/*		Product p = res.getProduct();
+			Collection<Product> products = productService.getProductsByMarket(res.getMarket().getId());
+			if(products.contains(res.getProduct())){
+				
+			}*/
 			requestService.save(res);
 			result = new ModelAndView("redirect:list.do");
 		} catch (ValidationException oops) {

@@ -22,6 +22,9 @@
 <security:authorize access="hasRole('MARKET')">
 <form:form action="request/market/edit.do" modelAttribute="request">
 	
+	<form:hidden path="id"/>
+	<form:hidden path="version"/>
+	
 	<acme:select path="departmentId" code="request.department" items="${deps}" itemLabel="title"/>
 	<acme:textbox code="request.quantity" path="quantity"/>	<br/>
 
@@ -34,6 +37,9 @@
 
 <security:authorize access="hasRole('PROVIDER')">
 <form:form action="request/provider/edit.do" modelAttribute="request">
+	
+	<form:hidden path="id"/>
+	<form:hidden path="version"/>
 	
 	<form:label path="status">
 		<spring:message code="request.status" />
