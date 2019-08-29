@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.DepartmentService;
 import services.MarketService;
 import services.ProductService;
 import services.RequestService;
 import controllers.AbstractController;
+import domain.Department;
 import domain.Market;
 import domain.Product;
 import domain.Request;
@@ -32,6 +34,9 @@ public class RequestMarketController extends AbstractController {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private DepartmentService departmentService;
 	
 	private int productId;
 	// List -----------------------------------------------------------------
@@ -58,8 +63,9 @@ public class RequestMarketController extends AbstractController {
 		
 		Market logged = marketService.getPrincipal();
 		Collection<Product> products = productService.getProductsByMarket(logged.getId());
+		
 		Product t = productService.findOne(productId);
-		if(products.contains(t)){
+		if(!products.contains(t)){
 			result = new ModelAndView("error/access");
 		}else{
 			Request request = requestService.create();
@@ -70,20 +76,20 @@ public class RequestMarketController extends AbstractController {
 	}
 
 	// Edit -----------------------------------------------------------------
-/*
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int requestId) {
 		ModelAndView result;
 
 		Request request = requestService.findOne(requestId);
-		Market logged = marketService.findByPrincipal();
+		Market logged = marketService.getPrincipal();
 		if(request.getMarket().equals(logged))
 			result = this.createEditModelAndView(request);
 		else
 			result = new ModelAndView("error/access");
 		return result;
-	}*/
-/*
+	}
+
 	// Save -----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
@@ -102,7 +108,7 @@ public class RequestMarketController extends AbstractController {
 			result = this.createEditModelAndView(request,"request.commit.error");
 		}
 		return result;
-	}*/
+	}
 
 	//Helper methods --------------------------------------------------------------------------
 
@@ -117,8 +123,10 @@ public class RequestMarketController extends AbstractController {
 			
 		ModelAndView res;
 		res = new ModelAndView("request/edit");
-
+		
+		Collection<Department> deps = departmentService.findDepartmentsByPrincipal();
 		res.addObject("request", request);
+		res.addObject("deps",deps);
 		res.addObject("message", messageCode);
 
 		return res;

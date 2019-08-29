@@ -2,11 +2,16 @@ package services;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 
 import repositories.RequestRepository;
+import domain.Product;
 import domain.Request;
 
 
@@ -23,6 +28,12 @@ public class RequestService {
 	
 	@Autowired
 	private MarketService marketService;
+	
+	@Autowired
+	private ProductService productService;
+	
+	@Autowired
+	private Validator validator;
 	
 	//Simple CRUD methods -----
 	
@@ -56,4 +67,29 @@ public class RequestService {
 		return this.requestRepository.getRequestsByMarket(marketService.getPrincipal().getId());
 	}
 
+	public Request reconstruct(Request request, int productId, BindingResult bindingResult) {
+		Request res = new Request();
+		Product product = productService.findOne(productId);
+		
+		if(request.getId()==0){
+			res = request;
+			res.setStatus("PENDING");
+			res.setProvider(product.getProvider());
+			res.setProduct(product);
+			res.setMarket(marketService.getPrincipal());
+		}else{
+			Request e = requestRepository.findOne(request.getId());
+			res=e;
+			res.setQuantity(request.getQuantity());
+		}
+
+		validator.validate(res, bindingResult);
+		
+		if(bindingResult.hasErrors()){
+			System.out.println(bindingResult.getFieldErrors());
+			throw new ValidationException();
+		}
+
+		return res;
+	}
 }
