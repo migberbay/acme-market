@@ -87,5 +87,9 @@ public class DepartmentService {
 
 		return res;
 	}
+	
+	public Collection<Department> findDepartmentsByMarket(int marketId){
+		return this.departmentRepository.findDepartmentsByMarket(marketId);
+	}
 
 }

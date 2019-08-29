@@ -13,6 +13,6 @@ import domain.Department;
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
 
 	@Query("select d from Department d where d.market.id=?1")
-	Collection<Department> findDepartmentsByMarket(int marketIdd);
+	Collection<Department> findDepartmentsByMarket(int marketId);
 
 }

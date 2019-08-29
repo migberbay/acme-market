@@ -42,6 +42,7 @@
 		<security:intercept-url pattern="/actor/**" access="permitAll"/>
 		<security:intercept-url pattern="/market/**" access="permitAll"/>
 		<security:intercept-url pattern="/product/**" access="permitAll"/>
+		<security:intercept-url pattern="/department/**" access="permitAll"/>
 		<security:intercept-url pattern="/message/**" access="isAuthenticated()" /> 
 		<security:intercept-url pattern="/box/**" access="isAuthenticated()"/>
 		
