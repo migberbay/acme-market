@@ -10,10 +10,9 @@
 
 
 	<display:table name="products" id="row" requestURI="${requestURI}" pagesize="5">
-		<security:authorize access="hasRole('PROVIDER')">
 			<display:column titleKey="product.options">
-				<a href="product/provider/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
 				<security:authorize access="hasRole('PROVIDER')">
+					<a href="product/provider/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
 				<jstl:if test="${row.department==null}">
 					<a href="product/provider/edit.do?productId=${row.id}"><spring:message code="product.edit"/></a><br/>
 					<a href="product/provider/delete.do?productId=${row.id}"><spring:message code="product.delete"/></a><br/>
@@ -23,7 +22,6 @@
 					<a href="request/market/create.do?productId=${row.id}"><spring:message code="product.request"/></a><br/>		
 				</security:authorize>
 			</display:column>
-		</security:authorize>
 		
 		<display:column property="name" titleKey="product.name"/>
 		<display:column property="price" titleKey="product.price"/>
