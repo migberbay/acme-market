@@ -10,15 +10,16 @@
 
 
 	<display:table name="departments" id="row" requestURI="${requestURI}" pagesize="5">
-		<security:authorize access="hasRole('MARKET')">
-			<display:column titleKey="department.options">
+		<display:column titleKey="department.options">
+			<a href="product/list.do?departmentId=${row.id}"><spring:message code="department.product.list"/></a><br/>
+			<security:authorize access="hasRole('MARKET')">
 				<a href="department/market/show.do?departmentId=${row.id}"><spring:message code="department.show"/></a><br/>
 				<jstl:if test="${deps.contains(row)}">
 					<a href="department/market/edit.do?departmentId=${row.id}"><spring:message code="department.edit"/></a><br/>
 					<a href="department/market/delete.do?departmentId=${row.id}"><spring:message code="department.delete"/></a><br/>
-				</jstl:if>		
-			</display:column>
-		</security:authorize>
+				</jstl:if>
+			</security:authorize>		
+		</display:column>
 		
 		<display:column property="title" titleKey="department.title"/>
 		<display:column property="discount" titleKey="department.discount"/>

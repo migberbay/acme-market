@@ -33,14 +33,14 @@ public class ProductController extends AbstractController {
 	//Listing-----------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) Integer marketId) {
+	public ModelAndView list(@RequestParam(required = false) Integer departmentId) {
 		ModelAndView res;
 		Collection<Product> products;
 		
-		if(marketId == null){
+		if(departmentId == null){
 			 products = productService.getMarketProducts();
 		}else{
-			products = productService.getProductsByMarket(marketId);
+			products = productService.getProductsByDepartment(departmentId);
 		}
 		
 		
