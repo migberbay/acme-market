@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,6 +53,18 @@ public class CommentCustomerController extends AbstractController {
 	@Autowired
 	private Validator validator;
 	
+	//Listing-----------------------------------------------------------
+
+		@RequestMapping(value = "/list", method = RequestMethod.GET)
+		public ModelAndView list() {
+			ModelAndView res;
+			res = new ModelAndView("comment/list");
+			Collection<Comment> comments = commentService.findByCustomer(customerService.getPrincipal());
+			
+			res.addObject("comments", comments);
+
+			return res;
+		}
 	
 	// Create -----------------------------------------------------------------
 
@@ -89,7 +102,7 @@ public class CommentCustomerController extends AbstractController {
 
 	// Save -----------------------------------------------------------------
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@RequestParam("form")CommentForm form, BindingResult binding) {
+	public ModelAndView save(@ModelAttribute("form")CommentForm form, BindingResult binding) {
 		ModelAndView result;
 		
 		validator.validate(form, binding);
@@ -106,10 +119,12 @@ public class CommentCustomerController extends AbstractController {
 				
 				if(form.getDeliveryBoy()!= null){
 					form.getDeliveryBoy().getComments().add(comment);
+					deliveryBoyService.save(form.getDeliveryBoy());
 					result = new ModelAndView("redirect:/actor/show.do?actorId="+form.getDeliveryBoy().getId());
 				}else if(form.getProduct()!=null){
 					form.getProduct().getComments().add(comment);
-					result = new ModelAndView("redirect:/product/show.do?actorId="+form.getProduct().getId());
+					productService.save(form.getProduct());
+					result = new ModelAndView("redirect:/product/show.do?productId="+form.getProduct().getId());
 				}else{
 					result = createEditModelAndView(form);
 				}

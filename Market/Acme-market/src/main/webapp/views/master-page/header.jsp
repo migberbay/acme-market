@@ -41,6 +41,7 @@
 		
 		<security:authorize access="hasRole('CUSTOMER')">
 			<li><a class="fNiv" href="purchase/customer/list.do"><spring:message code="master.page.purchase.list" /></a></li>
+			<li><a class="fNiv" href="comment/customer/list.do"><spring:message code="master.page.comment.list" /></a></li>
 		</security:authorize>
 		
 		<security:authorize access="hasRole('DELIVERYBOY')">

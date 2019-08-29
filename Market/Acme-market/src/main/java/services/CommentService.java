@@ -50,6 +50,10 @@ public class CommentService {
 	public void delete(Comment a){
 		commentRepository.delete(a);
 	}
+
+	public Collection<Comment> findByCustomer(Customer principal){
+		return this.commentRepository.findByCustomer(principal);
+	}
 	
 	//Other business methods -----
 	
