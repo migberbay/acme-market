@@ -24,7 +24,9 @@
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	
+	<jstl:if test="${isEmpty}">
 	<acme:textbox code="department.title" path="title"/>	<br/>
+	</jstl:if>
 	<acme:textbox code="department.discount" path="discount"/>	<br/>	
 
 	<acme:submit name="save" code="department.save"/>
