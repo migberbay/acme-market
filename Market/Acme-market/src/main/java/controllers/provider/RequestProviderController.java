@@ -25,7 +25,7 @@ import domain.Request;
 
 @Controller
 @RequestMapping("/request/provider")
-public class RequestProvidetController extends AbstractController {
+public class RequestProviderController extends AbstractController {
 
 	@Autowired
 	private RequestService requestService;
