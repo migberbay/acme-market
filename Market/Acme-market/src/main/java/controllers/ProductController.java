@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.DepartmentService;
+import services.MarketService;
 import services.ProductService;
 import domain.Department;
+import domain.Market;
 import domain.Product;
 import forms.StringFinderForm;
 
@@ -29,6 +31,9 @@ public class ProductController extends AbstractController {
 	
 	@Autowired
 	private DepartmentService departmentService;
+	
+	@Autowired
+	private MarketService marketService;
 
 	//Listing-----------------------------------------------------------
 
@@ -51,6 +56,25 @@ public class ProductController extends AbstractController {
 		res.addObject("products", products);
 
 		return res;
+	}
+	
+	// Show --------------------------------------------------------------------
+
+	@RequestMapping(value = "/show", method = RequestMethod.GET)
+	public ModelAndView show(@RequestParam final int productId) {
+
+		ModelAndView result;
+		result = new ModelAndView("product/show");
+
+		Product product = productService.findOne(productId);
+		if(product.getDepartment()!=null){
+			Market market = marketService.getMarketByProduct(productId);
+			result.addObject("market",market);
+		}
+		result.addObject("product", product);
+		result.addObject("uri", "product/search.do");
+
+		return result;
 	}
 
 	// filter: change filter parameters and lists packages -------------------------------------

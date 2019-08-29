@@ -50,25 +50,6 @@ public class ProductProviderController extends AbstractController {
 	}
 		
 	
-	// Show --------------------------------------------------------------------
-
-		@RequestMapping(value = "/show", method = RequestMethod.GET)
-		public ModelAndView show(@RequestParam final int productId) {
-
-			ModelAndView result;
-			result = new ModelAndView("product/show");
-
-			Product product = productService.findOne(productId);
-			if(product.getDepartment()!=null){
-				Market market = marketService.getMarketByProduct(productId);
-				result.addObject("market",market);
-			}
-			result.addObject("product", product);
-			result.addObject("uri", "product/provider/list.do");
-
-			return result;
-		}
-	
 	// Create -----------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
