@@ -20,7 +20,6 @@
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <security:authorize access="hasRole('MARKET')">
-
 <form:form action="request/market/edit.do" modelAttribute="request">
 	
 	<acme:select path="departmentId" code="request.department" items="${deps}" itemLabel="title"/>
@@ -31,8 +30,41 @@
 	<br />	
 
 </form:form>
-
 </security:authorize>
+
+<security:authorize access="hasRole('PROVIDER')">
+<form:form action="request/provider/edit.do" modelAttribute="request">
+	
+	<form:label path="status">
+		<spring:message code="request.status" />
+	</form:label>	
+	<form:select path="status" name="status" onchange="initPage(this);">
+		<form:option value="0" label="----" />		
+		<form:options items="${items}" />
+	</form:select>
+	<form:errors path="status" cssClass="error" /><br/>
+
+	<div style="display:none" id="rejected">
+	<acme:textbox code="request.rejectReason" path="rejectReason" />
+	</div>
+	<acme:submit name="save" code="request.save"/>
+	<acme:cancel url="request/provider/list.do" code="request.cancel"/>
+	<br />	
+
+</form:form>
+</security:authorize>
+
+<script>
+function initPage(select) {
+	var selectIndex=select.selectedIndex;
+	var selectValue=select.options[selectIndex].text;
+	if(selectValue=="REJECTED"){
+		document.getElementById('rejected').style.display = 'block';
+	}else{
+		document.getElementById('rejected').style.display = 'none';
+	}
+}
+</script>
 
 
 

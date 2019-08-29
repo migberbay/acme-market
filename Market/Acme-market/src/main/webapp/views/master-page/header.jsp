@@ -55,10 +55,13 @@
 					<li><a href="department/market/create.do"><spring:message code="master.page.department.create" /></a></li>					
 				</ul>
 			</li>
+			<li><a class="fNiv" href="request/market/list.do"><spring:message code="master.page.request" /></a></li>
+			
 		</security:authorize>
 		
 		<security:authorize access="hasRole('PROVIDER')">
 			<li><a class="fNiv" href="curricula/provider/show.do"><spring:message code="master.page.curricula" /></a></li>
+			<li><a class="fNiv" href="request/provider/list.do"><spring:message code="master.page.request" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.product" /></a>
 				<ul>
 					<li class="arrow"></li>

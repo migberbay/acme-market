@@ -28,6 +28,8 @@
 <%@ attribute name="readonly" required="false" %>
 <%@ attribute name="placeholder" required="false" %>
 <%@ attribute name="id" required="false" %>
+<%@ attribute name="style" required="false" %>
+<%@ attribute name="name" required="false" %>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
@@ -39,6 +41,6 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>	
-	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}" id="${id}"/>	
+	<form:input path="${path}" name="${name}" readonly="${readonly}" placeholder="${placeholder}" id="${id}" style="${style}"/>	
 	<form:errors path="${path}" cssClass="error" />
 </div>	

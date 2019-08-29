@@ -66,6 +66,10 @@ public class RequestService {
 	public Collection<Request> getRequestsByPrincipal() {
 		return this.requestRepository.getRequestsByMarket(marketService.getPrincipal().getId());
 	}
+	
+	public Collection<Request> getRequestsByProvider(int providerId){
+		return this.requestRepository.getRequestsByProvider(providerId);
+	}
 
 	public Request reconstruct(Request request, int productId, BindingResult bindingResult) {
 		Request res = new Request();
