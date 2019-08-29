@@ -20,6 +20,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<!-- Este list lo usa todo el mundo que quiera -->
 
 
 <form:form action="product/search.do" modelAttribute="stringFinderForm">
@@ -34,7 +35,7 @@
 	
 	<display:table name="products" id="row" requestURI="${requestURI}" pagesize="5">
 			<display:column titleKey="product.options">
-				<a href="product/provider/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
+				<a href="product/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
 			</display:column>
 		<display:column property="name" titleKey="product.name"/>
 		<display:column property="price" titleKey="product.price"/>

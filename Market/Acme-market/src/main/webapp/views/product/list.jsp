@@ -8,11 +8,14 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
+<!-- Este list lo usan solo los providers (para mostrar sus productos) y los markets para pedir productos sin asignar. -->
 
 	<display:table name="products" id="row" requestURI="${requestURI}" pagesize="5">
 			<display:column titleKey="product.options">
+			
+			<a href="product/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
 				<security:authorize access="hasRole('PROVIDER')">
-					<a href="product/provider/show.do?productId=${row.id}"><spring:message code="product.show"/></a><br/>
+					
 				<jstl:if test="${row.department==null}">
 					<a href="product/provider/edit.do?productId=${row.id}"><spring:message code="product.edit"/></a><br/>
 					<a href="product/provider/delete.do?productId=${row.id}"><spring:message code="product.delete"/></a><br/>

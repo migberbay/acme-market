@@ -11,7 +11,7 @@
 
 	<display:table name="departments" id="row" requestURI="${requestURI}" pagesize="5">
 		<display:column titleKey="department.options">
-			<a href="product/list.do?departmentId=${row.id}"><spring:message code="department.product.list"/></a><br/>
+			<a href="product/search.do?departmentId=${row.id}"><spring:message code="department.product.list"/></a><br/>
 			<security:authorize access="hasRole('MARKET')">
 				<a href="department/market/show.do?departmentId=${row.id}"><spring:message code="department.show"/></a><br/>
 				<jstl:if test="${deps.contains(row)}">
