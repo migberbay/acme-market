@@ -1,6 +1,7 @@
 package services;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.validation.ValidationException;
@@ -12,20 +13,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ProductRepository;
-import domain.Market;
-import domain.Product;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import repositories.ProductRepository;
 import domain.Comment;
 import domain.Product;
 import domain.Provider;
+import forms.ProductForm;
 
 
 @Service
@@ -83,18 +74,15 @@ public class ProductService {
 	
 	//Other business methods -----
 	
-	public Product reconstruct(Product product, BindingResult bindingResult) {
-		Product res = new Product();
+	public Collection<Product> reconstruct(ProductForm form, BindingResult bindingResult) {
+		Collection<Product> res = new ArrayList<>();
+		Product aux = this.create(providerService.getPrincipal()); 
+		aux.setName(form.getName());
+		aux.setPrice(form.getPrice());
+		aux.setStock(form.getPacketSize());
 		
-		if(product.getId()==0){
-			res = product;
-			res.setProvider(providerService.getPrincipal());
-		}else{
-			Product e = productRepository.findOne(product.getId());
-			res=e;
-			res.setName(product.getName());
-			res.setPrice(product.getPrice());
-			res.setStock(product.getStock());
+		for (int i=0; i < form.getTotalStock()/form.getPacketSize(); i++) {
+			res.add(aux);		
 		}
 
 		validator.validate(res, bindingResult);
@@ -125,6 +113,10 @@ public class ProductService {
 
 	public Collection<Product> getProductsByDepartment(int departmentId) {
 		return this.productRepository.getProductsByDepartment(departmentId);
+	}
+
+	public Collection<Product> getUnassignedProducts() {
+		return this.productRepository.getUnassignedProducts();
 	}
 
 }

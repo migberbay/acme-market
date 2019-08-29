@@ -21,6 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("select p from Product p where p.department!=null")
 	Collection<Product> getMarketProducts();
 	
+	@Query("select p from Product p where p.department=null")
+	Collection<Product> getUnassignedProducts();
+	
 	@Query("select p from Product p where ((?1 is null or ?1 like '' ) or (p.name like %?1%))")
 	Collection<Product> searchProducts(String keyword);
 

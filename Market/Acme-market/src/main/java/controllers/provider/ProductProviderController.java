@@ -1,6 +1,11 @@
 package controllers.provider;
 
+import java.util.AbstractMap;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import javax.validation.ValidationException;
 
@@ -20,6 +25,7 @@ import controllers.AbstractController;
 import domain.Market;
 import domain.Product;
 import domain.Provider;
+import forms.ProductForm;
 
 @Controller
 @RequestMapping("/product/provider")
@@ -42,9 +48,34 @@ public class ProductProviderController extends AbstractController {
 		
 		Collection<Product> products = productService.findProductsByPrincipal();
 		
-		result = new ModelAndView("product/list");
-		result.addObject("products",products);		
-		result.addObject("requestURI","product/provider/list.do");
+		Map<Product,Integer> aux = new HashMap<Product, Integer>();
+		Set<Entry<Product,Integer>> productsByAmount = aux.entrySet();
+		
+		try {
+			for (Product product : products) {
+				Boolean existsInSet = false;
+				for (Entry<Product, Integer> entry : productsByAmount) {
+					if (product.getName().equals(entry.getKey().getName())) {//el producto esta en el set
+						
+						entry.setValue(entry.getValue()+1);
+						existsInSet = true;
+						break;
+					}
+				}
+				if(!existsInSet){
+					aux.put(product, 1);
+					productsByAmount = aux.entrySet();
+				}
+			}
+			
+			result = new ModelAndView("product/list");
+			result.addObject("products",productsByAmount);
+			result.addObject("auth",true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = new ModelAndView("error/access");
+		}
+		
 		
 		return result;
 	}
@@ -55,87 +86,88 @@ public class ProductProviderController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result;
-		Product product = productService.create();
 
+		ProductForm form =  new ProductForm();
+		result = this.createEditModelAndView(form);
+
+		return result;
+	}
+//	
+//	// Edit -----------------------------------------------------------------
+//
+//	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+//	public ModelAndView edit(@RequestParam final int productId) {
+//		ModelAndView result;
+//		Product product = productService.findOne(productId);	
 //		Provider logged = providerService.getPrincipal();
-		result = this.createEditModelAndView(product);
-
-		return result;
-	}
-	
-	// Edit -----------------------------------------------------------------
-
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView edit(@RequestParam final int productId) {
-		ModelAndView result;
-		Product product = productService.findOne(productId);	
-		Provider logged = providerService.getPrincipal();
-		
-		if(product.getProvider().equals(logged)){
-			result = this.createEditModelAndView(product);
-		}else
-			result = new ModelAndView("error/access");
-
-		return result;
-	}
+//		
+//		if(product.getProvider().equals(logged)){
+//			result = this.createEditModelAndView(product);
+//		}else
+//			result = new ModelAndView("error/access");
+//
+//		return result;
+//	}
 
 	// Save -----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView edit(@ModelAttribute("product")Product product, final BindingResult bindingResult) {
+	public ModelAndView edit(@ModelAttribute("form")ProductForm form, final BindingResult bindingResult) {
 		ModelAndView result;
-		Product res;
+		Collection<Product> res;
 		try {
-			res = productService.reconstruct(product,bindingResult);
-			productService.save(res);
+			res = productService.reconstruct(form,bindingResult);
+			for (Product p : res) {
+				productService.save(p);
+			}
 			result = new ModelAndView("redirect:/product/provider/list.do");
 		} catch (ValidationException oops) {
 			oops.printStackTrace();
-			result = this.createEditModelAndView(product);
+			result = this.createEditModelAndView(form);
 		} catch (final Throwable oops) {
 			oops.printStackTrace();
-			result = this.createEditModelAndView(product,"file.commit.error");
+			result = this.createEditModelAndView(form,"file.commit.error");
 		}
 		return result;
 	}
 	
 
-	// Delete -----------------------------------------------------------------
-
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView delete(@RequestParam final int productId) {
-		ModelAndView result;
-		Provider logged = providerService.getPrincipal();
-		Product product = productService.findOne(productId);
-
-		if(product.getProvider().equals(logged)){
-		try {
-			result = new ModelAndView("redirect:/product/provider/list.do");
-			productService.delete(product);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			result = this.createEditModelAndView(product, "product.commit.error");
-		}
-		}else
-			result = new ModelAndView("error/access");
-
-		return result;
-	}
+//	// Delete -----------------------------------------------------------------
+//
+//	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+//	public ModelAndView delete(@RequestParam final int productId) {
+//		ModelAndView result;
+//		Provider logged = providerService.getPrincipal();
+//		Product product = productService.findOne(productId);
+//
+//		if(product.getProvider().equals(logged)){
+//		try {
+//			result = new ModelAndView("redirect:/product/provider/list.do");
+//			productService.delete(product);
+//		} catch (final Throwable oops) {
+//			oops.printStackTrace();
+//			result = this.createEditModelAndView(product, "product.commit.error");
+//		}
+//		}else
+//			result = new ModelAndView("error/access");
+//
+//		return result;
+//	}
 
 	//Helper methods --------------------------------------------------------------------------
 
 		
-	protected ModelAndView createEditModelAndView(Product product){
+	protected ModelAndView createEditModelAndView(ProductForm form){
 		ModelAndView res;
-		res = createEditModelAndView(product, null);
+		res = createEditModelAndView(form, null);
 		return res;
 	}
 		
-	protected ModelAndView createEditModelAndView(Product product, String messageCode){
+	protected ModelAndView createEditModelAndView(ProductForm form, String messageCode){
 		ModelAndView res;
 		
 		res = new ModelAndView("product/edit");
-		res.addObject("product", product);
+		res.addObject("form", form);
 		res.addObject("message", messageCode);
 
 		return res;

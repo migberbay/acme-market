@@ -19,13 +19,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
-<form:form action="product/provider/edit.do" modelAttribute="product">
-
-	<form:hidden path="id"/>
-	<form:hidden path="version"/>
+<form:form action="product/provider/edit.do" modelAttribute="form">
 	
 	<acme:textbox code="product.name" path="name"/>	<br/>
-	<acme:textbox code="product.stock" path="stock"/>	<br/>
+	<acme:textbox code="product.stock" path="totalStock"/>	<br/>
+	<acme:textbox code="product.packetSize" path="packetSize"/>	<br/>
 	<acme:textbox code="product.price" path="price"/><br/>
 	
 

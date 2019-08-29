@@ -95,7 +95,7 @@ public class ProductController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(StringFinderForm finder, Integer departmentId){
 		ModelAndView res;
-		res = createEditModelAndView(finder, null);
+		res = createEditModelAndView(finder, departmentId, null);
 		return res;
 	}
 	

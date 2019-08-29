@@ -57,6 +57,7 @@
 				</ul>
 			</li>
 			<li><a class="fNiv" href="request/market/list.do"><spring:message code="master.page.request" /></a></li>
+			<li><a class="fNiv" href="product/market/list.do"><spring:message code="master.page.product.list.avaliable" /></a></li>
 			
 		</security:authorize>
 		
@@ -75,8 +76,7 @@
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message code="master.page.login" /></a></li>
 			<li><a class="fNiv" href="market/list.do"><spring:message code="master.page.market.list" /></a></li>
-			<li><a class="fNiv" href="product/list.do"><spring:message code="master.page.product.list" /></a></li>
-			<li><a class="fNiv" href="product/search.do"><spring:message code="master.page.product.search" /></a></li>
+			<li><a class="fNiv" href="product/search.do"><spring:message code="master.page.product.list" /></a></li>
 			<li><a class="fNiv"><spring:message	code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -89,8 +89,7 @@
 		
 		<security:authorize access="isAuthenticated()">
 		<li><a class="fNiv" href="market/list.do"><spring:message code="master.page.market.list" /></a></li>
-		<li><a class="fNiv" href="product/list.do"><spring:message code="master.page.product.list" /></a></li>
-		<li><a class="fNiv" href="product/search.do"><spring:message code="master.page.product.search" /></a></li>
+		<li><a class="fNiv" href="product/search.do"><spring:message code="master.page.product.list" /></a></li>
 			<li>
 				<a class="fNiv"> 
 					<spring:message code="master.page.profile" /> 
