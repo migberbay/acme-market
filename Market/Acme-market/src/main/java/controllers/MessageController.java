@@ -104,7 +104,7 @@ public class MessageController extends AbstractController {
 		ModelAndView res;
 		 Message message = this.messageService.findOne(messageId);
 		 
-		 if(message.getSender().equals(LoginService.getPrincipal())){
+		 if(message.getSender().equals(LoginService.getPrincipal()) || message.getRecipients().contains(LoginService.getPrincipal())){
 			 try {
 					this.messageService.delete(message);
 					res = new ModelAndView("redirect:/box/list.do");

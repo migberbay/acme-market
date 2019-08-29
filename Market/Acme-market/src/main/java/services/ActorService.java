@@ -56,6 +56,9 @@ public class ActorService {
 	private CreditCardService creditCardService;
 	
 	@Autowired
+	private BoxService boxService;
+	
+	@Autowired
 	private ConfigurationService configurationService;
 	
 	
@@ -130,6 +133,8 @@ public class ActorService {
 		res.setCreditCard(savedCC);
 
 		Customer saved = customerService.save(res);
+		
+		boxService.createSystemBoxes(saved.getUserAccount());
 				
 		return saved;
 	}
@@ -159,6 +164,7 @@ public class ActorService {
 		res.setCompanyName(form.getCompanyName());
 		
 		Market saved = marketService.save(res);
+		boxService.createSystemBoxes(saved.getUserAccount());
 		
 		return saved;
 	}
@@ -187,6 +193,8 @@ public class ActorService {
 		
 		Admin saved = adminService.save(res);
 		
+		boxService.createSystemBoxes(saved.getUserAccount());
+		
 		return saved;
 	}
 	
@@ -210,6 +218,8 @@ public class ActorService {
 		
 		Provider saved = providerService.save(res);
 		
+		boxService.createSystemBoxes(saved.getUserAccount());
+		
 		return saved;
 	}
 	
@@ -232,6 +242,8 @@ public class ActorService {
 		res.setPhoto(actor.getPhoto());
 		
 		DeliveryBoy saved = deliveryBoyService.save(res);
+		
+		boxService.createSystemBoxes(saved.getUserAccount());
 		
 		return saved;
 	}

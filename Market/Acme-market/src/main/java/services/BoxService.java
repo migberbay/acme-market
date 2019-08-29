@@ -14,6 +14,7 @@ import repositories.BoxRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Box;
+import domain.Customer;
 import domain.Message;
 
 @Service
@@ -93,7 +94,7 @@ public class BoxService {
 		outbox.setName("Out Box");
 		outbox.setMessages(new ArrayList<Message>());
 		thrashbox.setUserAccount(userAccount);
-		thrashbox.setName("Thrash Box");
+		thrashbox.setName("Trash Box");
 		thrashbox.setMessages(new ArrayList<Message>());
 
 
@@ -116,6 +117,5 @@ public class BoxService {
 	public Box saveSystem( Box box) {
 		return this.boxRepository.save(box);
 	}
-
 
 }

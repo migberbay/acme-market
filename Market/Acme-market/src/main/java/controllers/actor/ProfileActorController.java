@@ -108,8 +108,17 @@ public class ProfileActorController extends AbstractController {
 
 		result = new ModelAndView("actor/show");
 
+		System.out.println("actorId recieved: " + actorId);
+		
 		if (actorId != null) { //accedemos al perfil de otro actor
-			Actor actor = actorService.findOne(actorId);
+			//Actor actor = actorService.findOne(actorId); esto ha dejado de funcionar???
+			Actor actor = null;
+			System.out.println();
+			for (Actor a : actorService.findAll()) {
+				if(a.getId() == actorId){
+					actor = a;
+				}
+			}
 				
 			result.addObject("actor", actor); // actor que se va a mostrar
 			result.addObject("logged", false); // flag para permitir editar

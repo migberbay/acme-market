@@ -19,6 +19,7 @@ public class Customer extends Actor {
 	private CreditCard creditCard;
 	private Collection<Market> markets;
 	private Collection<Purchase> purchases;
+	private Collection<Comment> comments;
 	
 	@OneToOne (optional = false)
 	public CreditCard getCreditCard() {
@@ -47,6 +48,16 @@ public class Customer extends Actor {
 
 	public void setPurchases(Collection<Purchase> purchases) {
 		this.purchases = purchases;
+	}
+	
+	@Valid
+	@OneToMany
+	public Collection<Comment> getComments() {
+		return comments;
+	}
+	
+	public void setComments(Collection<Comment> comments) {
+		this.comments = comments;
 	}
 	
 	

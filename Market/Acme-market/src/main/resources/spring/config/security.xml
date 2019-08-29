@@ -60,6 +60,7 @@
 
 		<security:intercept-url pattern="/purchase/customer/**" access="hasRole('CUSTOMER')" /> 
 		<security:intercept-url pattern="/customer/market/**" access="hasRole('CUSTOMER')" /> 
+		<security:intercept-url pattern="/comment/customer/**" access="hasRole('CUSTOMER')" /> 
 		
 		<security:intercept-url pattern="/purchase/deliveryBoy/**" access="hasRole('DELIVERYBOY')" />
 

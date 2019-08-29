@@ -27,12 +27,16 @@
 <spring:message code="purchase.status"/>:	<jstl:out value="${purchase.status }"/><br>
 <spring:message code="purchase.estimatedDate"/>: <jstl:out value="${purchase.estimatedDate }"/><br>
 
-<spring:message code="purchase.DeliveryBoy"/>: <jstl:out value="${purchase.deliveryBoy.name}"/><br><br>
+<spring:message code="purchase.DeliveryBoy"/>: <a href="actor/show.do?actorId=${purchase.deliveryBoy.id}"><jstl:out value="${purchase.deliveryBoy.name}"/></a>
+<input type="button" onclick="location.href='comment/customer/create.do?deliveryBoyId=${purchase.deliveryBoy.id}';" value="Rate!" />
+
+<br><br>
 
 <spring:message code="purchase.Cart"/>:<br>
 <jstl:forEach items="${purchase.products}" var="x">
 	<spring:message code="purchase.product.name"/>: <jstl:out value="${x.name}"/> ,
-	<spring:message code="purchase.product.price"/>: <jstl:out value="${x.price}"/> <br>
+	<spring:message code="purchase.product.price"/>: <jstl:out value="${x.price}"/>
+	<input type="button" onclick="location.href='comment/customer/create.do?productId=${x.id}';" value="Rate!" /> <br>
 </jstl:forEach>
 <br>
 

@@ -19,14 +19,14 @@
 				<br/><a href="customer/market/join.do?marketId=${row.id}"><spring:message code="market.join"/></a>
 			</jstl:if>
 			<jstl:if test="${customer.markets.contains(row)}">
-				<a href = "purchase/customer/create.do?marketId=${row.id}">Open a Purchase</a>
+				<a href = "purchase/customer/create.do?marketId=${row.id}"><spring:message code="market.purchase.open"/></a>
 				<br/><a href = "customer/market/leave.do?marketId=${row.id}"><spring:message code="market.leave"/></a>
 			</jstl:if>
 		</display:column>
 	</jstl:if>
 		
 		<display:column titleKey="market.products">
-			<a href = "product/list.do?marketId=${row.id}">Show</a>
+			<a href = "department/list.do?marketId=${row.id}"><spring:message code="market.department.list"/></a>
 		</display:column>
 		<display:column property="companyName" titleKey="market.companyName" />
 	
