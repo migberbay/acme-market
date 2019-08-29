@@ -1,4 +1,4 @@
-package controllers.market;
+package controllers.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +14,8 @@ import domain.Customer;
 import domain.Market;
 
 @Controller
-@RequestMapping("/customer/market")
-public class CustomerMarketController extends AbstractController {
+@RequestMapping("/market/customer")
+public class MarketCustomerController extends AbstractController {
 
 	@Autowired
 	private MarketService marketService;
