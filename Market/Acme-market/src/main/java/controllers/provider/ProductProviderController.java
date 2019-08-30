@@ -1,11 +1,10 @@
 package controllers.provider;
 
-import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.validation.ValidationException;
 
@@ -22,9 +21,7 @@ import services.MarketService;
 import services.ProductService;
 import services.ProviderService;
 import controllers.AbstractController;
-import domain.Market;
 import domain.Product;
-import domain.Provider;
 import forms.ProductForm;
 
 @Controller
@@ -88,6 +85,7 @@ public class ProductProviderController extends AbstractController {
 		ModelAndView result;
 
 		ProductForm form =  new ProductForm();
+		form.setCreating(true);
 		result = this.createEditModelAndView(form);
 
 		return result;
@@ -118,6 +116,7 @@ public class ProductProviderController extends AbstractController {
 		Product product = productService.findOne(productId);	
 		
 		ProductForm form =  new ProductForm();
+		form.setCreating(false);
 		form.setName(product.getName());
 		form.setPrice(product.getPrice());
 		form.setPacketSize(product.getStock());
@@ -132,19 +131,27 @@ public class ProductProviderController extends AbstractController {
 	public ModelAndView edit(@ModelAttribute("form")ProductForm form, final BindingResult bindingResult) {
 		ModelAndView result;
 		Collection<Product> res;
-		try {
-			res = productService.reconstruct(form,bindingResult);
-			for (Product p : res) {
-				productService.save(p);
+		Collection <Product> aux = productService.getProductsByNameAndProvider(form.getName(), providerService.getPrincipal().getId());
+		
+		if(form.getCreating() == true && aux.isEmpty()){//no hay colision
+			try {
+				res = productService.reconstruct(form,bindingResult);
+				for (Product p : res) {
+					productService.save(p);
+				}
+				result = new ModelAndView("redirect:/product/provider/list.do");
+			} catch (ValidationException oops) {
+				oops.printStackTrace();
+				result = this.createEditModelAndView(form);
+			} catch (final Throwable oops) {
+				oops.printStackTrace();
+				result = this.createEditModelAndView(form,"file.commit.error");
 			}
-			result = new ModelAndView("redirect:/product/provider/list.do");
-		} catch (ValidationException oops) {
-			oops.printStackTrace();
-			result = this.createEditModelAndView(form);
-		} catch (final Throwable oops) {
-			oops.printStackTrace();
-			result = this.createEditModelAndView(form,"file.commit.error");
+		}else{
+			result = list();
+			result.addObject("nameCollision",true);
 		}
+		
 		return result;
 	}
 	

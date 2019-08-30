@@ -6,7 +6,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 
 public class ProductForm {
-
+	
+	private Boolean creating;
 	private String name;
 	private Integer totalStock;
 	private Integer packetSize;
@@ -44,8 +45,13 @@ public class ProductForm {
 		this.price = price;
 	}
 	
-	
-
+	@NotNull
+	public Boolean getCreating() {
+		return creating;
+	}
+	public void setCreating(Boolean creating) {
+		this.creating = creating;
+	}
 
 	
 }

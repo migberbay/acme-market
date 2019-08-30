@@ -124,6 +124,10 @@ public class ProductService {
 		return this.productRepository.getUnasignedProductsByNameAndProvider(name, providerId);
 	}
 	
+	public Collection<Product> getProductsByNameAndProvider(String name, int providerId){
+		return this.productRepository.getProductsByNameAndProvider(name, providerId);
+	}
+	
 	public Double getScore(Product d){
 		Double res = 0.;
 		Double cont = 0.;

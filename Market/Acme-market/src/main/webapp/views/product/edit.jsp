@@ -21,15 +21,17 @@
 
 <form:form action="product/provider/edit.do" modelAttribute="form">
 	
+		<form:hidden path="creating"/>
+		
 	<jstl:if test="${stock}">
 		<form:hidden path="name"/>
 		<form:hidden path="price"/>
 		<form:hidden path="packetSize"/>
 	</jstl:if>
 	<jstl:if test="${stock == false}">
-	<acme:textbox code="product.name" path="name"/>	<br/>
-	<acme:textbox code="product.price" path="price"/><br/>
-	<acme:textbox code="product.packetSize" path="packetSize"/>	<br/>
+		<acme:textbox code="product.name" path="name"/>	<br/>
+		<acme:textbox code="product.price" path="price"/><br/>
+		<acme:textbox code="product.packetSize" path="packetSize"/>	<br/>
 	</jstl:if>
 	<acme:textbox code="product.stock" path="totalStock"/>	<br/>
 	

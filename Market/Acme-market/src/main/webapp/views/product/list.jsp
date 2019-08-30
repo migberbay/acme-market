@@ -9,18 +9,22 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <!-- Este list lo usan solo los providers (para mostrar sus productos) y los markets para pedir productos sin asignar. -->
-
+<jstl:if test="${nameCollision}">
+	<div class="error">
+		You've Already used that name! Try adding stock instead.
+	</div>
+</jstl:if>
 	<display:table name="products" id="row" requestURI="${requestURI}" pagesize="5">
 			<display:column titleKey="product.options">
 			
 			<a href="product/show.do?productId=${row.getKey().id}"><spring:message code="product.show"/></a><br/>
 				<security:authorize access="hasRole('PROVIDER')">
-				<jstl:if test="${row.getKey().department==null}">
+				<%-- <jstl:if test="${row.getKey().department==null}">
 					<a href="product/provider/edit.do?productId=${row.getKey().id}"><spring:message code="product.edit"/></a><br/>
 					<!-- edits all the unassigned ones -->
 					<a href="product/provider/delete.do?productId=${row.getKey().id}"><spring:message code="product.delete"/></a><br/>
 					<!-- deletes all the unassigned ones -->
-				</jstl:if>		
+				</jstl:if>	 --%>	
 				<a href="product/provider/addStock.do?productId=${row.getKey().id}"><spring:message code="product.addStock"/></a><br/>
 				</security:authorize>
 				
