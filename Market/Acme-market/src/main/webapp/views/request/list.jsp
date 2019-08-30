@@ -17,7 +17,6 @@
 			</jstl:if>			
 		</display:column>		
 		<display:column property="status" titleKey="request.status"  />
-		<display:column property="quantity" titleKey="request.quantity"  />
 		<display:column property="rejectReason" titleKey="request.rejectReason"  />
 		<display:column titleKey="request.department">
 			<jstl:out value="${department.title}"/>
@@ -35,7 +34,6 @@
 			</jstl:if>			
 		</display:column>		
 		<display:column property="status" titleKey="request.status"  />
-		<display:column property="quantity" titleKey="request.quantity"  />
 		<display:column property="rejectReason" titleKey="request.rejectReason"  />
 		<display:column titleKey="request.department">
 			<jstl:out value="${department.title}"/>
