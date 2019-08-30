@@ -108,6 +108,23 @@ public class ProductProviderController extends AbstractController {
 //
 //		return result;
 //	}
+	
+	
+	// Add stock -----------------------------------------------------------------
+
+	@RequestMapping(value = "/addStock", method = RequestMethod.GET)
+	public ModelAndView addStock(@RequestParam final int productId) {
+		ModelAndView result;
+		Product product = productService.findOne(productId);	
+		
+		ProductForm form =  new ProductForm();
+		form.setName(product.getName());
+		form.setPrice(product.getPrice());
+		form.setPacketSize(product.getStock());
+		result = this.createEditModelAndView(form);
+
+		return result;
+	}
 
 	// Save -----------------------------------------------------------------
 
@@ -167,6 +184,8 @@ public class ProductProviderController extends AbstractController {
 		ModelAndView res;
 		
 		res = new ModelAndView("product/edit");
+		if(form.getName()!=null) res.addObject("stock",true);
+		else res.addObject("stock",false);
 		res.addObject("form", form);
 		res.addObject("message", messageCode);
 

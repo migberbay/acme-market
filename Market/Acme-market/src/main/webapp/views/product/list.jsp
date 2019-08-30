@@ -21,7 +21,9 @@
 					<a href="product/provider/delete.do?productId=${row.getKey().id}"><spring:message code="product.delete"/></a><br/>
 					<!-- deletes all the unassigned ones -->
 				</jstl:if>		
+				<a href="product/provider/addStock.do?productId=${row.getKey().id}"><spring:message code="product.addStock"/></a><br/>
 				</security:authorize>
+				
 				<security:authorize access="hasRole('MARKET')">
 					<a href="request/market/create.do?productId=${row.getKey().id}"><spring:message code="product.request"/></a><br/>		
 				</security:authorize>
