@@ -77,7 +77,9 @@ public class DepartmentService {
 		}else{
 			Department e = departmentRepository.findOne(department.getId());
 			res=e;
-
+			if(!e.getDiscount().equals(department.getDiscount())){
+				this.applyDiscount(e.getDiscount(),department.getDiscount(), department.getId());
+			}
 			if(department.getTitle()!=null) res.setTitle(department.getTitle());
 			res.setDiscount(department.getDiscount());
 		}
@@ -89,8 +91,6 @@ public class DepartmentService {
 			throw new ValidationException();
 		}
 
-		if(department.getId()!=0) this.applyDiscount(department);
-
 		return res;
 	}
 	
@@ -98,18 +98,17 @@ public class DepartmentService {
 		return this.departmentRepository.findDepartmentsByMarket(marketId);
 	}
 
-	private void applyDiscount(Department dep){
-		System.out.println("DISCOUNTS");
-		Department old = this.findOne(dep.getId());
-		Collection<Product> products = productService.getProductsByDepartment(dep.getId());
-		System.out.println("LIST PRODUCTS DEPARTAMENT " + products);
+	private void applyDiscount(Double old, Double newS, int departmentId){
+		Collection<Product> products = productService.getProductsByDepartment(departmentId);
+
 		for(Product p: products){
-			System.out.println("FOR P " + p.getPrice());
-			System.out.println("dISCOUNTS DEP " + dep.getDiscount() + " DISCOUNT OLD " + old.getDiscount());
-			Double or = Math.abs(1/(p.getPrice()-old.getDiscount()));
-			if(dep.getDiscount()>old.getDiscount()) p.setPrice(or -(or*dep.getDiscount()));
-			if(dep.getDiscount()<old.getDiscount()) p.setPrice(or +(or*dep.getDiscount()));
-			System.out.println("FOR P 2 " + p.getPrice());
+			Double or;
+			if(old==0d) or= p.getPrice();
+			else or = Math.abs(p.getPrice()/(1-old));
+			
+			Double op = or -(or*newS);
+			p.setPrice(Math.round(op*100.0d)/100.0d);
+
 			productService.save(p);
 		}
 	}
