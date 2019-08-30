@@ -786,7 +786,6 @@
 	<bean id="request1" class="domain.Request">
 		<property name="departmentId" value="40" />
 		<property name="status" value="PENDING" />
-		<property name="quantity" value="10" />
 		<property name="market" ref="market1" />
 		<property name="provider" ref="provider1" />
 		<property name="product" ref="product15" />
@@ -795,7 +794,6 @@
 	<bean id="request2" class="domain.Request">
 		<property name="departmentId" value="41" />
 		<property name="status" value="ACCEPTED" />
-		<property name="quantity" value="20" />
 		<property name="market" ref="market1" />
 		<property name="provider" ref="provider1" />
 		<property name="product" ref="product12" />
@@ -805,7 +803,6 @@
 		<property name="departmentId" value="42" />
 		<property name="status" value="REJECTED" />
 		<property name="rejectReason" value="Was rejected" />
-		<property name="quantity" value="21" />
 		<property name="market" ref="market2" />
 		<property name="provider" ref="provider2" />
 		<property name="product" ref="product4" />

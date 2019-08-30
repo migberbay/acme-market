@@ -108,6 +108,7 @@ public class ProductController extends AbstractController {
 			products.addAll(productService.getMarketProducts());
 		}else if(finder.getKeyword().isEmpty() && departmentId != null){
 			products = productService.getProductsByDepartment(departmentId);
+			System.out.println("LIST DEPARTMENTS " + products);
 		}else{
 			products.addAll(productService.searchProducts(finder.getKeyword()));
 		}

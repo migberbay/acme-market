@@ -18,7 +18,6 @@ public class Request extends DomainEntity {
 	private int departmentId;
 	private String status;
 	private String rejectReason;
-	private Integer quantity;
 	
 	@NotNull
 	public int getDepartmentId() {
@@ -45,15 +44,6 @@ public class Request extends DomainEntity {
 
 	public void setRejectReason(String rejectReason) {
 		this.rejectReason = rejectReason;
-	}
-
-	@NotNull
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
 	}
 
 	//Relationships

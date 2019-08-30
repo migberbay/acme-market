@@ -25,8 +25,7 @@
 	<form:hidden path="id"/>
 	<form:hidden path="version"/>
 	
-	<acme:select path="departmentId" code="request.department" items="${deps}" itemLabel="title"/>
-	<acme:textbox code="request.quantity" path="quantity"/>	<br/>
+	<acme:select path="department" code="request.department" items="${deps}" itemLabel="title"/>
 
 	<acme:submit name="save" code="request.save"/>
 	<acme:cancel url="request/market/list.do" code="request.cancel"/>

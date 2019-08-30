@@ -119,4 +119,7 @@ public class ProductService {
 		return this.productRepository.getUnassignedProducts();
 	}
 
+	public Collection<Product> getUnasignedProductsByNameAndProvider(String name, int providerId){
+		return this.productRepository.getUnasignedProductsByNameAndProvider(name, providerId);
+	}
 }

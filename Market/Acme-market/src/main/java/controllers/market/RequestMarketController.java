@@ -7,6 +7,7 @@ import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import domain.Department;
 import domain.Market;
 import domain.Product;
 import domain.Request;
+import forms.RequestForm;
 
 @Controller
 @RequestMapping("/request/market")
@@ -64,14 +66,9 @@ public class RequestMarketController extends AbstractController {
 		Product product = productService.findOne(productId);
 		
 		if(LoginService.hasRole("MARKET") && product.getDepartment() == null){
-			Request res = requestService.create();
+			RequestForm res = new RequestForm();
 			try {
 				this.productId = productId;
-				res.setMarket(marketService.getPrincipal());
-				res.setProduct(product);
-				res.setProvider(product.getProvider());
-				res.setStatus("PENDING");
-				
 				result = createEditModelAndView(res);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -92,8 +89,9 @@ public class RequestMarketController extends AbstractController {
 
 		Request request = requestService.findOne(requestId);
 		Market logged = marketService.getPrincipal();
+		RequestForm form = requestService.construct(request);
 		if(request.getMarket().equals(logged))
-			result = this.createEditModelAndView(request);
+			result = this.createEditModelAndView(form);
 		else
 			result = new ModelAndView("error/access");
 		return result;
@@ -102,7 +100,7 @@ public class RequestMarketController extends AbstractController {
 	// Save -----------------------------------------------------------------
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView edit(final Request request, final BindingResult bindingResult) {
+	public ModelAndView edit(@ModelAttribute("request") RequestForm request, final BindingResult bindingResult) {
 		ModelAndView result;
 		Request res;
 		try {
@@ -122,13 +120,13 @@ public class RequestMarketController extends AbstractController {
 	//Helper methods --------------------------------------------------------------------------
 
 		
-	protected ModelAndView createEditModelAndView(Request request){
+	protected ModelAndView createEditModelAndView(RequestForm request){
 		ModelAndView res;
 		res = createEditModelAndView(request, null);
 		return res;
 	}
 		
-	protected ModelAndView createEditModelAndView(Request request, String messageCode){
+	protected ModelAndView createEditModelAndView(RequestForm request, String messageCode){
 			
 		ModelAndView res;
 		res = new ModelAndView("request/edit");

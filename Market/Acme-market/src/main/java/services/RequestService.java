@@ -13,6 +13,7 @@ import org.springframework.validation.Validator;
 import repositories.RequestRepository;
 import domain.Product;
 import domain.Request;
+import forms.RequestForm;
 
 
 @Service
@@ -31,6 +32,9 @@ public class RequestService {
 	
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private DepartmentService departmentService;
 	
 	@Autowired
 	private Validator validator;
@@ -71,20 +75,20 @@ public class RequestService {
 		return this.requestRepository.getRequestsByProvider(providerId);
 	}
 
-	public Request reconstruct(Request request, int productId, BindingResult bindingResult) {
+	public Request reconstruct(RequestForm request, int productId, BindingResult bindingResult) {
 		Request res = new Request();
 		Product product = productService.findOne(productId);
 		
 		if(request.getId()==0){
-			res = request;
 			res.setStatus("PENDING");
 			res.setProvider(product.getProvider());
 			res.setProduct(product);
 			res.setMarket(marketService.getPrincipal());
+			res.setDepartmentId(request.getDepartment().getId());
 		}else{
 			Request e = requestRepository.findOne(request.getId());
 			res=e;
-			res.setQuantity(request.getQuantity());
+			res.setDepartmentId(request.getDepartment().getId());
 		}
 
 		validator.validate(res, bindingResult);
@@ -94,6 +98,15 @@ public class RequestService {
 			throw new ValidationException();
 		}
 
+		return res;
+	}
+
+	public RequestForm construct(Request request) {
+		RequestForm res = new RequestForm();
+		
+		res.setId(request.getId());
+		res.setVersion(request.getVersion());
+		res.setDepartment(departmentService.findOne(request.getDepartmentId()));
 		return res;
 	}
 	
