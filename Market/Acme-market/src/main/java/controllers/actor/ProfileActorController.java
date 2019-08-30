@@ -112,15 +112,19 @@ public class ProfileActorController extends AbstractController {
 		
 		if (actorId != null) { //accedemos al perfil de otro actor
 			//Actor actor = actorService.findOne(actorId); esto ha dejado de funcionar???
-			Actor actor = null;
-			System.out.println();
 			for (Actor a : actorService.findAll()) {
 				if(a.getId() == actorId){
-					actor = a;
+					if(a.getUserAccount().getAuthorities().contains(deliveryBoyAuth)){
+						DeliveryBoy actor = deliveryBoyService.findOne(actorId);
+						result.addObject("actor", actor); // actor que se va a mostr
+						result.addObject("actorIsDeliveryBoy", true);
+					}else{
+						Actor actor = a;
+						result.addObject("actor", actor); // actor que se va a mostr
+					}
+					
 				}
 			}
-				
-			result.addObject("actor", actor); // actor que se va a mostrar
 			result.addObject("logged", false); // flag para permitir editar
 			
 			
@@ -160,7 +164,7 @@ public class ProfileActorController extends AbstractController {
 				Provider provider = providerService.findOne(actor.getId());
 				result.addObject("actor", provider);
 				result.addObject("curricula",curriculaService.findCurriculaByProvider(provider.getId()));
-				result.addObject("actorIsProvidert",true);
+				result.addObject("actorIsProvider",true);
 			}
 		}
 		

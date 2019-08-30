@@ -14,6 +14,7 @@ import org.springframework.validation.Validator;
 
 import repositories.ProductRepository;
 import domain.Comment;
+import domain.DeliveryBoy;
 import domain.Product;
 import domain.Provider;
 import forms.ProductForm;
@@ -121,5 +122,17 @@ public class ProductService {
 
 	public Collection<Product> getUnasignedProductsByNameAndProvider(String name, int providerId){
 		return this.productRepository.getUnasignedProductsByNameAndProvider(name, providerId);
+	}
+	
+	public Double getScore(Product d){
+		Double res = 0.;
+		Double cont = 0.;
+		for (Comment c : d.getComments()) {
+			Double score = new Double(c.getScore());
+			res += score;
+			cont++;
+		}
+		res = res/cont;
+		return res;
 	}
 }

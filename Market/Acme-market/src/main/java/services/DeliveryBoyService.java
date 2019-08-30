@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import repositories.DeliveryBoyRepository;
 import security.LoginService;
 import security.UserAccount;
+import domain.Comment;
 import domain.DeliveryBoy;
 import domain.Customer;
 
@@ -55,6 +56,18 @@ public class DeliveryBoyService {
 	
 	public DeliveryBoy getPrincipal(){
 		return this.deliveryBoyRepository.findByPrincipal(LoginService.getPrincipal());
+	}
+	
+	public Double getScore(DeliveryBoy d){
+		Double res = 0.;
+		Double cont = 0.;
+		for (Comment c : d.getComments()) {
+			Double score = new Double(c.getScore());
+			res += score;
+			cont++;
+		}
+		res = res/cont;
+		return res;
 	}
 
 }

@@ -10,6 +10,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<!-- PUBLIC DATA -->
 	<div>		
 		<b><spring:message code="actor.username"/></b>: <jstl:out value="${actor.userAccount.username}"/> <br/>	
 		<b><spring:message code="actor.name"/></b>: <jstl:out value="${actor.name}"/> <br/>
@@ -19,10 +20,26 @@
 		<b><spring:message code="actor.email"/></b>: <jstl:out value="${actor.email}"/> <br/>			 				 
 		<b><spring:message code="actor.phone"/></b>: <jstl:out value="${actor.phone}"/> <br/>
 		<b><spring:message code="actor.address"/></b>: <jstl:out value="${actor.address}"/> <br/>
+		<jstl:if test="${logged}">
+			<b><a href="actor/editPersonal.do"><spring:message code="actor.edit" /></a> Personal Data</b> <br/>
+		</jstl:if>
 		<br>
+	
+	<jstl:if test="${actorIsDeliveryBoy}">
+	COMMENTS:<br>
+		<display:table name="actor.comments" id="row" requestURI="actor/show.do" pagesize="5">
+		<display:column titleKey="actor.customer">
+			<a href="actor/show.do?actorId=${row.customer.id}"><jstl:out value="${row.customer.userAccount.username}"/></a><br/>	
+		</display:column>
 		
+		<display:column property="text" titleKey="comment.text"/>
+		<display:column property="score" titleKey="comment.score"/>
+
+	</display:table>
+	</jstl:if>
+
+<!-- PRIVATE DATA -->		
 	<jstl:if test="${logged}">
-		<b><a href="actor/editPersonal.do"><spring:message code="actor.edit" /></a> Personal Data</b> <br/>
 		
 		<jstl:if test="${actorIsProvider}">
 			<jstl:choose>
@@ -49,17 +66,6 @@
 	</jstl:if>
 	</div>
 	<br/>
-	
-	<jstl:if test="${(actorIsScientist or actorIsCustomer) and logged}">
-  			<jstl:choose>
-  				<jstl:when test="${actor.creditCard == null}">
-  					you have no credit card created, make one <a href ="actor/editCreditCard.do" >here</a>.
-  				</jstl:when>
-  				<jstl:otherwise>
-  					
-  				</jstl:otherwise>
-  			</jstl:choose>
-		</jstl:if>  
 		
 	<jstl:if test="${logged}">
 			<br>
