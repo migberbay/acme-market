@@ -19,6 +19,7 @@ import services.ProductService;
 import controllers.AbstractController;
 import domain.Configuration;
 import domain.DeliveryBoy;
+import domain.Product;
 
 @Controller
 @RequestMapping("/system/admin/")
@@ -79,6 +80,21 @@ public class ConfigurationAdminController extends AbstractController {
 		}
 		res.addObject("deliveryBoysByScore",deliveryBoyByScore.entrySet());
 		res.addObject("showDelivery", true);
+		return res;
+	}
+	
+	
+	@RequestMapping(value="/computeProducts", method=RequestMethod.GET)
+	public ModelAndView computeScoreProducts(){
+		ModelAndView res = new ModelAndView("admin/score");
+		
+		
+		Map<Product, Double> productsByScore = new HashMap<>();
+		for (Product product : productService.findAll()) {
+			productsByScore.put(product, productService.getScore(product));
+		}
+		res.addObject("productByScore",productsByScore.entrySet());
+		res.addObject("showProduct", true);
 		return res;
 	}
 	
