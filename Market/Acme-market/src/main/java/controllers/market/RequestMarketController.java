@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import security.LoginService;
 import services.DepartmentService;
 import services.MarketService;
 import services.ProductService;
@@ -38,7 +39,7 @@ public class RequestMarketController extends AbstractController {
 	@Autowired
 	private DepartmentService departmentService;
 	
-	private int productId;
+	int productId;
 	// List -----------------------------------------------------------------
 	
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -60,17 +61,25 @@ public class RequestMarketController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create(@RequestParam int productId) {
 		ModelAndView result;
+		Product product = productService.findOne(productId);
 		
-		Market logged = marketService.getPrincipal();
-		Collection<Product> products = productService.getProductsByMarket(logged.getId());
-		
-		Product t = productService.findOne(productId);
-		if(!products.contains(t)){
-			result = new ModelAndView("error/access");
+		if(LoginService.hasRole("MARKET") && product.getDepartment() == null){
+			Request res = requestService.create();
+			try {
+				this.productId = productId;
+				res.setMarket(marketService.getPrincipal());
+				res.setProduct(product);
+				res.setProvider(product.getProvider());
+				res.setStatus("PENDING");
+				
+				result = createEditModelAndView(res);
+			} catch (Exception e) {
+				e.printStackTrace();
+				result = createEditModelAndView(res,"commit.error");
+			}
+			
 		}else{
-			Request request = requestService.create();
-			this.productId=productId;
-			result = this.createEditModelAndView(request);
+			result =  new ModelAndView("error/access");
 		}
 		return result;
 	}
