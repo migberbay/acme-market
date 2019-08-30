@@ -81,16 +81,12 @@ public class RequestProviderController extends AbstractController {
 			res = requestService.reconstruct(request,bindingResult);
 			Product p = res.getProduct();
 			Collection<Product> products = productService.getUnasignedProductsByNameAndProvider(p.getName(), p.getProvider().getId());
-			System.out.println("REQUEST SAVE COL " + products );
 			if(products.isEmpty()){
 				res.setStatus("REJECTED");
 				res.setRejectReason("Not enough stock; try again later");
 			}else if(request.getStatus().equals("ACCEPTED")){
 				Product pr = (Product) products.toArray()[0];
-				System.out.println("ACCEPTED " + pr + " " + pr.getDepartment());
-				System.out.println("WTF " + request.getDepartmentId());
-				pr.setDepartment(departmentService.findOne(request.getDepartmentId()));
-				System.out.println(" UWU " + pr.getDepartment());
+				pr.setDepartment(departmentService.findOne(res.getDepartmentId()));
 				productService.save(pr);
 			}
 			requestService.save(res);

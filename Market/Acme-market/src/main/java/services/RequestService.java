@@ -78,7 +78,7 @@ public class RequestService {
 	public Request reconstruct(RequestForm request, int productId, BindingResult bindingResult) {
 		Request res = new Request();
 		Product product = productService.findOne(productId);
-		
+		System.out.println("RECONSTRUCT MARKET " + request.getDepartment());
 		if(request.getId()==0){
 			res.setStatus("PENDING");
 			res.setProvider(product.getProvider());

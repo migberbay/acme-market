@@ -19,5 +19,16 @@
 		</div>
 		<br/>
 		
+		<h3><spring:message code="product.comments"/></h3>
+		<display:table name="product.comments" id="row" requestURI="product/show.do" pagesize="5">
+			<display:column titleKey="product.customer">
+				<a href="actor/show.do?actorId=${row.customer.id}"><jstl:out value="${row.customer.userAccount.username}"/></a><br/>	
+			</display:column>
+		
+			<display:column property="text" titleKey="product.comment.text"/>
+			<display:column property="score" titleKey="product.comment.score"/>
+
+	</display:table>
+	
 		<acme:cancel url="${uri}" code="product.back"/>
 		

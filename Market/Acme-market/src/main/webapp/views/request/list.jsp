@@ -19,7 +19,7 @@
 		<display:column property="status" titleKey="request.status"  />
 		<display:column property="rejectReason" titleKey="request.rejectReason"  />
 		<display:column titleKey="request.department">
-			<jstl:out value="${department.title}"/>
+			<jstl:out value="${row.departmentId}"/>
 		</display:column>
 		<display:column property="market.companyName" titleKey="request.market"  />
 		<display:column property="provider.userAccount.username" titleKey="request.provider"  />
@@ -36,7 +36,7 @@
 		<display:column property="status" titleKey="request.status"  />
 		<display:column property="rejectReason" titleKey="request.rejectReason"  />
 		<display:column titleKey="request.department">
-			<jstl:out value="${department.title}"/>
+			<jstl:out value="${row.departmentId}"/>
 		</display:column>
 		<display:column property="market.companyName" titleKey="request.market"  />
 		<display:column property="provider.userAccount.username" titleKey="request.provider"  />

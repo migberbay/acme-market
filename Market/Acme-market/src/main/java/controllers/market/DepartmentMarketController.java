@@ -118,7 +118,6 @@ public class DepartmentMarketController extends AbstractController {
 			Department res;
 			try {
 				res = departmentService.reconstruct(department,bindingResult);
-				if(department.getId()!=0) this.applyDiscount(res);
 				departmentService.save(res);
 				result = new ModelAndView("redirect:/department/market/list.do");
 			} catch (ValidationException oops) {
@@ -179,12 +178,17 @@ public class DepartmentMarketController extends AbstractController {
 	}
 	
 	private void applyDiscount(Department dep){
+		System.out.println("DISCOUNTS");
 		Department old = departmentService.findOne(dep.getId());
 		Collection<Product> products = productService.getProductsByDepartment(dep.getId());
+		System.out.println("LIST PRODUCTS DEPARTAMENT " + products);
 		for(Product p: products){
+			System.out.println("FOR P " + p.getPrice());
+			System.out.println("dISCOUNTS DEP " + dep.getDiscount() + " DISCOUNT OLD " + old.getDiscount());
 			Double or = Math.abs(1/(p.getPrice()-old.getDiscount()));
 			if(dep.getDiscount()>old.getDiscount()) p.setPrice(or -(or*dep.getDiscount()));
 			if(dep.getDiscount()<old.getDiscount()) p.setPrice(or +(or*dep.getDiscount()));
+			System.out.println("FOR P 2 " + p.getPrice());
 			productService.save(p);
 		}
 	}
