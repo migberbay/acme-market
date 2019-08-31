@@ -43,7 +43,7 @@ public class CommentServiceTest extends AbstractTest {
 	public void driverCreateComment(){
 		
 		final Object testingData[][] = {{"customer1", null},
-										{"customer2", ConstraintViolationException.class},
+										{"customer2", null},
 										{"admin", DataIntegrityViolationException.class},
 										{null , IllegalArgumentException.class}};
 		
@@ -62,7 +62,7 @@ public class CommentServiceTest extends AbstractTest {
 			c.setCustomer(customerService.getPrincipal());
 			c.setScore(3);
 			c.setText("text");
-			c.setMoment(new Date());
+			c.setMoment(new Date(System.currentTimeMillis()-100000));
 			
 			c = commentService.save(c);
 			Assert.isTrue(commentService.findAll().contains(c));
