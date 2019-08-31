@@ -20,6 +20,10 @@
 		<b><spring:message code="actor.email"/></b>: <jstl:out value="${actor.email}"/> <br/>			 				 
 		<b><spring:message code="actor.phone"/></b>: <jstl:out value="${actor.phone}"/> <br/>
 		<b><spring:message code="actor.address"/></b>: <jstl:out value="${actor.address}"/> <br/>
+		<jstl:if test="${actorIsMarket}">
+			<b><spring:message code="actor.VATNumber"/></b> <jstl:out value="${actor.VATNumber}"/> <br/>
+			<b><spring:message code="actor.CompanyName"/></b>: <jstl:out value="${actor.companyName}"/> <br/>
+		</jstl:if>
 		<jstl:if test="${logged}">
 			<b><a href="actor/editPersonal.do"><spring:message code="actor.edit" /></a> Personal Data</b> <br/>
 		</jstl:if>

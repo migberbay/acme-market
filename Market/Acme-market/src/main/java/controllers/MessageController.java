@@ -7,6 +7,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -35,6 +36,9 @@ public class MessageController extends AbstractController {
 
 	@Autowired
 	private UserAccountService	userAccountService;
+
+	@Autowired
+	private Validator	validator;
 
 
 	// Constructors -----------------------------------------------------------
@@ -80,12 +84,13 @@ public class MessageController extends AbstractController {
 	public ModelAndView save( MessageForm form,  BindingResult binding) {
 		ModelAndView res;
 
+		Message message = this.messageService.reconstruct(form);
+		validator.validate(form, binding);
 		if (binding.hasErrors()) {
-			System.out.println(binding.toString());
+			System.out.println(binding);
 			res = this.createEditModelAndView(form);
 		} else
 			try {
-				Message message = this.messageService.reconstruct(form);
 				Message saved = this.messageService.save(message);
 				this.messageService.addMesageToBoxes(saved);
 				res = new ModelAndView("redirect:/box/list.do");

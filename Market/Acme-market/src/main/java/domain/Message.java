@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import security.UserAccount;
@@ -81,6 +82,7 @@ public class Message extends DomainEntity {
 	@Valid
 	@ManyToMany
 	@NotNull
+	@NotEmpty
 	public Collection<UserAccount> getRecipients() {
 		return this.recipients;
 	}

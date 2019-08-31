@@ -118,6 +118,10 @@ public class ProfileActorController extends AbstractController {
 						DeliveryBoy actor = deliveryBoyService.findOne(actorId);
 						result.addObject("actor", actor); // actor que se va a mostr
 						result.addObject("actorIsDeliveryBoy", true);
+					}else if(a.getUserAccount().getAuthorities().contains(marketAuth)){
+						Market actor = marketService.findOne(actorId);
+						result.addObject("actor", actor); // actor que se va a mostr
+						result.addObject("actorIsMarket", true);
 					}else{
 						Actor actor = a;
 						result.addObject("actor", actor); // actor que se va a mostr
@@ -184,13 +188,7 @@ public class ProfileActorController extends AbstractController {
 		Authority marketAuth = new Authority();
 		marketAuth.setAuthority(Authority.MARKET);
 		
-		if(LoginService.getPrincipal().getAuthorities().contains(marketAuth)){
-			Market m = marketService.getPrincipal();
-			f.setVATNumber(m.getVATNumber());
-			f.setCompanyName(m.getCompanyName());
-			result.addObject("isMarket",true);
-		}
-
+		System.out.println(LoginService.getPrincipal().getAuthorities());
 		
 		f.setName(a.getName());
 		f.setMiddleName(a.getMiddleName());
@@ -199,9 +197,15 @@ public class ProfileActorController extends AbstractController {
 		f.setEmail(a.getEmail());
 		f.setAddress(a.getAddress());
 		f.setPhoto(a.getPhoto());
-		
 
 		result = createEditModelAndView(f,"personal");
+		
+		if(LoginService.getPrincipal().getAuthorities().contains(marketAuth)){
+			Market m = marketService.getPrincipal();
+			f.setVATNumber(m.getVATNumber());
+			f.setCompanyName(m.getCompanyName());
+			result.addObject("isMarket",true);
+		}
 
 		return result;
 	}
@@ -257,6 +261,10 @@ public class ProfileActorController extends AbstractController {
 			for (int i = 0; i < 11; i++) {
 				months.add(i+1);
 				years.add(d.getYear()+i+1900);
+			}
+			
+			if(LoginService.hasRole("MARKET")){
+				res.addObject("isMarket",true);
 			}
 			
 			res.addObject("showPersonal", true);

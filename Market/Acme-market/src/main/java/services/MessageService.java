@@ -76,10 +76,9 @@ public class MessageService {
 		res.setBody(form.getBody());
 		res.setSubject(form.getSubject());
 
-		List<UserAccount> recipients = new ArrayList<>();
+		Set<UserAccount> recipients = new HashSet<>();
 
 		String[] recipientsArray = form.getRecipients().split(",");
-
 
 		for (int i = 0; i < recipientsArray.length; i++){
 			UserAccount ua = this.userAccountService.findByUsername(recipientsArray[i].trim());
@@ -87,10 +86,10 @@ public class MessageService {
 				recipients.add(ua);
 			}
 		}
-			
+		if (recipients.isEmpty()) {
+			form.setRecipients("");
+		}
 		res.setRecipients(recipients);
-
-
 		return res;
 	}
 
