@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -127,4 +128,38 @@ public class RequestService {
 
 		return res;
 	}
+	
+	
+	public Double getAvgRequestsPerMarket(){
+		return this.requestRepository.getAvgRequestsPerMarket();
+	}
+	
+	public Integer getMinRequestsPerMarket(){
+		return this.requestRepository.getMinRequestsPerMarket();
+	}
+	
+	public Integer getMaxRequestsPerMarket(){
+		return this.requestRepository.getMaxRequestsPerMarket();
+	}
+	
+	public Double getStdevRequestsPerMarket(){
+		return this.requestRepository.getStdevRequestsPerMarket();
+	}
+	
+	public Double getAvgRequestsPerProvider(){
+		return this.requestRepository.getAvgRequestsPerProvider();
+	}
+	
+	public Integer getMinRequestsPerProvider(){
+		return this.requestRepository.getMinRequestsPerProvider();
+	}
+	
+	public Integer getMaxRequestsPerProvider(){
+		return this.requestRepository.getMaxRequestsPerProvider();
+	}
+	
+	public Double getStdevRequestsPerProvider(){
+		return this.requestRepository.getStdevRequestsPerProvider();
+	}
+
 }

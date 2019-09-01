@@ -35,5 +35,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	
 	@Query("select p from Product p where p.name=?1 and p.provider.id=?2 and p.department=null")
 	Collection<Product> getUnasignedProductsByNameAndProvider(String name, int providerId);
-
+	
 }

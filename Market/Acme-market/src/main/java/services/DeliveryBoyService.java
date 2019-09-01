@@ -1,6 +1,10 @@
 package services;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,5 +73,18 @@ public class DeliveryBoyService {
 		res = res/cont;
 		return res;
 	}
+
+	public Set<Entry<DeliveryBoy, Double>> getTopDeliveryBoyByScore() {
+		Map<DeliveryBoy, Double> deliveryBoyByScore = new HashMap<>();
+		for (DeliveryBoy deliveryBoy : deliveryBoyRepository.findAll()) {
+			deliveryBoyByScore.put(deliveryBoy, this.getScore(deliveryBoy));
+		}
+		for(Double n: deliveryBoyByScore.values()){
+			
+		}
+		return deliveryBoyByScore.entrySet();
+	}
+	
+	
 
 }

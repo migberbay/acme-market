@@ -16,68 +16,39 @@
 	<table style="width:'100%' border='0' align='center' ">
 			<tr>
 				<th><spring:message code="admin.type"/></th>
-				<th><spring:message code="admin.requestsPerManager"/></th>
-				<th><spring:message code="admin.pendingRequestsPerManager"/></th>
-				<th><spring:message code="admin.requestsPerCustomer"/></th>
-				<th><spring:message code="admin.pendingRequestsPerCustomer"/></th>
-				<th><spring:message code="admin.filesPerContract"/></th>
-				<th><spring:message code="admin.billboardFilesPerContract"/></th>
-				<th><spring:message code="admin.radioFilesPerContract"/></th>
-				<th><spring:message code="admin.tvFilesPerContract"/></th>
-				<th><spring:message code="admin.socialNetworkFilesPerContract"/></th>
-				<th><spring:message code="admin.infoFilesPerContract"/></th>
+				<th><spring:message code="admin.requestsPerMarket"/></th>
+				<th><spring:message code="admin.requestsPerProvider"/></th>
+				<th><spring:message code="admin.purchasesPerCustomer"/></th>
+				<th><spring:message code="admin.deliveredPurchasesPerDeliveryBoy"/></th>
+
 			</tr>
 			<tr>
 				<td><spring:message code="admin.average"/></td>
-				<td><jstl:out value="${avgRequestsPerManager}"/></td>
-				<td><jstl:out value="${avgPendingRequestsPerManager}"/></td>
-				<td><jstl:out value="${avgRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${avgPendingRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${avgFilesPerContract}"/></td>
-				<td><jstl:out value="${avgBillboardFilesPerContract}"/></td>
-				<td><jstl:out value="${avgRadioFilesPerContract}"/></td>
-				<td><jstl:out value="${avgTVFilesPerContract}"/></td>
-				<td><jstl:out value="${avgSocialNetworkFilesPerContract}"/></td>
-				<td><jstl:out value="${avgInfoFilesPerContract}"/></td>
+				<td><jstl:out value="${avgRequestsPerMarket}"/></td>
+				<td><jstl:out value="${avgRequestsPerProvider}"/></td>
+				<td><jstl:out value="${avgPurchasesPerCustomer}"/></td>
+				<td><jstl:out value="${avgDeliveredPurchasesPerDeliveryBoy}"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="admin.minimum"/></td>
-				<td><jstl:out value="${minRequestsPerManager}"/></td>
-				<td><jstl:out value="${minPendingRequestsPerManager}"/></td>
-				<td><jstl:out value="${minRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${minPendingRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${minFilesPerContract}"/></td>
-				<td><jstl:out value="${minBillboardFilesPerContract}"/></td>
-				<td><jstl:out value="${minRadioFilesPerContract}"/></td>
-				<td><jstl:out value="${minTVFilesPerContract}"/></td>
-				<td><jstl:out value="${minSocialNetworkFilesPerContract}"/></td>
-				<td><jstl:out value="${minInfoFilesPerContract}"/></td>
+				<td><jstl:out value="${minRequestsPerMarket}"/></td>
+				<td><jstl:out value="${minRequestsPerProvider}"/></td>
+				<td><jstl:out value="${minPurchasesPerCustomer}"/></td>
+				<td><jstl:out value="${minDeliveredPurchasesPerDeliveryBoy}"/></td>
 			</tr>	
 			<tr>
 				<td><spring:message code="admin.maximum"/></td>
-				<td><jstl:out value="${maxRequestsPerManager}"/></td>
-				<td><jstl:out value="${maxPendingRequestsPerManager}"/></td>
-				<td><jstl:out value="${maxRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${maxPendingRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${maxFilesPerContract}"/></td>
-				<td><jstl:out value="${maxBillboardFilesPerContract}"/></td>
-				<td><jstl:out value="${maxRadioFilesPerContract}"/></td>
-				<td><jstl:out value="${maxTVFilesPerContract}"/></td>
-				<td><jstl:out value="${maxSocialNetworkFilesPerContract}"/></td>
-				<td><jstl:out value="${maxInfoFilesPerContract}"/></td>
+				<td><jstl:out value="${maxRequestsPerMarket}"/></td>
+				<td><jstl:out value="${maxRequestsPerProvider}"/></td>
+				<td><jstl:out value="${maxPurchasesPerCustomer}"/></td>
+				<td><jstl:out value="${maxDeliveredPurchasesPerDeliveryBoy}"/></td>
 			</tr>
 			<tr>
 				<td><spring:message code="admin.stdv"/></td>
-				<td><jstl:out value="${stdevRequestsPerManager}"/></td>
-				<td><jstl:out value="${stdevPendingRequestsPerManager}"/></td>
-				<td><jstl:out value="${stdevRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${stdevPendingRequestsPerCustomer}"/></td>
-				<td><jstl:out value="${stdevFilesPerContract}"/></td>
-				<td><jstl:out value="${stdevBillboardFilesPerContract}"/></td>
-				<td><jstl:out value="${stdevRadioFilesPerContract}"/></td>
-				<td><jstl:out value="${stdevTVFilesPerContract}"/></td>
-				<td><jstl:out value="${stdevSocialNetworkFilesPerContract}"/></td>
-				<td><jstl:out value="${stdevInfoFilesPerContract}"/></td>
+				<td><jstl:out value="${stdevRequestsPerMarket}"/></td>
+				<td><jstl:out value="${stdevRequestsPerProvider}"/></td>
+				<td><jstl:out value="${stdevPurchasesPerCustomer}"/></td>
+				<td><jstl:out value="${stdevDeliveredPurchasesPerDeliveryBoy}"/></td>
 			</tr>
 	</table>
 

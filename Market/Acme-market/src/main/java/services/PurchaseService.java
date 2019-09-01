@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -93,5 +94,37 @@ public class PurchaseService {
 		cal.add(Calendar.MINUTE, minutesToAdd);
 		
 		return cal.getTime();
+	}
+	
+	public Double getAvgPurchasesPerCustomer(){
+		return this.purchaseRepository.getAvgPurchasesPerCustomer();
+	}
+	
+	public Integer getMinPurchasesPerCustomer(){
+		return this.purchaseRepository.getMinPurchasesPerCustomer();
+	}
+	
+	public Integer getMaxPurchasesPerCustomer(){
+		return this.purchaseRepository.getMaxPurchasesPerCustomer();
+	}
+	
+	public Double getStdevPurchasesPerCustomer(){
+		return this.purchaseRepository.getStdevPurchasesPerCustomer();
+	}
+	
+	public Double getAvgDeliveredPurchasesPerDeliveryBoy(){
+		return this.purchaseRepository.getAvgDeliveredPurchasesPerDeliveryBoy();
+	}
+	
+	public Integer getMinDeliveredPurchasesPerDeliveryBoy(){
+		return this.purchaseRepository.getMinDeliveredPurchasesPerDeliveryBoy();
+	}
+	
+	public Integer getMaxDeliveredPurchasesPerDeliveryBoy(){
+		return this.purchaseRepository.getMaxDeliveredPurchasesPerDeliveryBoy();
+	}
+	
+	public Double getStdevDeliveredPurchasesPerDeliveryBoy(){
+		return this.purchaseRepository.getStdevDeliveredPurchasesPerDeliveryBoy();
 	}
 }
