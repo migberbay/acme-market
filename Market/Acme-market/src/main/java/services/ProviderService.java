@@ -1,6 +1,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,15 @@ public class ProviderService {
 	
 	public Provider getPrincipal(){
 		return this.providerRepository.findByPrincipal(LoginService.getPrincipal());
+	}
+	
+	public Collection<Provider> getTopProvidersByRequest(){
+		List<Provider> providers = (List<Provider>) this.providerRepository.getTopProvidersByRequest();
+		Collection<Provider> result;
+		if(providers.size()<10) result = providers;
+		else result = providers.subList(0, 10);
+		
+		return result;
 	}
 
 }

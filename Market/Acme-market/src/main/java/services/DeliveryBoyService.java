@@ -1,7 +1,12 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -74,15 +79,30 @@ public class DeliveryBoyService {
 		return res;
 	}
 
-	public Set<Entry<DeliveryBoy, Double>> getTopDeliveryBoyByScore() {
+	public List<DeliveryBoy> getTopDeliveryBoyByScore() {
 		Map<DeliveryBoy, Double> deliveryBoyByScore = new HashMap<>();
 		for (DeliveryBoy deliveryBoy : deliveryBoyRepository.findAll()) {
 			deliveryBoyByScore.put(deliveryBoy, this.getScore(deliveryBoy));
 		}
-		for(Double n: deliveryBoyByScore.values()){
-			
-		}
-		return deliveryBoyByScore.entrySet();
+	    List<Map.Entry<DeliveryBoy, Double>> list = new LinkedList<Map.Entry<DeliveryBoy, Double> >(deliveryBoyByScore.entrySet()); 
+	    List<DeliveryBoy> result = new ArrayList<>();
+	    Collections.sort(list, new Comparator<Map.Entry<DeliveryBoy, Double> >() { 
+	            public int compare(Map.Entry<DeliveryBoy, Double> o1,  
+	                               Map.Entry<DeliveryBoy, Double> o2) 
+	            { 
+	                return (o1.getValue()).compareTo(o2.getValue()); 
+	            } 
+	        }); 
+	    for (Map.Entry<DeliveryBoy, Double> aa : list) { 
+	    	System.out.println(" ORDERED: DELIVER " + aa.getKey().getUserAccount().getUsername() + " y score " + aa.getValue());
+            result.add(aa.getKey());
+        } 
+	    
+	    List<DeliveryBoy> res;
+	    if(result.size()<10) res = result;
+	    else res = result.subList(0, 10);
+	    
+		return res;
 	}
 	
 	

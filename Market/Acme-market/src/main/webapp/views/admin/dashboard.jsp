@@ -52,10 +52,20 @@
 			</tr>
 	</table>
 
-	<b><spring:message code="admin.topPendingManagers"/></b>
-	<jstl:if test="${empty top10Managers}"><spring:message code="admin.empty"/></jstl:if>	
+	<b><spring:message code="admin.top10DeliveryBoys"/></b>
+	<jstl:if test="${empty top10DeliveryBoys}"><spring:message code="admin.empty"/></jstl:if>	
 	<table style="width:'100%' border='0' align='center' ">
-		<jstl:forEach var="i" items="${top10Managers}">
+		<jstl:forEach var="i" items="${top10DeliveryBoys}">
+		<tr>
+			<td><jstl:out value="${i.name}"/> <jstl:out value="${i.surname}"/> (<a href="actor/show.do?actorId=${i.id}"><jstl:out value="${i.userAccount.username}"/></a>)</td>
+		</tr>			
+		</jstl:forEach>		
+	</table> 
+	
+	<b><spring:message code="admin.top10Providers"/></b>
+	<jstl:if test="${empty top10Providers}"><spring:message code="admin.empty"/></jstl:if>	
+	<table style="width:'100%' border='0' align='center' ">
+		<jstl:forEach var="i" items="${top10Providers}">
 		<tr>
 			<td><jstl:out value="${i.name}"/> <jstl:out value="${i.surname}"/> (<a href="actor/show.do?actorId=${i.id}"><jstl:out value="${i.userAccount.username}"/></a>)</td>
 		</tr>			

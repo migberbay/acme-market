@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.DeliveryBoyService;
+import services.ProviderService;
 import services.PurchaseService;
 import services.RequestService;
 
@@ -25,6 +26,9 @@ public class DashboardAdminController extends AbstractController {
 	
 	@Autowired
 	private DeliveryBoyService deliveryBoyService;
+	
+	@Autowired
+	private ProviderService providerService;
 	
 	//DASHBOARD--------------------------------------------------------
 	@RequestMapping(value="/dashboard", method=RequestMethod.GET)
@@ -54,6 +58,7 @@ public class DashboardAdminController extends AbstractController {
 		res.addObject("stdevDeliveredPurchasesPerDeliveryBoy", Math.round(purchaseService.getStdevDeliveredPurchasesPerDeliveryBoy()*100.0d)/100.0d);
 
 		res.addObject("top10DeliveryBoys", deliveryBoyService.getTopDeliveryBoyByScore());
+		res.addObject("top10Providers", providerService.getTopProvidersByRequest());
 
 
 		return res;
