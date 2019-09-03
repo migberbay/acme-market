@@ -9,10 +9,12 @@ import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.ProductRepository;
+import security.LoginService;
 import domain.Comment;
 import domain.DeliveryBoy;
 import domain.Product;
@@ -64,7 +66,7 @@ public class ProductService {
 	}
 	
 	public Product save(Product a){
-		
+		Assert.isTrue(LoginService.hasRole("PROVIDER"));
 		Product saved = productRepository.saveAndFlush(a);
 		return saved;
 	}

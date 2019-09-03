@@ -7,6 +7,7 @@ import javax.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
@@ -53,7 +54,7 @@ public class DepartmentService {
 	}
 	
 	public Department save(Department a){
-		
+		Assert.isTrue(LoginService.hasRole("MARKET"));
 		Department saved = departmentRepository.saveAndFlush(a);
 		return saved;
 	}

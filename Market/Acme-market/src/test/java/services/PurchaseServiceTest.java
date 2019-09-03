@@ -23,7 +23,6 @@ public class PurchaseServiceTest extends AbstractTest {
 	@Autowired
 	private ProductService productService;
 	
-	
 	@Autowired
 	private MarketService marketService;
 	
