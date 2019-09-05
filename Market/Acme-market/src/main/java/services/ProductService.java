@@ -66,7 +66,7 @@ public class ProductService {
 	}
 	
 	public Product save(Product a){
-		Assert.isTrue(LoginService.hasRole("PROVIDER"));
+		Assert.isTrue(LoginService.hasRole("PROVIDER")||LoginService.hasRole("CUSTOMER"));
 		Product saved = productRepository.saveAndFlush(a);
 		return saved;
 	}
