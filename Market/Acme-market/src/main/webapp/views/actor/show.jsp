@@ -71,11 +71,11 @@
 	</div>
 	<br/>
 		
-	<jstl:if test="${logged}">
+	<%-- <jstl:if test="${logged}">
 			<br>
 			<a href="actor/delete.do" onclick="confirmLeave();">delete ALL data</a><br>
 			<a href="actor/generateData.do"> <spring:message code="actor.generate" /> </a> <br>
-	</jstl:if>
+	</jstl:if> --%>
 		
 		<input type="button" name="back"
 		value="<spring:message code="actor.show.back" />"
