@@ -29,7 +29,7 @@ public class CommentService {
 	
 	public Comment create(){
 		Comment res = new Comment();
-		res.setMoment(new Date());
+		res.setMoment(new Date(System.currentTimeMillis()-1000));
 		return res;
 	}
 	

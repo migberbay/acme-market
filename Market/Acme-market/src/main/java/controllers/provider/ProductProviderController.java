@@ -134,7 +134,7 @@ public class ProductProviderController extends AbstractController {
 		Collection<Product> res;
 		Collection <Product> aux = productService.getProductsByNameAndProvider(form.getName(), providerService.getPrincipal().getId());
 		
-		if(form.getCreating() == true && aux.isEmpty()){//no hay colision
+		if((form.getCreating() == true && aux.isEmpty())||form.getCreating() == false){//no hay colision
 			try {
 				res = productService.reconstruct(form,bindingResult);
 				for (Product p : res) {
@@ -147,7 +147,7 @@ public class ProductProviderController extends AbstractController {
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
 				result = this.createEditModelAndView(form,"product.commit.error");
-			}
+			}	
 		}else{
 			result = list();
 			result.addObject("nameCollision",true);
