@@ -66,7 +66,7 @@ public class ProductService {
 	}
 	
 	public Product save(Product a){
-		Assert.isTrue(LoginService.hasRole("PROVIDER")||LoginService.hasRole("CUSTOMER"));
+		Assert.isTrue(LoginService.hasRole("PROVIDER")||LoginService.hasRole("CUSTOMER") ||LoginService.hasRole("MARKET"));
 		Product saved = productRepository.saveAndFlush(a);
 		return saved;
 	}
@@ -79,6 +79,14 @@ public class ProductService {
 	
 	public Collection<Product> reconstruct(ProductForm form, BindingResult bindingResult) {
 		Collection<Product> res = new ArrayList<>();
+		
+		validator.validate(form, bindingResult);
+		
+		if(bindingResult.hasErrors()){
+			System.out.println(bindingResult.getFieldErrors());
+			throw new ValidationException();
+		}
+		
 		Product aux = this.create(providerService.getPrincipal()); 
 		aux.setName(form.getName());
 		aux.setPrice(form.getPrice());
@@ -86,13 +94,6 @@ public class ProductService {
 		
 		for (int i=0; i < form.getTotalStock()/form.getPacketSize(); i++) {
 			res.add(aux);		
-		}
-
-		validator.validate(res, bindingResult);
-		
-		if(bindingResult.hasErrors()){
-			System.out.println(bindingResult.getFieldErrors());
-			throw new ValidationException();
 		}
 
 		return res;

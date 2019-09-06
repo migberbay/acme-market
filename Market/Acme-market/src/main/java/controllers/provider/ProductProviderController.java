@@ -68,6 +68,7 @@ public class ProductProviderController extends AbstractController {
 			result = new ModelAndView("product/list");
 			result.addObject("products",productsByAmount);
 			result.addObject("auth",true);
+			result.addObject("requestURI","product/provider/list.do");
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = new ModelAndView("error/access");
@@ -145,7 +146,7 @@ public class ProductProviderController extends AbstractController {
 				result = this.createEditModelAndView(form);
 			} catch (final Throwable oops) {
 				oops.printStackTrace();
-				result = this.createEditModelAndView(form,"file.commit.error");
+				result = this.createEditModelAndView(form,"product.commit.error");
 			}
 		}else{
 			result = list();
@@ -189,10 +190,13 @@ public class ProductProviderController extends AbstractController {
 		
 	protected ModelAndView createEditModelAndView(ProductForm form, String messageCode){
 		ModelAndView res;
-		
 		res = new ModelAndView("product/edit");
-		if(form.getName()!=null) res.addObject("stock",true);
-		else res.addObject("stock",false);
+		if(form.getName()!=null){
+			if(!form.getCreating()) 
+				res.addObject("stock",true); else res.addObject("stock",false);
+		}else{
+			res.addObject("stock",false);
+		}
 		res.addObject("form", form);
 		res.addObject("message", messageCode);
 

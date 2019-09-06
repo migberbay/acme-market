@@ -170,6 +170,8 @@ public class DepartmentMarketController extends AbstractController {
 		if(department.getId()!=0){
 			Collection<Product> products = productService.getProductsByDepartment(department.getId());
 			res.addObject("isEmpty",products.isEmpty());
+		}else{
+			res.addObject("isEmpty",true);
 		}
 		res.addObject("department", department);
 		res.addObject("message", messageCode);
