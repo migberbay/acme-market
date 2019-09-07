@@ -41,19 +41,20 @@ public class CurriculaProviderController extends AbstractController {
 	public ModelAndView show() {
 
 		ModelAndView result;
-		
+		result = new ModelAndView("curricula/show");
 		Provider provider = providerService.getPrincipal();
 
 		if(curriculaService.findCurriculaByProvider(provider.getId())!=null){
-			result = new ModelAndView("curricula/show");
+			result.addObject("newcurricula", false);
 			int curriculaId = curriculaService.findCurriculaByProvider(provider.getId()).getId();
 			result.addObject("personal", personalService.findPersonalRecordByCurricula(curriculaId));
 			result.addObject("professionals",professionalService.findProfessionalRecordsByCurricula(curriculaId));
 			result.addObject("educations",educationService.findEducationRecordsByCurricula(curriculaId));
 			result.addObject("uri", "curricula/show.do");
-		}else
-			result = new ModelAndView("error/access");
-		
+		}else{
+			result.addObject("newcurricula", true);
+			result.addObject("uri", "curricula/show.do");
+		}
 
 		return result;
 	}

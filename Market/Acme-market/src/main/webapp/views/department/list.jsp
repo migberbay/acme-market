@@ -13,7 +13,6 @@
 		<display:column titleKey="department.options">
 			<a href="product/search.do?departmentId=${row.id}"><spring:message code="department.product.list"/></a><br/>
 			<security:authorize access="hasRole('MARKET')">
-				<a href="department/market/show.do?departmentId=${row.id}"><spring:message code="department.show"/></a><br/>
 				<a href="department/market/edit.do?departmentId=${row.id}"><spring:message code="department.edit"/></a><br/>
 				<jstl:if test="${deps.contains(row)}">
 					<a href="department/market/delete.do?departmentId=${row.id}"><spring:message code="department.delete"/></a><br/>

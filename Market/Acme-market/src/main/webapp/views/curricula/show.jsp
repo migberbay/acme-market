@@ -11,8 +11,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <security:authorize access="hasRole('PROVIDER')">
-
-		<h3><spring:message code="curricula.personalRecord"/></h3>
+	<jstl:if test="${newcurricula}">
+		<a href="curricula/provider/create.do"><spring:message code="curricula.create"/></a>	
+	</jstl:if>
+	<jstl:if test="${!newcurricula}">
+			<h3><spring:message code="curricula.personalRecord"/></h3>
 		<b><spring:message code="curricula.personalRecord.fullName"/>:</b> <jstl:out value="${personal.fullName}"/><br>
 		<b><spring:message code="curricula.personalRecord.photo"/>:</b> <jstl:out value="${personal.photo }"/><br>
 		<b><spring:message code="curricula.personalRecord.email"/>:</b> <jstl:out value="${personal.email }"/><br>
@@ -54,5 +57,5 @@
 	</display:table>
 	<a href="professionalRecord/provider/create.do"><spring:message code="curricula.create"/></a>
 	
-
+	</jstl:if>
 </security:authorize>
