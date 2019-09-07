@@ -137,10 +137,15 @@ public class ProductProviderController extends AbstractController {
 		if((form.getCreating() == true && aux.isEmpty())||form.getCreating() == false){//no hay colision
 			try {
 				res = productService.reconstruct(form,bindingResult);
-				for (Product p : res) {
-					productService.save(p);
+				if(form.getTotalStock() < form.getPacketSize()){
+					result = this.createEditModelAndView(form);
+					result.addObject("packetTooBig",true);
+				}else{
+					for (Product p : res) {
+						productService.save(p);
+					}
+					result = new ModelAndView("redirect:/product/provider/list.do");
 				}
-				result = new ModelAndView("redirect:/product/provider/list.do");
 			} catch (ValidationException oops) {
 				oops.printStackTrace();
 				result = this.createEditModelAndView(form);

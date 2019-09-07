@@ -19,6 +19,11 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
+<jstl:if test="${packetTooBig}">
+<div class = "error">
+	The Stock you're trying to add is too little for the packet size, please increase it to at least <jstl:out value="${form.packetSize}"></jstl:out>
+</div>
+</jstl:if>
 <form:form action="product/provider/edit.do" modelAttribute="form">
 	
 		<form:hidden path="creating"/>
