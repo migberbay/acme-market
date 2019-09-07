@@ -56,6 +56,12 @@
 		</security:authorize>
 			
 		</display:column>
+		<display:column titleKey="purchase.ordered">
+		<jstl:choose>
+		<jstl:when test="${row.isFinal}">YES</jstl:when>
+		<jstl:otherwise>NO</jstl:otherwise>
+		</jstl:choose>
+		</display:column>
 		<display:column property="status" titleKey="purchase.status"/>
 		<display:column property="market.companyName" titleKey="purchase.market"/>
 		

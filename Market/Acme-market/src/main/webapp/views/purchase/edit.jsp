@@ -44,7 +44,7 @@
 </div>
 
 
-  <spring:message code="purchase.Cart"/>:<input type="button" onclick="location.href='purchase/customer/finalizePurchase.do?purchaseId=${purchase.id}';" value="Order!" /> <br>
+  <spring:message code="purchase.Cart"/>:<input type="button" onclick="confirmLeave();" value="Order!" /> <br>
 	<spring:message code="purchase.total"/>: <jstl:out value="${purchase.totalPrice}"/><br>
 	<jstl:forEach items="${purchase.products}" var="x">
 		<spring:message code="purchase.product.name"/>: <jstl:out value="${x.name}"/> ,
@@ -100,8 +100,11 @@ function dragElement(elmnt) {
   }
 }
 
+function confirmLeave() {
+	location.href='purchase/customer/finalizePurchase.do?purchaseId=${purchase.id}';
+	if(!confirm("Your order will be sent to the market to process it, you will not be able to edit it afterwards,continue?")) return;
+	}
 </script>
-
 
 
 
