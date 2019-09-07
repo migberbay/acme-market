@@ -7,6 +7,7 @@ import javax.validation.ConstraintViolationException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,7 +46,7 @@ public class ProductServiceTest extends AbstractTest {
 		
 		final Object testingData[][] = {{"provider1", null},
 										{"provider2", null},
-										{"market1", IllegalArgumentException.class}};
+										{"market1", DataIntegrityViolationException.class}};
 		
 		for(int i = 0; i < testingData.length; i++){
 			templateCreateProduct((String) testingData[i][0], (Class<?>)testingData[i][1]);
